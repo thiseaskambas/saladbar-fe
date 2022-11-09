@@ -1,8 +1,8 @@
-import { NavLink } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 
 import { INavItem } from '../utils/types';
 import NavDropDown from './NavDropDown';
+import { StyledNavLink } from '../layouts/styles/nav.styles';
 
 interface IProps {
   item: INavItem;
@@ -67,7 +67,7 @@ const NavItem = ({ item, depthLevel }: IProps) => {
           />
         </>
       ) : (
-        <NavLink to={item.url}>{item.title}</NavLink>
+        <StyledNavLink to={item.url}>{item.title}</StyledNavLink>
       )}
     </li>
   );

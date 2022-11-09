@@ -1,3 +1,4 @@
+import { StyledUl } from '../layouts/styles/nav.styles';
 import { INavItem, INavSubItem } from '../utils/types';
 import NavItem from './NavItem';
 
@@ -10,11 +11,11 @@ interface IProps {
 const NavDropDown = ({ submenu, dropdown, depthLevel }: IProps) => {
   depthLevel = depthLevel + 1;
   return (
-    <ul style={{ display: dropdown ? 'block' : 'none' }}>
+    <StyledUl style={{ display: dropdown ? 'block' : 'none' }}>
       {submenu.map((item: INavItem) => {
         return <NavItem key={item.title} item={item} depthLevel={depthLevel} />;
       })}
-    </ul>
+    </StyledUl>
   );
 };
 
