@@ -1,4 +1,4 @@
-import { INavItem } from './types';
+import { INavItem } from '../types/types';
 
 export const navItems: Array<INavItem> = [
   { title: 'Home', url: '/' },

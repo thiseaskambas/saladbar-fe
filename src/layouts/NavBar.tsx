@@ -1,20 +1,20 @@
 import NavItem from '../components/NavItem';
 import { navItems } from '../utils/navItems';
-import { INavItem } from '../utils/types';
+import { INavItem } from '../types/types';
 
-import { StyledUl } from './styles/nav.styles';
+import { StyledMainUl } from './styles/navBar.styles';
 
 const NavBar = () => {
   return (
     <nav>
-      <StyledUl>
+      <StyledMainUl>
         {navItems.map((item: INavItem) => {
           const depthLevel = 0;
           return (
             <NavItem key={item.title} item={item} depthLevel={depthLevel} />
           );
         })}
-      </StyledUl>
+      </StyledMainUl>
     </nav>
   );
 };
