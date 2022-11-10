@@ -28,6 +28,9 @@ const productsSlice = createSlice({
       .addCase(initializeProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.products.push(...action.payload);
+      })
+      .addCase(initializeProducts.rejected, (state) => {
+        state.status = 'failed';
       });
   },
 });
