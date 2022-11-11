@@ -11,7 +11,7 @@ const Login = () => {
     email: '',
     password: '',
   };
-  const validationSchema = Yup.object({
+  const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email('Invalid email address')
       .required('Please fill in your email'),
@@ -29,10 +29,8 @@ const Login = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        validateOnBlur={true}
-        validateOnChange={true}
         onSubmit={(values, actions) => {
-          console.log(values, actions), actions.setSubmitting(false);
+          console.log(values, actions);
         }}
       >
         {(formik) => (
@@ -40,9 +38,11 @@ const Login = () => {
             <label htmlFor="email">email</label>
             <Field type="email" name="email" />
             <ErrorMessage name="email" />
+
             <label htmlFor="password">password</label>
             <Field name="password" type="password" />
             <ErrorMessage name="password" />
+
             <button type="submit" disabled={!(formik.isValid && formik.dirty)}>
               Login now
             </button>
