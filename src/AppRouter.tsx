@@ -11,11 +11,13 @@ import Users from './pages/Users';
 import ProductForm from './pages/ProductForm';
 import Products from './pages/Products';
 import CartEditForm from './pages/CartEditForm';
+import SignUp from './pages/SignUp';
 
 const AppRouter = () => (
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<SignUp />} />
     <Route path="/main-dash" element={<MainDashBoard />} />
     <Route path="/day-view" element={<Day />} />
     <Route path="/carts">

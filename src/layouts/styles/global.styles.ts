@@ -24,6 +24,9 @@ const GlobalStyles = createGlobalStyle`
     border: none;
    }
   }
+  .error{
+    border-color: red;
+  }
 `;
 
 export default GlobalStyles;

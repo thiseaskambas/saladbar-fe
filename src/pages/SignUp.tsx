@@ -4,14 +4,16 @@ import * as Yup from 'yup';
 interface IFormValues {
   email: string;
   password: string;
+  passwordConfirmation: string;
 }
 
-const Login = () => {
+const SignUp = () => {
   const initialValues: IFormValues = {
     email: '',
     password: '',
+    passwordConfirmation: '',
   };
-  const validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object({
     email: Yup.string()
       .email('Invalid email address')
       .required('Please fill in your email'),
@@ -19,18 +21,22 @@ const Login = () => {
       .required('Please fill in your password')
       .matches(
         /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-        'Remember: your password contains letters and numbers and is at least 5 characters long'
+        'The password must contain letters and numbers and must be at least 5 characters long'
       ),
+    passwordConfirmation: Yup.string().oneOf(
+      [Yup.ref('password'), null],
+      'Passwords must match'
+    ),
   });
 
   return (
     <main>
-      <h1>Login</h1>
+      <h1>Sign up</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
-          console.log(values, actions);
+          console.log(values, actions), actions.setSubmitting(false);
         }}
       >
         {(formik) => (
@@ -43,8 +49,12 @@ const Login = () => {
             <Field name="password" type="password" />
             <ErrorMessage name="password" />
 
+            <label htmlFor="passwordConfirmation">password confirmation</label>
+            <Field name="passwordConfirmation" type="password" />
+            <ErrorMessage name="passwordConfirmation" />
+
             <button type="submit" disabled={!(formik.isValid && formik.dirty)}>
-              Login now
+              Sign-up now
             </button>
           </Form>
         )}
@@ -53,4 +63,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
