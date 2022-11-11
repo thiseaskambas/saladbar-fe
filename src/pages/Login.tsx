@@ -1,12 +1,16 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
+import { useAppDispatch } from '../store/store';
+import { logUserIn } from '../store/auth.slice';
+
 interface IFormValues {
   email: string;
   password: string;
 }
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const initialValues: IFormValues = {
     email: '',
     password: '',
@@ -15,12 +19,11 @@ const Login = () => {
     email: Yup.string()
       .email('Invalid email address')
       .required('Please fill in your email'),
-    password: Yup.string()
-      .required('Please fill in your password')
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-        'Remember: your password contains letters and numbers and is at least 5 characters long'
-      ),
+    password: Yup.string().required('Please fill in your password'),
+    // .matches(
+    //   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
+    //   'Remember: your password contains letters and numbers and is at least 5 characters long'
+    // ),
   });
 
   return (
@@ -29,8 +32,10 @@ const Login = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values, actions) => {
-          console.log(values, actions);
+        onSubmit={async (values, actions) => {
+          await dispatch(logUserIn(values));
+          actions.setSubmitting(false);
+          actions.resetForm({ values: { email: '', password: '' } });
         }}
       >
         {(formik) => (
