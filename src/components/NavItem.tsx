@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { INavItem } from '../types/types';
 import NavDropDown from './NavDropDown';
 
-import { NavLink } from 'react-router-dom';
+import { StyledNavLink } from './styles/navLInk.styled';
 
 interface IProps {
   item: INavItem;
@@ -88,7 +88,10 @@ const NavItem = ({ item, depthLevel }: IProps) => {
           />
         </>
       ) : (
-        <NavLink to={item.url}>{item.title}</NavLink>
+        <StyledNavLink to={item.url} isSubmenuItem={depthLevel > 0}>
+          {' '}
+          {item.title}{' '}
+        </StyledNavLink>
       )}
     </li>
   );
