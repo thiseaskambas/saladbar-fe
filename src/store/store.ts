@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import productsReducer from './products.slice';
 import authReducer from './auth.slice';
+import notifReducer from './notification.slice';
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
     auth: authReducer,
+    notification: notifReducer,
   },
 });
 

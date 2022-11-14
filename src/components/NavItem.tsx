@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { INavItem } from '../types/types';
+import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
 
 import { StyledNavLink } from './styles/navLInk.styled';
@@ -48,15 +48,11 @@ const NavItem = ({ item, depthLevel }: IProps) => {
       }
     } else if (e.target instanceof Element && e.target.tagName === 'BUTTON') {
       elWidth = Number(e.target.clientWidth);
-      console.log(e);
     }
     if (viewportWidth < e.clientX + 2 * elWidth) {
-      console.log(e.clientX, elWidth);
       setMoveLeft(true);
     } else {
       setMoveLeft(false);
-
-      console.log(e.clientX, elWidth);
     }
     setDropdown(true);
   };

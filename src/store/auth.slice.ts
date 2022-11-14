@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   IAuthInitialState,
   ILoginCredentials,
+  ILoginResponse,
   IUser,
 } from '../types/user.types';
 import authServices from '../services/auth.services';
@@ -13,17 +14,33 @@ const initialState = {
 
 export const logUserIn = createAsyncThunk(
   'auth/login',
-  async (credentials: ILoginCredentials) => {
-    const logedUser = await authServices.logIn(credentials);
-    console.log(logedUser);
-    return logedUser as IUser;
+  async (credentials: ILoginCredentials): Promise<IUser> => {
+    const response = await authServices.logIn(credentials);
+    authServices.setToken(response.accessToken);
+    window.localStorage.setItem(
+      'loggedSaladBarAppUser',
+      JSON.stringify(response)
+    );
+    return response.loggedUser;
   }
 );
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    findUserFromStoredLoginResponse(state) {
+      const storedLoginResponse = window.localStorage.getItem(
+        'loggedSaladBarAppUser'
+      );
+      if (storedLoginResponse) {
+        const parsed: ILoginResponse = JSON.parse(storedLoginResponse);
+        state.user = parsed.loggedUser;
+        state.status = 'succeeded';
+        authServices.setToken(parsed.accessToken);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(logUserIn.pending, (state) => {
@@ -39,4 +56,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { findUserFromStoredLoginResponse } = authSlice.actions;
 export default authSlice.reducer;

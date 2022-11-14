@@ -8,10 +8,11 @@ export interface INewUserEntry {
 
 export type Role = 'user' | 'admin' | 'dev';
 
-export interface IUser
-  extends Omit<INewUserEntry, 'password' | 'passwordConfirm'> {
+export interface IUser {
   role: Role;
-  refreshToken: string;
+  username: string;
+  name: string;
+  id: string;
 }
 
 export interface IAuthInitialState {
@@ -22,4 +23,16 @@ export interface IAuthInitialState {
 export interface ILoginCredentials {
   password: string;
   email: string;
+}
+
+export interface IToken {
+  username: string;
+  id: string;
+  iat: string;
+  exp: string;
+}
+
+export interface ILoginResponse {
+  accessToken: string;
+  loggedUser: IUser;
 }

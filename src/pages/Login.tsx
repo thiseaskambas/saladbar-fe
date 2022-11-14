@@ -1,5 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../store/store';
 import { logUserIn } from '../store/auth.slice';
@@ -10,6 +11,7 @@ interface IFormValues {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialValues: IFormValues = {
     email: '',
@@ -33,9 +35,14 @@ const Login = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, actions) => {
-          await dispatch(logUserIn(values));
-          actions.setSubmitting(false);
-          actions.resetForm({ values: { email: '', password: '' } });
+          try {
+            await dispatch(logUserIn(values));
+            actions.setSubmitting(false);
+            actions.resetForm({ values: { email: '', password: '' } });
+            navigate('/dashboard');
+          } catch (err) {
+            console.log(err);
+          }
         }}
       >
         {(formik) => (
