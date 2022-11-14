@@ -2,8 +2,9 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 import { logUserIn } from '../store/auth.slice';
+import { useSelector } from 'react-redux';
 
 interface IFormValues {
   email: string;
@@ -13,6 +14,8 @@ interface IFormValues {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const authState = useSelector((state: RootState) => state.auth);
+
   const initialValues: IFormValues = {
     email: '',
     password: '',
@@ -36,10 +39,10 @@ const Login = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, actions) => {
           try {
-            await dispatch(logUserIn(values));
-            actions.setSubmitting(false);
+            await dispatch(logUserIn(values)).unwrap();
             actions.resetForm({ values: { email: '', password: '' } });
             navigate('/dashboard');
+            actions.setSubmitting(false);
           } catch (err) {
             console.log(err);
           }
@@ -47,6 +50,7 @@ const Login = () => {
       >
         {(formik) => (
           <Form onSubmit={formik.handleSubmit}>
+            {authState.status === 'failed' && <div>Error</div>}
             <label htmlFor="email">email</label>
             <Field type="email" name="email" />
             <ErrorMessage name="email" />

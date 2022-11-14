@@ -25,6 +25,21 @@ export const logUserIn = createAsyncThunk(
   }
 );
 
+// export const test = createAsyncThunk(
+//   'auth/findUserFromStoredLoginResponse',
+//   async () => {
+//     const storedLoginResponse = window.localStorage.getItem(
+//       'loggedSaladBarAppUser'
+//     );
+//     if (storedLoginResponse) {
+//       const parsed: ILoginResponse = JSON.parse(storedLoginResponse);
+//       state.user = parsed.loggedUser;
+//       state.status = 'succeeded';
+//       authServices.setToken(parsed.accessToken);
+//     }
+//   }
+// );
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,

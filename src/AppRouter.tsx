@@ -12,30 +12,33 @@ import ProductForm from './pages/ProductForm';
 import Products from './pages/Products';
 import CartEditForm from './pages/CartEditForm';
 import SignUp from './pages/SignUp';
+import RequireAuth from './components/RequireAuth';
 
 const AppRouter = () => (
   <Routes>
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
-    <Route path="/dashboard" element={<MainDashBoard />} />
-    <Route path="/day-view" element={<Day />} />
-    <Route path="/carts">
-      <Route index element={<CartsDash />} />
-      <Route path="current" element={<Cart />} />
-      <Route path=":id" element={<Cart />} />
-      <Route path=":id/edit" element={<CartEditForm />} />
-    </Route>
-    <Route path="/products">
-      <Route index element={<Products />} />
-      <Route path="create" element={<ProductForm />} />
-      <Route path=":id" element={<Product />} />
-      <Route path=":id/edit" element={<ProductForm />} />
-    </Route>
-    <Route path="/users">
-      <Route index element={<Users />} />
-      <Route path="me" element={<UserProfile />} />
-      <Route path=":id" element={<UserProfile />} />
+    <Route element={<RequireAuth />}>
+      <Route path="/dashboard" element={<MainDashBoard />} />
+      <Route path="/day-view" element={<Day />} />
+      <Route path="/carts">
+        <Route index element={<CartsDash />} />
+        <Route path="current" element={<Cart />} />
+        <Route path=":id" element={<Cart />} />
+        <Route path=":id/edit" element={<CartEditForm />} />
+      </Route>
+      <Route path="/products">
+        <Route index element={<Products />} />
+        <Route path="create" element={<ProductForm />} />
+        <Route path=":id" element={<Product />} />
+        <Route path=":id/edit" element={<ProductForm />} />
+      </Route>
+      <Route path="/users">
+        <Route index element={<Users />} />
+        <Route path="me" element={<UserProfile />} />
+        <Route path=":id" element={<UserProfile />} />
+      </Route>
     </Route>
     <Route path="*" element={<h1>Not found!</h1>} />
   </Routes>
