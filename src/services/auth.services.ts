@@ -17,4 +17,6 @@ const setToken = (newToken: string): void => {
   console.log(token);
 };
 
-export default { logIn, setToken };
+const getToken = () => token;
+
+export default { logIn, setToken, getToken };

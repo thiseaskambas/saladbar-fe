@@ -10,9 +10,9 @@ const initialState = {
 
 export const initializeProducts = createAsyncThunk(
   'products/initializeProducts',
-  async () => {
-    const { data } = await productServices.getAll();
-    return data as IProduct[];
+  async (): Promise<IProduct[]> => {
+    const response = await productServices.getAll();
+    return response.data;
   }
 );
 
