@@ -19,7 +19,7 @@ const AppRouter = () => (
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
-    <Route element={<RequireAuth />}>
+    <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
       <Route path="/dashboard" element={<MainDashBoard />} />
       <Route path="/day-view" element={<Day />} />
       <Route path="/carts">
@@ -40,6 +40,7 @@ const AppRouter = () => (
         <Route path=":id" element={<UserProfile />} />
       </Route>
     </Route>
+    <Route path="/unauthorized" element={<h1>Unauthorized!</h1>} />
     <Route path="*" element={<h1>Not found!</h1>} />
   </Routes>
 );

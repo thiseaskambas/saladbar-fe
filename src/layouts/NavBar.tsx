@@ -14,7 +14,9 @@ const NavBar = ({ user }: { user: IUser | null }) => {
       const navItemsToMap = navItems.filter((item) => !item.mustBeLoggedIn);
       setNavItems(() => navItemsToMap);
     } else {
-      const navItemsToMap = navItems.filter((item) => item.mustBeLoggedIn);
+      const navItemsToMap = navItems.filter(
+        (item) => item.mustBeLoggedIn || item.alwaysShow
+      );
       setNavItems(() => navItemsToMap);
     }
   }, [user]);

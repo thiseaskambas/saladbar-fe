@@ -3,6 +3,7 @@ export interface INavItem {
   url: string;
   submenu?: INavSubItem;
   mustBeLoggedIn: boolean;
+  alwaysShow?: boolean;
 }
 
 export type INavSubItem = Array<INavItem>;

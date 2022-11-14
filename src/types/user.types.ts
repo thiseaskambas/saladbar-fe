@@ -6,10 +6,10 @@ export interface INewUserEntry {
   passwordConfirm: string;
 }
 
-export type Role = 'user' | 'admin' | 'dev';
+export type IRole = 'user' | 'admin' | 'dev';
 
 export interface IUser {
-  role: Role;
+  role: IRole;
   username: string;
   name: string;
   id: string;
