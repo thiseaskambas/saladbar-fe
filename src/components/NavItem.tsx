@@ -37,6 +37,7 @@ const NavItem = ({ item, depthLevel }: IProps) => {
 
   const onMouseEnter = (e: React.MouseEvent<Element>) => {
     const viewportWidth = window.innerWidth;
+
     let elWidth = 0;
     if (e.target instanceof Element && e.target.tagName === 'SPAN') {
       if (
@@ -47,11 +48,15 @@ const NavItem = ({ item, depthLevel }: IProps) => {
       }
     } else if (e.target instanceof Element && e.target.tagName === 'BUTTON') {
       elWidth = Number(e.target.clientWidth);
+      console.log(e);
     }
-    if (viewportWidth < e.clientX + elWidth) {
+    if (viewportWidth < e.clientX + 2 * elWidth) {
+      console.log(e.clientX, elWidth);
       setMoveLeft(true);
     } else {
       setMoveLeft(false);
+
+      console.log(e.clientX, elWidth);
     }
     setDropdown(true);
   };
@@ -88,7 +93,10 @@ const NavItem = ({ item, depthLevel }: IProps) => {
           />
         </>
       ) : (
-        <StyledNavLink to={item.url} isSubmenuItem={depthLevel > 0}>
+        <StyledNavLink
+          to={item.url}
+          issubmenu={depthLevel > 0 ? 'submenu' : ''}
+        >
           {' '}
           {item.title}{' '}
         </StyledNavLink>
