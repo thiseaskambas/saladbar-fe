@@ -1,6 +1,6 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { RootState, useAppDispatch } from '../store/store';
 import { logUserIn } from '../store/auth.slice';
@@ -13,6 +13,7 @@ interface IFormValues {
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const authState = useSelector((state: RootState) => state.auth);
 
@@ -31,6 +32,8 @@ const Login = () => {
     // ),
   });
 
+  const fromUrl = location.state?.from?.pathname || '/dashboard';
+
   return (
     <main>
       <h1>Login</h1>
@@ -41,7 +44,7 @@ const Login = () => {
           try {
             await dispatch(logUserIn(values)).unwrap();
             actions.resetForm({ values: { email: '', password: '' } });
-            navigate('/dashboard');
+            navigate(fromUrl, { replace: true });
             actions.setSubmitting(false);
           } catch (err) {
             console.log(err);
