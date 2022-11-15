@@ -1,9 +1,9 @@
-import axios from 'axios';
-const baseUrl = '/api/v1/products';
+import axios from '../utils/axios';
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl);
-  return response.data;
+  const response = await axios.axiosPrivate.get(`/products`);
+
+  return response.data.data;
 };
 
 export default { getAll };

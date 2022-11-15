@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import { INavItem } from '../types/types';
+import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
 
-import { NavLink } from 'react-router-dom';
+import { StyledNavLink } from './styles/navLInk.styled';
 
 interface IProps {
   item: INavItem;
@@ -37,6 +37,7 @@ const NavItem = ({ item, depthLevel }: IProps) => {
 
   const onMouseEnter = (e: React.MouseEvent<Element>) => {
     const viewportWidth = window.innerWidth;
+
     let elWidth = 0;
     if (e.target instanceof Element && e.target.tagName === 'SPAN') {
       if (
@@ -48,7 +49,7 @@ const NavItem = ({ item, depthLevel }: IProps) => {
     } else if (e.target instanceof Element && e.target.tagName === 'BUTTON') {
       elWidth = Number(e.target.clientWidth);
     }
-    if (viewportWidth < e.clientX + elWidth) {
+    if (viewportWidth < e.clientX + 2 * elWidth) {
       setMoveLeft(true);
     } else {
       setMoveLeft(false);
@@ -88,7 +89,13 @@ const NavItem = ({ item, depthLevel }: IProps) => {
           />
         </>
       ) : (
-        <NavLink to={item.url}>{item.title}</NavLink>
+        <StyledNavLink
+          to={item.url}
+          issubmenu={depthLevel > 0 ? 'submenu' : ''}
+        >
+          {' '}
+          {item.title}{' '}
+        </StyledNavLink>
       )}
     </li>
   );

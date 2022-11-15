@@ -15,14 +15,7 @@ const GlobalStyles = createGlobalStyle`
   }
   nav {
    top: 0;
-   
-   a {
-    color: red;
-   }
-   button {
-    background-color: transparent;
-    border: none;
-   }
+    padding: 1rem;
   }
   .error{
     border-color: red;

@@ -2,30 +2,41 @@ import AppRouter from './AppRouter';
 import NavBar from './layouts/NavBar';
 import Footer from './layouts/Footer';
 import GlobalStyles from './layouts/styles/global.styles';
+import { useSelector } from 'react-redux';
+import { RootState /* useAppDispatch */ } from './store/store';
+// import { useEffect } from 'react';
+// import { initializeProducts } from './store/products.slice';
+// import { findUserFromStoredLoginResponse } from './store/auth.slice';
 
 function App() {
-  // const [products, setProducts] = useState([]);
-  // console.count('app');
+  // const dispatch = useAppDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const userStatus = useSelector((state: RootState) => state.auth.status);
+  // const productsState = useSelector((state: RootState) => state.products);
 
   // useEffect(() => {
+  //   if (userStatus === 'idle') {
+  //     dispatch(findUserFromStoredLoginResponse());
+  //   }
+  // }, []);
+  // useEffect(() => {
   //   let subscribed = true;
-  //   console.count('effect');
-  //   axios.get('http://localhost:3001/api/v1/products').then((response) => {
-  //     console.log('promise fulfilled');
-  //     if (subscribed) {
-  //       console.log(response.data);
-  //       setProducts(response.data);
-  //     }
-  //   });
+  //   if (
+  //     subscribed &&
+  //     userStatus === 'succeeded' &&
+  //     productsState.status === 'idle'
+  //   ) {
+  //     dispatch(initializeProducts());
+  //   }
   //   return () => {
   //     subscribed = false;
   //   };
-  // }, []);
+  // }, [userStatus]);
 
   return (
     <>
       <GlobalStyles />
-      <NavBar />
+      <NavBar user={userStatus === 'succeeded' ? user : null} />
       <AppRouter />
       <Footer />
     </>

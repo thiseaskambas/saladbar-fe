@@ -1,10 +1,14 @@
-import { configureStore, createAsyncThunk } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import productsReducer from './products.slice';
+import authReducer from './auth.slice';
+import notifReducer from './notification.slice';
 
 export const store = configureStore({
   reducer: {
     products: productsReducer,
+    auth: authReducer,
+    notification: notifReducer,
   },
 });
 
@@ -12,11 +16,5 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
-export const createAppAsyncThunk = createAsyncThunk.withTypes<{
-  state: RootState;
-  dispatch: AppDispatch;
-  rejectValue: string;
-  extra: { s: string; n: number };
-}>();
 
 export default store;

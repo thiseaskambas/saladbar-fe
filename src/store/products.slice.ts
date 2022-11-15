@@ -10,9 +10,9 @@ const initialState = {
 
 export const initializeProducts = createAsyncThunk(
   'products/initializeProducts',
-  async () => {
-    const { data } = await productServices.getAll();
-    return data as IProduct[];
+  async (): Promise<IProduct[]> => {
+    const response = await productServices.getAll();
+    return response.data;
   }
 );
 
@@ -24,10 +24,11 @@ const productsSlice = createSlice({
     builder
       .addCase(initializeProducts.pending, (state) => {
         state.status = 'loading';
+        state.products = [];
       })
       .addCase(initializeProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.products.push(...action.payload);
+        state.products = [...action.payload];
       })
       .addCase(initializeProducts.rejected, (state) => {
         state.status = 'failed';

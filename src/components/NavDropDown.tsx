@@ -1,5 +1,5 @@
 import { StyledDropUl } from '../layouts/styles/navBar.styles';
-import { INavItem, INavSubItem } from '../types/types';
+import { INavItem, INavSubItem } from '../types/components.types';
 import NavItem from './NavItem';
 
 interface IProps {
