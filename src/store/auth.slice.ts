@@ -18,7 +18,6 @@ export const logUserIn = createAsyncThunk(
   'auth/login',
   async (credentials: ILoginCredentials): Promise<ILoginResponse> => {
     const response = await authServices.logIn(credentials);
-
     return { ...response, persist: credentials.rememberMe };
   }
 );
