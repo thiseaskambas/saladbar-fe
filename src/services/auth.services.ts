@@ -1,9 +1,6 @@
 import axios from '../utils/axios';
 import { ILoginCredentials, ILoginResponse } from '../types/user.types';
 
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-let token: string | null = null;
-
 const logIn = async (
   credentials: ILoginCredentials
 ): Promise<ILoginResponse> => {
@@ -11,15 +8,14 @@ const logIn = async (
   return response.data;
 };
 
-const setToken = (newToken: string): void => {
-  token = `bearer ${newToken}`;
-};
-
-const getToken = () => token;
-
 const refreshToken = async () => {
   const response = await axios.axiosPublic.get('/refresh');
   return response.data;
 };
 
-export default { logIn, setToken, getToken, refreshToken };
+const logOut = async () => {
+  const response = await axios.axiosPrivate.get('/logout');
+  return response;
+};
+
+export default { logIn, refreshToken, logOut };

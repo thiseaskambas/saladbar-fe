@@ -3,7 +3,12 @@ import { INavItem } from '../types/components.types';
 export const navItems: Array<INavItem> = [
   { title: 'Home', url: '/', mustBeLoggedIn: false, alwaysShow: true },
   { title: 'Login', url: '/login', mustBeLoggedIn: false, alwaysShow: false },
-  { title: 'Dash Board', url: '/dashboard', mustBeLoggedIn: true },
+  {
+    title: 'Dash Board',
+    url: '/dashboard',
+    mustBeLoggedIn: false,
+    alwaysShow: true,
+  },
   { title: 'Cart', url: '/carts/current', mustBeLoggedIn: true },
   { title: 'Today', url: '/day-view', mustBeLoggedIn: true },
   { title: 'My Profile', url: '/users/me', mustBeLoggedIn: true },

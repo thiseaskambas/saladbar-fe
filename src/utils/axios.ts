@@ -32,11 +32,10 @@ axiosPrivate.interceptors.request.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config: any | AxiosRequestConfig) => {
     const state = store.getState();
-    if (!config.headers['authorization']) {
-      console.log('it does not');
+    if (!config.headers['authorization'] && state.auth.accessToken) {
       config.headers['authorization'] = `Bearer ${state.auth.accessToken}`;
     }
-    console.log(config);
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -45,15 +44,13 @@ axiosPrivate.interceptors.request.use(
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
-    //  const state = store.getState();
     const prevRequest = error.config;
-    console.log(prevRequest);
     if (error.response && error.response.status === 500 && !prevRequest.sent) {
       prevRequest.sent = true;
-      const rest = await store.dispatch(refreshToken()).unwrap();
+      const res = await store.dispatch(refreshToken()).unwrap();
       return axiosPrivate({
         ...prevRequest,
-        headers: { authorization: `Bearer ${rest.accessToken}` },
+        headers: { authorization: `Bearer ${res.accessToken}` },
       });
     }
     return Promise.reject(error);
