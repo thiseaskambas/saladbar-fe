@@ -18,6 +18,7 @@ export interface IUser {
 export interface IAuthInitialState {
   user: IUser;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  accessToken: string;
 }
 
 export interface ILoginCredentials {

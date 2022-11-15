@@ -1,14 +1,7 @@
-import axios from 'axios';
-
-import authServices from './auth.services';
-const baseUrl = '/api/v1/products';
+import axios from '../utils/axios';
 
 const getAll = async () => {
-  const token = authServices.getToken();
-  const config = {
-    headers: { authorization: token },
-  };
-  const response = await axios.get(baseUrl, config);
+  const response = await axios.axiosPrivate.get(`/products`);
 
   return response.data.data;
 };

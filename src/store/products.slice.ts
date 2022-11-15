@@ -24,10 +24,11 @@ const productsSlice = createSlice({
     builder
       .addCase(initializeProducts.pending, (state) => {
         state.status = 'loading';
+        state.products = [];
       })
       .addCase(initializeProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.products.push(...action.payload);
+        state.products = [...action.payload];
       })
       .addCase(initializeProducts.rejected, (state) => {
         state.status = 'failed';
