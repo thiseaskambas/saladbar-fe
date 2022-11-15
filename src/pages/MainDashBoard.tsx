@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { logUserOut, refreshToken } from '../store/auth.slice';
+
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
 
@@ -36,7 +36,6 @@ const MainDashBoard = () => {
     <>
       <main>
         <div>MainDashBoard</div>
-        <button onClick={() => dispatch(logUserOut())}>Logout</button>
       </main>
     </>
   );

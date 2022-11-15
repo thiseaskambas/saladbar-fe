@@ -6,11 +6,11 @@ import { IRole } from '../types/user.types';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RequireAuth = ({ allowedRoles }: { allowedRoles?: IRole[] }) => {
   const location = useLocation();
-  const userState = useSelector((state: RootState) => state.auth);
+  const authState = useSelector((state: RootState) => state.auth);
 
-  return allowedRoles?.includes(userState.user.role) ? (
+  return allowedRoles?.includes(authState.user.role) ? (
     <Outlet />
-  ) : userState.status === 'succeeded' ? (
+  ) : authState.accessToken ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />
