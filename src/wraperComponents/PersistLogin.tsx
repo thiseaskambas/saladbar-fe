@@ -8,23 +8,31 @@ import { RootState, useAppDispatch } from '../store/store';
 const PersistLogin = () => {
   const dispatch = useAppDispatch();
   const storedToken = useSelector((state: RootState) => state.auth.accessToken);
-
   const [isLoading, setIsLoading] = useState(true);
-
+  const [persist] = useState(
+    JSON.parse(localStorage.getItem('persist') || 'false')
+  );
   useEffect(() => {
+    let isMounted = true;
+    console.log({ persist });
     const verifyRefreshToken = async () => {
       try {
         await dispatch(refreshToken()).unwrap();
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       } finally {
-        setIsLoading(false);
+        isMounted && setIsLoading(false);
       }
     };
-    !storedToken ? verifyRefreshToken() : setIsLoading(false);
+    !storedToken && persist ? verifyRefreshToken() : setIsLoading(false);
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  return <>{!isLoading && <Outlet />}</>;
+  return (
+    <>{!persist ? <Outlet /> : isLoading ? <main>loading</main> : <Outlet />}</>
+  );
 };
 
 export default PersistLogin;

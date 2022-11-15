@@ -11,13 +11,15 @@ const initialState = {
   user: {},
   status: 'idle',
   accessToken: '',
+  persist: false,
 } as IAuthInitialState;
 
 export const logUserIn = createAsyncThunk(
   'auth/login',
   async (credentials: ILoginCredentials): Promise<ILoginResponse> => {
     const response = await authServices.logIn(credentials);
-    return response;
+
+    return { ...response, persist: credentials.rememberMe };
   }
 );
 

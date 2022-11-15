@@ -5,6 +5,9 @@ const logIn = async (
   credentials: ILoginCredentials
 ): Promise<ILoginResponse> => {
   const response = await axios.axiosPublic.post(`/auth/login`, credentials);
+  if (credentials.rememberMe) {
+    localStorage.setItem('persist', 'true');
+  }
   return response.data;
 };
 
@@ -15,6 +18,7 @@ const refreshToken = async () => {
 
 const logOut = async () => {
   const response = await axios.axiosPrivate.get('/logout');
+  localStorage.removeItem('persist');
   return response;
 };
 

@@ -6,8 +6,7 @@ export const navItems: Array<INavItem> = [
   {
     title: 'Dash Board',
     url: '/dashboard',
-    mustBeLoggedIn: false,
-    alwaysShow: true,
+    mustBeLoggedIn: true,
   },
   { title: 'Cart', url: '/carts/current', mustBeLoggedIn: true },
   { title: 'Today', url: '/day-view', mustBeLoggedIn: true },

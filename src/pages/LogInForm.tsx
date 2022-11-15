@@ -9,9 +9,10 @@ import { useSelector } from 'react-redux';
 interface IFormValues {
   email: string;
   password: string;
+  rememberMe: boolean;
 }
 
-const Login = () => {
+const LogInForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ const Login = () => {
   const initialValues: IFormValues = {
     email: '',
     password: '',
+    rememberMe: false,
   };
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -43,7 +45,9 @@ const Login = () => {
         onSubmit={async (values, actions) => {
           try {
             await dispatch(logUserIn(values)).unwrap();
-            actions.resetForm({ values: { email: '', password: '' } });
+            actions.resetForm({
+              values: { email: '', password: '', rememberMe: false },
+            });
             navigate(fromUrl, { replace: true });
             actions.setSubmitting(false);
           } catch (err) {
@@ -62,6 +66,11 @@ const Login = () => {
             <Field name="password" type="password" />
             <ErrorMessage name="password" />
 
+            <label>
+              <Field type="checkbox" name="rememberMe" />
+              Remember me
+            </label>
+
             <button type="submit" disabled={!(formik.isValid && formik.dirty)}>
               Login now
             </button>
@@ -72,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LogInForm;

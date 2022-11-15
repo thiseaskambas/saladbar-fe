@@ -25,6 +25,7 @@ export interface IAuthInitialState {
 export interface ILoginCredentials {
   password: string;
   email: string;
+  rememberMe?: boolean;
 }
 
 export interface IToken {
@@ -37,4 +38,5 @@ export interface IToken {
 export interface ILoginResponse {
   accessToken: string;
   loggedUser: IUser;
+  persist?: boolean;
 }
