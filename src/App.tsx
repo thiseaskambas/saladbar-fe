@@ -1,25 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import AppRouter from './AppRouter';
+import NavBar from './layouts/NavBar';
+import Footer from './layouts/Footer';
+import GlobalStyles from './layouts/styles/global.styles';
+import { useSelector } from 'react-redux';
+import { RootState /* useAppDispatch */ } from './store/store';
+// import { useEffect } from 'react';
+// import { initializeProducts } from './store/products.slice';
+// import { findUserFromStoredLoginResponse } from './store/auth.slice';
 
 function App() {
+  // const dispatch = useAppDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
+  const userStatus = useSelector((state: RootState) => state.auth.status);
+  // const productsState = useSelector((state: RootState) => state.products);
+
+  // useEffect(() => {
+  //   if (userStatus === 'idle') {
+  //     dispatch(findUserFromStoredLoginResponse());
+  //   }
+  // }, []);
+  // useEffect(() => {
+  //   let subscribed = true;
+  //   if (
+  //     subscribed &&
+  //     userStatus === 'succeeded' &&
+  //     productsState.status === 'idle'
+  //   ) {
+  //     dispatch(initializeProducts());
+  //   }
+  //   return () => {
+  //     subscribed = false;
+  //   };
+  // }, [userStatus]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <GlobalStyles />
+      <NavBar user={userStatus === 'succeeded' ? user : null} />
+      <AppRouter />
+      <Footer />
+    </>
   );
 }
 
