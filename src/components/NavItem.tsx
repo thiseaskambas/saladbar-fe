@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
+import { StyledNavButton } from './styles/navButton.styled';
 
 import { StyledNavLink } from './styles/navLInk.styled';
+import images from '../assets';
 
 interface IProps {
   item: INavItem;
@@ -70,17 +72,17 @@ const NavItem = ({ item, depthLevel }: IProps) => {
     >
       {item.submenu ? (
         <>
-          <button
+          <StyledNavButton
             onClick={() => setDropdown((prev) => !prev)}
             aria-expanded={dropdown ? 'true' : 'false'}
           >
-            {item.title}
+            {item.title.toUpperCase()}
             {depthLevel && depthLevel > 0 ? (
-              <span> right </span>
+              <img src={images['right.XS.png']} />
             ) : (
-              <span> down </span>
+              <img src={images['drop.XS.png']} />
             )}
-          </button>
+          </StyledNavButton>
           <NavDropDown
             submenu={item.submenu}
             dropdown={dropdown}
@@ -94,7 +96,7 @@ const NavItem = ({ item, depthLevel }: IProps) => {
           issubmenu={depthLevel > 0 ? 'submenu' : ''}
         >
           {' '}
-          {item.title}{' '}
+          {item.title.toUpperCase()}{' '}
         </StyledNavLink>
       )}
     </li>

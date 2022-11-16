@@ -47,6 +47,7 @@
   "proxy": "http://localhost:3001/",
   "devDependencies": {
     "@types/styled-components": "^5.1.26",
+    "@types/webpack-env": "^1.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "2.7.1"
