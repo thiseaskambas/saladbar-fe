@@ -20,7 +20,6 @@ export const StyledDropUl = styled.ul<{
   position: absolute;
   & button {
     border-radius: 0;
-    background: none;
   }
   ${({ dropdown, theme }) =>
     dropdown && {

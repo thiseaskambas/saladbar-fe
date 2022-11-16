@@ -14,11 +14,13 @@ const GlobalStyles = createGlobalStyle`
   }
   main {
     flex-grow: 1;
-    margin: 1rem;
+    padding: 1rem;
+    z-index: 0;
   }
   nav {
    top: 0;
     padding: 1rem;
+    z-index: 1;
   }
   .error{
     border-color: red;

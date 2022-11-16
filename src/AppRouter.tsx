@@ -4,7 +4,7 @@ import CartsDash from './pages/CartsDash';
 import Product from './pages/Product';
 import Day from './pages/Day';
 import Home from './pages/Home';
-import LogInForm from './pages/LogInForm';
+import Login from './pages/Login';
 import MainDashBoard from './pages/MainDashBoard';
 import UserProfile from './pages/UserProfile';
 import Users from './pages/Users';
@@ -18,7 +18,7 @@ import LogOut from './pages/LogOut';
 
 const AppRouter = () => (
   <Routes>
-    <Route path="/login" element={<LogInForm />} />
+    <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
     <Route element={<PersistLogin />}>
       <Route path="/" element={<Home />} />

@@ -5,6 +5,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { RootState, useAppDispatch } from '../store/store';
 import { logUserIn } from '../store/auth.slice';
 import { useSelector } from 'react-redux';
+import {
+  StyledForm,
+  StyledInnerDiv,
+  StyledMain,
+  StyledMessageCtn,
+} from './styles/form.styles';
+import { Link } from 'react-router-dom';
 
 interface IFormValues {
   email: string;
@@ -37,7 +44,7 @@ const LogInForm = () => {
   const fromUrl = location.state?.from?.pathname || '/dashboard';
 
   return (
-    <main>
+    <StyledMain>
       <h1>Login</h1>
       <Formik
         initialValues={initialValues}
@@ -56,28 +63,47 @@ const LogInForm = () => {
         }}
       >
         {(formik) => (
-          <Form onSubmit={formik.handleSubmit}>
+          <StyledForm onSubmit={formik.handleSubmit}>
             {authState.status === 'failed' && <div>Error</div>}
-            <label htmlFor="email">email</label>
-            <Field type="email" name="email" />
-            <ErrorMessage name="email" />
+            <StyledInnerDiv>
+              <label htmlFor="email">email:</label>
+              <Field type="email" name="email" />
+              <StyledMessageCtn>
+                <ErrorMessage name="email" />
+              </StyledMessageCtn>
+            </StyledInnerDiv>
 
-            <label htmlFor="password">password</label>
-            <Field name="password" type="password" />
-            <ErrorMessage name="password" />
+            <StyledInnerDiv>
+              <label htmlFor="password">password:</label>
+              <Field name="password" type="password" />
+              <StyledMessageCtn>
+                <ErrorMessage name="password" />
+              </StyledMessageCtn>
+            </StyledInnerDiv>
 
-            <label>
-              <Field type="checkbox" name="rememberMe" />
-              Remember me
-            </label>
+            <StyledInnerDiv>
+              <label>
+                <Field type="checkbox" name="rememberMe" />
+                Remember me
+              </label>
+            </StyledInnerDiv>
 
-            <button type="submit" disabled={!(formik.isValid && formik.dirty)}>
-              Login now
-            </button>
-          </Form>
+            <StyledInnerDiv>
+              <button
+                type="submit"
+                disabled={!(formik.isValid && formik.dirty)}
+              >
+                Login now
+              </button>
+            </StyledInnerDiv>
+            <StyledInnerDiv>
+              Don&apos;t have an account ?<br />
+              <Link to="/signup">Register here!</Link>
+            </StyledInnerDiv>
+          </StyledForm>
         )}
       </Formik>
-    </main>
+    </StyledMain>
   );
 };
 
