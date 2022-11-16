@@ -11,7 +11,6 @@ export const navItems: Array<INavItem> = [
   { title: 'Cart', url: '/carts/current', mustBeLoggedIn: true },
   { title: 'Today', url: '/day-view', mustBeLoggedIn: true },
   { title: 'My Profile', url: '/users/me', mustBeLoggedIn: true },
-  { title: 'Logout', url: '/logout', mustBeLoggedIn: true },
   {
     title: 'Admin',
     url: '',
@@ -34,4 +33,5 @@ export const navItems: Array<INavItem> = [
       },
     ],
   },
+  { title: 'Logout', url: '/logout', mustBeLoggedIn: true },
 ];

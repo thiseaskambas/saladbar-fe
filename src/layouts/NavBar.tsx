@@ -2,9 +2,15 @@ import NavItem from '../components/NavItem';
 import { navItems } from '../utils/navItems';
 import { INavItem } from '../types/components.types';
 
-import { StyledMainUl } from './styles/navBar.styles';
+import {
+  StyledLogoContainer,
+  StyledMainUl,
+  StyledNav,
+} from './styles/navBar.styles';
 import { IUser } from '../types/user.types';
 import { useEffect, useState } from 'react';
+import images from '../assets/index';
+import { Link } from 'react-router-dom';
 
 const NavBar = ({ user }: { user: IUser | null }) => {
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
@@ -22,7 +28,12 @@ const NavBar = ({ user }: { user: IUser | null }) => {
   }, [user]);
 
   return (
-    <nav>
+    <StyledNav>
+      <StyledLogoContainer>
+        <Link to="/">
+          <img src={images['logo.blue.XS.png']} alt="" />
+        </Link>
+      </StyledLogoContainer>
       <StyledMainUl>
         {navItemsState.map((item: INavItem) => {
           const depthLevel = 0;
@@ -31,7 +42,7 @@ const NavBar = ({ user }: { user: IUser | null }) => {
           );
         })}
       </StyledMainUl>
-    </nav>
+    </StyledNav>
   );
 };
 

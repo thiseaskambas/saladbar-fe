@@ -6,6 +6,7 @@ export const StyledMainUl = styled.ul`
   justify-content: flex-start;
   gap: 2rem;
   flex-wrap: wrap;
+  align-items: center;
 `;
 
 export const StyledDropUl = styled.ul<{
@@ -17,11 +18,14 @@ export const StyledDropUl = styled.ul<{
   min-width: fit-content;
   white-space: nowrap;
   position: absolute;
-
-  ${({ dropdown }) =>
+  & button {
+    border-radius: 0;
+    background: none;
+  }
+  ${({ dropdown, theme }) =>
     dropdown && {
       display: 'block',
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.mediumBrown,
     }}
   ${({ depthLevel, moveLeft }) =>
     depthLevel > 1 &&
@@ -35,4 +39,27 @@ export const StyledDropUl = styled.ul<{
       right: '100%',
       top: '50%',
     }}
+    & li {
+    display: flex;
+  }
+`;
+
+export const StyledNav = styled.nav`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: ${({ theme }) => theme.colors.lightBrown};
+  -webkit-box-shadow: 0px 3px 8px 0px rgba(66, 66, 66, 0.64);
+  -moz-box-shadow: 0px 3px 8px 0px rgba(66, 66, 66, 0.64);
+  box-shadow: 0px 3px 8px 0px rgba(66, 66, 66, 0.64);
+`;
+
+export const StyledLogoContainer = styled.div`
+  height: 50px;
+  min-width: 50px;
+  max-width: 50px;
+  margin-right: 2rem;
+  & img {
+    width: 100%;
+  }
 `;
