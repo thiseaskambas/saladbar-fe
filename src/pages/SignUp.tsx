@@ -36,7 +36,6 @@ const SignUp = () => {
 
   return (
     <StyledMain>
-      <h1>Sign up</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

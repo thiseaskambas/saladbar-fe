@@ -1,4 +1,4 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -7,11 +7,14 @@ import { logUserIn } from '../store/auth.slice';
 import { useSelector } from 'react-redux';
 import {
   StyledForm,
+  StyledImgCtn,
   StyledInnerDiv,
   StyledMain,
   StyledMessageCtn,
 } from './styles/form.styles';
 import { Link } from 'react-router-dom';
+import { StyledLogoContainer } from '../layouts/styles/navBar.styles';
+import images from '../assets';
 
 interface IFormValues {
   email: string;
@@ -45,7 +48,6 @@ const LogInForm = () => {
 
   return (
     <StyledMain>
-      <h1>Login</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -65,6 +67,9 @@ const LogInForm = () => {
         {(formik) => (
           <StyledForm onSubmit={formik.handleSubmit}>
             {authState.status === 'failed' && <div>Error</div>}
+            <StyledImgCtn>
+              <img src={images['logo.blue.XS.png']} alt="" />
+            </StyledImgCtn>
             <StyledInnerDiv>
               <label htmlFor="email">email:</label>
               <Field type="email" name="email" />

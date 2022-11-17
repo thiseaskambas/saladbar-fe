@@ -14,6 +14,7 @@ export const StyledNavLink = styled(NavLink)<{
   &.active {
     background-color: ${({ theme }) => theme.colors.darkBrown};
     font-weight: 400;
+    color: red;
   }
   &:visited {
     color: black;

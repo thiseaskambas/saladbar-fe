@@ -9,7 +9,6 @@ export const StyledForm = styled.form`
   padding: 2rem;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 5rem;
   background-color: ${(props) => props.theme.colors.white};
 `;
 
@@ -51,4 +50,17 @@ export const StyledMessageCtn = styled.div`
 
 export const StyledMain = styled.main`
   background-color: ${(props) => props.theme.colors.lightBlue};
+  display: grid;
+  place-items: center;
+`;
+
+export const StyledImgCtn = styled.div`
+  height: 70px;
+  min-width: 70px;
+  max-width: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  & img {
+    width: 100%;
+  }
 `;
