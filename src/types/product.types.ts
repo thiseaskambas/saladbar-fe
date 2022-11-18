@@ -1,9 +1,9 @@
 export enum ProductCourseType {
   Starter = 'starter',
   Main = 'main',
+  Side = 'side',
   Desert = 'desert',
   Drink = 'drink',
-  Side = 'side',
   Other = 'other',
 }
 

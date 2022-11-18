@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -12,7 +12,6 @@ const MainDashBoard = () => {
   const productsState = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let isMounted = true;
 
     const initProducts = async () => {
@@ -24,13 +23,16 @@ const MainDashBoard = () => {
         navigate('/login', { state: { from: location }, replace: true });
       }
     };
-    if (productsState.status !== 'succeeded' && isMounted) {
+
+    if (productsState.status !== 'idle' && isMounted) {
       initProducts();
     }
     return () => {
       isMounted = false;
     };
   }, []);
+
+  console.log(productsState.products);
 
   return (
     <>
