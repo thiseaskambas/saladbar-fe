@@ -1,11 +1,13 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
   StyledForm,
   StyledInnerDiv,
   StyledMain,
   StyledMessageCtn,
+  StyledImgCtn,
 } from './styles/form.styles';
+import images from '../assets';
 
 interface IFormValues {
   email: string;
@@ -23,12 +25,11 @@ const SignUp = () => {
     email: Yup.string()
       .email('Invalid email address')
       .required('Please fill in your email'),
-    password: Yup.string()
-      .required('Please fill in your password')
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-        'The password must contain letters and numbers and must be at least 5 characters long'
-      ),
+    password: Yup.string().required('Please fill in your password'),
+    // .matches(
+    //   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
+    //   'The password must contain letters and numbers and must be at least 5 characters long'
+    // ),
     passwordConfirmation: Yup.string()
       .required('Please confirm your password')
       .oneOf([Yup.ref('password'), null], 'Passwords must match'),
@@ -45,6 +46,9 @@ const SignUp = () => {
       >
         {(formik) => (
           <StyledForm onSubmit={formik.handleSubmit}>
+            <StyledImgCtn>
+              <img src={images['logo.blue.XS.png']} alt="" />
+            </StyledImgCtn>
             <StyledInnerDiv>
               <label htmlFor="email">email</label>
               <Field type="email" name="email" />

@@ -1,22 +1,23 @@
 import styled from 'styled-components';
 
 export const StyledForm = styled.form`
-  /* border: 5px solid; */
   border-radius: 1rem;
-  width: fit-content;
-  max-width: 400px;
-  min-width: min-content;
-  padding: 2rem;
+  max-width: 380px;
+  padding: 1rem 3rem;
   margin-left: auto;
   margin-right: auto;
   background-color: ${(props) => props.theme.colors.white};
+  & a {
+    text-decoration: underline;
+  }
 `;
 
 export const StyledInnerDiv = styled.div`
   margin-top: 1.5rem;
-  > * {
-    display: block;
-  }
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
   & button {
     margin-left: auto;
     border-radius: 0.5rem;
@@ -40,12 +41,14 @@ export const StyledInnerDiv = styled.div`
 `;
 
 export const StyledMessageCtn = styled.div`
-  color: red;
-  max-width: 100%;
-  font-style: italic;
-  font-size: 0.9rem;
+  color: ${(props) => props.theme.error.color};
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  flex: 1 1 auto;
   word-wrap: break-word;
-  /* white-space: initial; */
+  font-size: 0.9rem;
+  text-align: end;
 `;
 
 export const StyledMain = styled.main`

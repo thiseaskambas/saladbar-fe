@@ -13,7 +13,7 @@ import {
   StyledMessageCtn,
 } from './styles/form.styles';
 import { Link } from 'react-router-dom';
-import { StyledLogoContainer } from '../layouts/styles/navBar.styles';
+
 import images from '../assets';
 
 interface IFormValues {

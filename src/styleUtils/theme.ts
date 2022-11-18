@@ -11,6 +11,9 @@ const theme = {
     lightBrown: '#ede3da',
     white: '#FAFAFF',
   },
+  error: {
+    color: 'darkGray',
+  },
 };
 
 export default theme;
