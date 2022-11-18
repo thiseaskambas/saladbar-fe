@@ -44,6 +44,9 @@ export const StyledDropUl = styled.ul<{
 `;
 
 export const StyledNav = styled.nav`
+  top: 0;
+  padding: 1rem;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

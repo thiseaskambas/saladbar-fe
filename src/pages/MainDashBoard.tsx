@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+import DashSideBar from '../components/DashSideBar';
+import { StyledDashContent } from '../components/styles/dashSide.styled';
 
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
+import { StyledMainDash } from './styles/mainDash.styles';
 
 const MainDashBoard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const productsState = useSelector((state: RootState) => state.products);
-
+  const [isSideBarDisp, setSideBarDisp] = useState(true);
   useEffect(() => {
     let isMounted = true;
 
@@ -24,7 +27,8 @@ const MainDashBoard = () => {
       }
     };
 
-    if (productsState.status !== 'idle' && isMounted) {
+    if (productsState.status === 'idle' && isMounted) {
+      console.log('initializing');
       initProducts();
     }
     return () => {
@@ -36,9 +40,20 @@ const MainDashBoard = () => {
 
   return (
     <>
-      <main>
-        <div>MainDashBoard</div>
-      </main>
+      <StyledMainDash>
+        <DashSideBar
+          display={isSideBarDisp}
+          products={productsState.products}
+        />
+        <StyledDashContent>
+          <div>
+            <button onClick={() => setSideBarDisp(!isSideBarDisp)}>
+              {isSideBarDisp ? 'hide' : 'show'}
+            </button>
+          </div>
+          MainDashBoard
+        </StyledDashContent>
+      </StyledMainDash>
     </>
   );
 };

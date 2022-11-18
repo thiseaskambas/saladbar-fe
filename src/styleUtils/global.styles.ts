@@ -17,14 +17,6 @@ const GlobalStyles = createGlobalStyle`
     padding: 1rem;
     z-index: 0;
   }
-  nav {
-   top: 0;
-    padding: 1rem;
-    z-index: 1;
-  }
-  .error{
-    border-color: red;
-  }
 `;
 
 export default GlobalStyles;
