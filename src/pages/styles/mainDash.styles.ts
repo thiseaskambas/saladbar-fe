@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledMainDash = styled.main`
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content auto;
   padding: 0;
 `;

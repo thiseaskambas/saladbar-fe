@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import DashSideBar from '../components/DashSideBar';
@@ -13,7 +13,7 @@ const MainDashBoard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productsState = useSelector((state: RootState) => state.products);
-  const [isSideBarDisp, setSideBarDisp] = useState(true);
+  const [sideBarDisplay, setSideBarDisp] = useState(true);
   useEffect(() => {
     let isMounted = true;
 
@@ -39,22 +39,14 @@ const MainDashBoard = () => {
   console.log(productsState.products);
 
   return (
-    <>
-      <StyledMainDash>
-        <DashSideBar
-          display={isSideBarDisp}
-          products={productsState.products}
-        />
-        <StyledDashContent>
-          <div>
-            <button onClick={() => setSideBarDisp(!isSideBarDisp)}>
-              {isSideBarDisp ? 'hide' : 'show'}
-            </button>
-          </div>
-          MainDashBoard
-        </StyledDashContent>
-      </StyledMainDash>
-    </>
+    <StyledMainDash>
+      <DashSideBar
+        show={sideBarDisplay}
+        products={productsState.products}
+        setSideBarDisp={setSideBarDisp}
+      />
+      <StyledDashContent>content here</StyledDashContent>
+    </StyledMainDash>
   );
 };
 

@@ -52,6 +52,7 @@ const LogInForm = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, actions) => {
+          console.log('submiting');
           try {
             await dispatch(logUserIn(values)).unwrap();
             actions.resetForm({
