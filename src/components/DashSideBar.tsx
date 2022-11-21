@@ -1,14 +1,27 @@
-import { IProduct } from '../types/product.types';
-import { StyledDashSideBar, StyledSideBarCtn } from './styles/dashSide.styled';
-import { StyledHamburger } from '../components/styles/hamburger.styled';
+import Hamburger from './Hamburger';
+import { IProduct, ProductCourseType } from '../types/product.types';
+import {
+  StyledSideLiItem,
+  StyledDashSideBar,
+  StyledSideBarCtn,
+} from './styles/dashSide.styled';
 
 interface Props {
   show: boolean;
   products: IProduct[];
   setSideBarDisp: (boolean: boolean) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setIsSelected: (e: any) => void;
+  selected: ProductCourseType | 'all';
 }
 
-const DashSideBar = ({ show, products, setSideBarDisp }: Props) => {
+const DashSideBar = ({
+  show,
+  products,
+  setSideBarDisp,
+  setIsSelected,
+  selected,
+}: Props) => {
   const courseTypes: string[] = products.reduce(
     (acc: string[], curr) =>
       acc.find((el) => el === curr.productCourseType)
@@ -25,22 +38,27 @@ const DashSideBar = ({ show, products, setSideBarDisp }: Props) => {
     <>
       <StyledSideBarCtn show={show}>
         <StyledDashSideBar show={show}>
-          <h2 className="sideItem">DashSideBar</h2>{' '}
-          {courseTypes.map((el) => (
-            <div key={el} className="sideItem">
-              {el}
-            </div>
-          ))}
+          <h1 className="sideItem">DashSideBar</h1>{' '}
+          <ul className="sideItem">
+            <StyledSideLiItem
+              onClick={setIsSelected}
+              selected={selected === 'all'}
+            >
+              <h2>all</h2>
+            </StyledSideLiItem>
+            {courseTypes.map((el) => (
+              <StyledSideLiItem
+                key={el}
+                className="sideItem"
+                onClick={setIsSelected}
+                selected={selected === el}
+              >
+                <h2>{el}</h2>
+              </StyledSideLiItem>
+            ))}
+          </ul>
         </StyledDashSideBar>
-        <StyledHamburger
-          className="hamburger-lines"
-          onClick={() => clickHandler()}
-          sideBarDisplay={show}
-        >
-          <div className="line line1"></div>
-          <div className="line line2"></div>
-          <div className="line line3"></div>
-        </StyledHamburger>
+        <Hamburger clickHandler={clickHandler} show={show} />
       </StyledSideBarCtn>
     </>
   );

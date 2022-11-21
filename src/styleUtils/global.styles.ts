@@ -17,6 +17,15 @@ const GlobalStyles = createGlobalStyle`
     padding: 1rem;
     z-index: 0;
   }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  font-weight: normal;
+}
 `;
 
 export default GlobalStyles;
