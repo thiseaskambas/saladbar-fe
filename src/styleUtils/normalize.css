@@ -24,6 +24,11 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 ul {
@@ -365,4 +370,14 @@ button {
   font: inherit;
   cursor: pointer;
   outline: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
 }

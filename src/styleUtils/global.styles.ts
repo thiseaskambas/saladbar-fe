@@ -17,14 +17,15 @@ const GlobalStyles = createGlobalStyle`
     padding: 1rem;
     z-index: 0;
   }
-  nav {
-   top: 0;
-    padding: 1rem;
-    z-index: 1;
-  }
-  .error{
-    border-color: red;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+  font-weight: normal;
+}
 `;
 
 export default GlobalStyles;
