@@ -1,4 +1,6 @@
-const theme = {
+import { DefaultTheme } from 'styled-components';
+
+const theme: DefaultTheme = {
   colors: {
     blue: '#3D5A80',
     lightBlue: '#98C1D9',
@@ -13,6 +15,11 @@ const theme = {
   },
   error: {
     color: 'darkGray',
+  },
+  backDropShadow: {
+    webkitboxShadow: '0px 3px 8px 0px rgba(66, 66, 66, 0.64)',
+    mozzilaboxShadow: '0px 3px 8px 0px rgba(66, 66, 66, 0.64)',
+    boxShadow: '0px 3px 8px 0px rgba(66, 66, 66, 0.64)',
   },
 };
 

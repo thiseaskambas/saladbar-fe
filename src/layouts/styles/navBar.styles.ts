@@ -51,9 +51,9 @@ export const StyledNav = styled.nav`
   flex-direction: row;
   justify-content: flex-start;
   background-color: ${({ theme }) => theme.colors.lightBrown};
-  -webkit-box-shadow: 0px 3px 8px 0px rgba(66, 66, 66, 0.64);
-  -moz-box-shadow: 0px 3px 8px 0px rgba(66, 66, 66, 0.64);
-  box-shadow: 0px 3px 8px 0px rgba(66, 66, 66, 0.64);
+  -webkit-box-shadow: ${({ theme }) => theme.backDropShadow.webkitboxShadow};
+  -moz-box-shadow: ${({ theme }) => theme.backDropShadow.mozzilaboxShadow};
+  box-shadow: ${({ theme }) => theme.backDropShadow.boxShadow};
 `;
 
 export const StyledLogoContainer = styled.div`

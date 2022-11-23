@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import DashSideBar from '../components/DashSideBar';
 import ProductCard from '../components/ProductCard';
-import { StyledDashContent } from '../components/styles/dashSide.styled';
+import { StyledDashContent } from '../components/styles/dashboard.styled';
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import { isProductCourseType, ProductCourseType } from '../types/product.types';
