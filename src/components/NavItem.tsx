@@ -5,7 +5,7 @@ import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
 import { StyledNavButton } from './styles/navButton.styled';
 import { RootState } from '../store/store';
-import { StyledNavLink } from './styles/navLInk.styled';
+import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styled';
 import images from '../assets';
 
 interface IProps {
@@ -102,7 +102,12 @@ const NavItem = ({ item, depthLevel }: IProps) => {
         >
           {' '}
           {item.title.toUpperCase()}
-          {item.isCart && <span>{cartItemsQuantity}</span>}
+          {item.isCart && (
+            <StyledOuterSpan>
+              {'  '}
+              {cartItemsQuantity}
+            </StyledOuterSpan>
+          )}
         </StyledNavLink>
       )}
     </li>

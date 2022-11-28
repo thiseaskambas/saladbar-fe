@@ -3,6 +3,7 @@ import { DefaultTheme } from 'styled-components';
 const theme: DefaultTheme = {
   colors: {
     blue: '#3D5A80',
+    skyBlue: '#cae8fa',
     lightBlue: '#98C1D9',
     orange: '#F7882F',
     lightOrange: '#F7B681',
@@ -12,6 +13,7 @@ const theme: DefaultTheme = {
     mediumBrown: '#E2CEBC',
     lightBrown: '#ede3da',
     white: '#FAFAFF',
+    lightGray: '#ebeded',
   },
   error: {
     color: 'darkGray',

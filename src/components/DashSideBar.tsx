@@ -4,6 +4,7 @@ import {
   StyledSideLiItem,
   StyledDashSideBar,
   StyledSideBarCtn,
+  StyledSideBarHeading,
 } from './styles/dashSide.styled';
 
 interface Props {
@@ -38,7 +39,9 @@ const DashSideBar = ({
     <>
       <StyledSideBarCtn show={show}>
         <StyledDashSideBar show={show}>
-          <h1 className="sideItem">DashSideBar</h1>{' '}
+          <StyledSideBarHeading className="sideItem">
+            Categories:
+          </StyledSideBarHeading>{' '}
           <ul className="sideItem">
             <StyledSideLiItem
               onClick={setIsSelected}

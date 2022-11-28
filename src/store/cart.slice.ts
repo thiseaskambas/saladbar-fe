@@ -26,6 +26,13 @@ const cartSlice = createSlice({
       return state;
     },
     removeFromCart(state, action) {
+      const temp = state.products.map((el) =>
+        el.product.id === action.payload && el.quantity > 0
+          ? { ...el, quantity: el.quantity - 1 }
+          : el
+      );
+      state.products = temp;
+      state.totalItems -= 1;
       return state;
     },
   },

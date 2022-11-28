@@ -5,19 +5,21 @@ export const StyledNavLink = styled(NavLink)<{
   issubmenu?: string;
 }>`
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1rem;
   font-weight: 300;
+  white-space: nowrap;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.mediumBrown};
   }
-  &.active {
-    background-color: ${({ theme }) => theme.colors.darkBrown};
-    font-weight: 400;
-    color: red;
-  }
   &:visited {
     color: black;
+  }
+  &.active {
+    background-color: ${({ theme }) => theme.colors.darkBrown};
+    /* font-weight: 400; */
+    /* border-bottom: 3px solid darkgray; */
+    /* border-radius: 0; */
   }
 
   ${({ issubmenu, theme }) =>
@@ -36,4 +38,16 @@ export const StyledNavLink = styled(NavLink)<{
         backgroundColor: theme.colors.lightBrown,
       },
     }}
+`;
+
+export const StyledOuterSpan = styled.span`
+  background-color: ${({ theme }) => theme.colors.orange};
+  color: ${({ theme }) => theme.colors.white};
+  display: inline-block;
+  position: relative;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.8rem;
 `;

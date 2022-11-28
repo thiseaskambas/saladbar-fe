@@ -33,12 +33,12 @@ export interface ILastEdited {
   editDate: Date;
 }
 
-interface ICartProducts {
+export interface ICartProduct {
   product: IProduct;
   quantity: number;
 }
 
 export interface ICartInitialState {
-  products: ICartProducts[];
+  products: ICartProduct[];
   totalItems: number;
 }

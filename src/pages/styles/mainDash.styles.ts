@@ -4,4 +4,5 @@ export const StyledMainDash = styled.main`
   display: grid;
   grid-template-columns: min-content auto;
   padding: 0;
+  background-color: ${({ theme }) => theme.colors.lightGray};
 `;

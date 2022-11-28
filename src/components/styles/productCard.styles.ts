@@ -6,7 +6,7 @@ export const StyledCardDiv = styled.div<{ img?: string }>`
   max-width: fit-content;
   height: fit-content;
   /* background-image: ${(props) => props.img}; */
-  background-color: ${({ theme }) => theme.colors.lightBlue};
+  background-color: ${({ theme }) => theme.colors.white};
   white-space: nowrap;
   padding: 1rem;
   cursor: default;
@@ -58,13 +58,16 @@ export const StyledAddToCartBtn = styled.button`
   font-size: 1.1rem;
   border-radius: 0.5rem;
   margin-top: 1rem;
-  background-color: ${({ theme }) => theme.colors.lightYellow};
+  background-color: ${({ theme }) => theme.colors.lightBrown};
   transition: 200ms;
   :hover {
-    background-color: ${({ theme }) => theme.colors.lightOrange};
+    background-color: ${({ theme }) => theme.colors.mediumBrown};
   }
   :disabled {
+    /* color: ${({ theme }) => theme.colors.gray}; */
+    color: gray;
+  }
+  :disabled:hover {
     background-color: ${({ theme }) => theme.colors.lightBrown};
-    cursor: not-allowed;
   }
 `;
