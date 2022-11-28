@@ -8,7 +8,7 @@ export const navItems: Array<INavItem> = [
     url: '/dashboard',
     mustBeLoggedIn: true,
   },
-  { title: 'Cart', url: '/carts/current', mustBeLoggedIn: true },
+  { title: 'Cart', url: '/carts/current', mustBeLoggedIn: true, isCart: true },
   { title: 'Today', url: '/day-view', mustBeLoggedIn: true },
   { title: 'My Profile', url: '/users/me', mustBeLoggedIn: true },
   {

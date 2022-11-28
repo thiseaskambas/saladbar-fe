@@ -3,14 +3,20 @@ import styled from 'styled-components';
 export const StyledHamburger = styled.div<{ sideBarDisplay: boolean }>`
   align-self: flex-start;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.colors.darkBrown};
+  border-radius: 50%;
+  padding: 8px;
+  margin: 5px;
+  background-color: ${({ theme }) => theme.colors.lightBrown};
+  transform: scale(0.9);
+
   & .line {
     width: 35px;
     height: 4px;
     background-color: #333;
-    margin: 6px 0;
+    margin: 6px auto;
     transition: 0.4s;
   }
+
   ${(props) =>
     props.sideBarDisplay &&
     `

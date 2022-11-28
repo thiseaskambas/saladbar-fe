@@ -59,4 +59,12 @@ export const StyledAddToCartBtn = styled.button`
   border-radius: 0.5rem;
   margin-top: 1rem;
   background-color: ${({ theme }) => theme.colors.lightYellow};
+  transition: 200ms;
+  :hover {
+    background-color: ${({ theme }) => theme.colors.lightOrange};
+  }
+  :disabled {
+    background-color: ${({ theme }) => theme.colors.lightBrown};
+    cursor: not-allowed;
+  }
 `;

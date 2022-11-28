@@ -38,6 +38,7 @@ const NavBar = ({ user }: { user: IUser | null }) => {
         {navItemsState.map((item: INavItem) => {
           const depthLevel = 0;
           return (
+            //TODO: add isCart boolean
             <NavItem key={item.title} item={item} depthLevel={depthLevel} />
           );
         })}
