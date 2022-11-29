@@ -16,6 +16,14 @@ export const initializeProducts = createAsyncThunk(
   }
 );
 
+export const createProduct = createAsyncThunk(
+  'products/createOne',
+  async (input: any) => {
+    const response = await productServices.createOne(input);
+    return response.data;
+  }
+);
+
 const productsSlice = createSlice({
   name: 'products',
   initialState,
