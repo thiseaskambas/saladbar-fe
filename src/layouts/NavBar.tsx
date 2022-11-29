@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import NavItem from '../components/NavItem';
 import { navItems } from '../utils/navItems';
 import { INavItem } from '../types/components.types';
@@ -8,9 +10,7 @@ import {
   StyledNav,
 } from './styles/navBar.styles';
 import { IUser } from '../types/user.types';
-import { useEffect, useState } from 'react';
 import images from '../assets/index';
-import { Link } from 'react-router-dom';
 
 const NavBar = ({ user }: { user: IUser | null }) => {
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);

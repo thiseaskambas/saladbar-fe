@@ -1,10 +1,9 @@
 import axios, {
-  AxiosRequestConfig,
   AxiosError,
+  AxiosRequestConfig,
   AxiosRequestHeaders,
 } from 'axios';
 import { refreshToken } from '../store/auth.slice';
-
 import store from '../store/store';
 
 interface ICustomAxiosReqConfig extends AxiosRequestConfig {
@@ -44,6 +43,7 @@ axiosPrivate.interceptors.request.use(
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
+    console.log('here');
     const prevRequest = error.config;
     if (error.response && error.response.status === 500 && !prevRequest.sent) {
       prevRequest.sent = true;

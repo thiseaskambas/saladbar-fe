@@ -1,10 +1,9 @@
+import { RootState } from '../store/store';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-
 import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
 import { StyledNavButton } from './styles/navButton.styled';
-import { RootState } from '../store/store';
 import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styled';
 import images from '../assets';
 

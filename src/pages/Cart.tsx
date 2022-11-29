@@ -1,17 +1,22 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
-import CartItem from '../components/CartItem';
-import { RootState } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 import {
   StyledCartMain,
   StyledConfirmBtn,
   StytledGridCtn,
   StytledGridFooterItem,
 } from './styles/cart.styles';
+import CartItem from '../components/CartItem';
+import { createOneCart } from '../store/carts.slice';
+import { resetCart } from '../store/cart.slice';
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
-
+  const dispatch = useAppDispatch();
+  const submitHandler = () => {
+    dispatch(createOneCart(cart.products));
+    dispatch(resetCart());
+  };
   return (
     <StyledCartMain>
       {cart.totalItems === 0 && (
@@ -43,7 +48,11 @@ const Cart = () => {
           </StytledGridFooterItem>
         </StytledGridCtn>
       )}
-      {cart.totalItems > 0 && <StyledConfirmBtn>Confirm cart</StyledConfirmBtn>}
+      {cart.totalItems > 0 && (
+        <StyledConfirmBtn onClick={submitHandler}>
+          Confirm cart
+        </StyledConfirmBtn>
+      )}
     </StyledCartMain>
   );
 };

@@ -7,8 +7,8 @@ import cartReducer from './cart.slice';
 
 export const store = configureStore({
   reducer: {
-    products: productsReducer,
     auth: authReducer,
+    products: productsReducer,
     notification: notifReducer,
     cart: cartReducer,
   },

@@ -3,6 +3,7 @@ import { IUser } from './user.types';
 
 export interface ICart extends Omit<INewCartEntry, 'items'> {
   items: ICartItem[];
+  createdBy: IUser['id'];
   createdAt: Date;
   lastEdited?: ILastEdited;
   totalPriceBeforeDiscount: number;
@@ -13,7 +14,6 @@ export interface ICart extends Omit<INewCartEntry, 'items'> {
 export interface INewCartEntry {
   items: ICartItemEntry[];
   discount: number;
-  createdBy: IUser['id'];
 }
 
 export interface ICartItem extends ICartItemEntry {
@@ -25,7 +25,7 @@ export interface ICartItem extends ICartItemEntry {
 export interface ICartItemEntry {
   product: IProduct['id'];
   quantity: number;
-  discount: number;
+  discount?: number;
 }
 
 export interface ILastEdited {
@@ -36,9 +36,16 @@ export interface ILastEdited {
 export interface ICartProduct {
   product: IProduct;
   quantity: number;
+  discount?: number;
 }
 
 export interface ICartInitialState {
   products: ICartProduct[];
+  discount: number;
   totalItems: number;
+}
+
+export interface ICartsInitialState {
+  carts: ICart[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }

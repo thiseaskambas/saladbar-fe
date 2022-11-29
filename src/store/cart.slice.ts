@@ -4,6 +4,7 @@ import { ICartInitialState } from '../types/cart.types';
 const initialState: ICartInitialState = {
   products: [],
   totalItems: 0,
+  discount: 0,
 };
 
 const cartSlice = createSlice({
@@ -35,8 +36,11 @@ const cartSlice = createSlice({
       state.totalItems -= 1;
       return state;
     },
+    resetCart() {
+      return initialState;
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
 export default cartSlice.reducer;
