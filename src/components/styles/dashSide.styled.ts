@@ -35,6 +35,7 @@ export const StyledSideBarCtn = styled.div<{
 }>`
   display: flex;
   margin-right: 1rem;
+  font-family: 'Courier Prime', monospace;
 `;
 
 export const StyledSideLiItem = styled.li<{
@@ -47,7 +48,7 @@ export const StyledSideLiItem = styled.li<{
   cursor: pointer;
   padding: 1rem 0.5rem;
   :first-child {
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
   :hover {
     background-color: ${({ theme }) => theme.colors.mediumBrown};
@@ -55,4 +56,9 @@ export const StyledSideLiItem = styled.li<{
   :active {
     background-color: ${({ theme }) => theme.colors.darkBrown};
   }
+`;
+
+export const StyledSideBarHeading = styled.h1`
+  margin-top: 1rem;
+  font-weight: bold;
 `;

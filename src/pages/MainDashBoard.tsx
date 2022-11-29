@@ -32,7 +32,6 @@ const MainDashBoard = () => {
       }
     };
     if (productsState.status === 'idle' && isMounted) {
-      console.log('initializing');
       initProducts();
     }
     return () => {
@@ -48,7 +47,7 @@ const MainDashBoard = () => {
       setIsSelected('all');
     }
   };
-  console.log(productsState.products);
+
   return (
     <StyledMainDash>
       <DashSideBar

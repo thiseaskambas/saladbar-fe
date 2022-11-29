@@ -1,10 +1,10 @@
+import { RootState } from '../store/store';
 import React, { useState, useEffect, useRef } from 'react';
-
+import { useSelector } from 'react-redux';
 import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
 import { StyledNavButton } from './styles/navButton.styled';
-
-import { StyledNavLink } from './styles/navLInk.styled';
+import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styled';
 import images from '../assets';
 
 interface IProps {
@@ -16,6 +16,10 @@ const NavItem = ({ item, depthLevel }: IProps) => {
   const [dropdown, setDropdown] = useState(false);
   const [moveLeft, setMoveLeft] = useState(false);
   const ref = useRef<null | HTMLLIElement>(null);
+
+  const cartItemsQuantity = useSelector(
+    (state: RootState) => state.cart.totalItems
+  );
 
   useEffect(() => {
     const handler = (event: Event): void => {
@@ -96,7 +100,13 @@ const NavItem = ({ item, depthLevel }: IProps) => {
           issubmenu={depthLevel > 0 ? 'submenu' : ''}
         >
           {' '}
-          {item.title.toUpperCase()}{' '}
+          {item.title.toUpperCase()}
+          {item.isCart && (
+            <StyledOuterSpan>
+              {'  '}
+              {cartItemsQuantity}
+            </StyledOuterSpan>
+          )}
         </StyledNavLink>
       )}
     </li>

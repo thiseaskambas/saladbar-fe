@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { IProduct } from '../types/product.types';
-
+import { addToCart } from '../store/cart.slice';
 import {
   StyledAddToCartBtn,
   StyledCardDiv,
@@ -9,6 +9,7 @@ import {
   StyledProductName,
   StyledProductQ,
 } from './styles/productCard.styles';
+import { useAppDispatch } from '../store/store';
 
 const actions = {
   INCR: 'INCR',
@@ -21,7 +22,7 @@ type TAction = {
   type: string;
   payload?: number;
 };
-const initialState = { quantity: 0 };
+const initialLocalState = { quantity: 0 };
 
 const reducer = (state: TQuantity, action: TAction) => {
   switch (action.type) {
@@ -41,7 +42,12 @@ const reducer = (state: TQuantity, action: TAction) => {
 };
 
 const ProductCard = ({ product }: { product: IProduct }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [localState, localDispatch] = useReducer(reducer, initialLocalState);
+  const dispatch = useAppDispatch();
+  const clickHandler = () => {
+    dispatch(addToCart({ product, quantity: localState.quantity }));
+    localDispatch({ type: 'RST' });
+  };
 
   return (
     <StyledCardDiv img={product.image.url}>
@@ -53,15 +59,20 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         <img src={product.image.url} />
       </StyledImgCtn>
       <div>
-        <StyledProductBtn onClick={() => dispatch({ type: 'DECR' })}>
+        <StyledProductBtn onClick={() => localDispatch({ type: 'DECR' })}>
           -
         </StyledProductBtn>
-        <StyledProductQ>{state.quantity}</StyledProductQ>
-        <StyledProductBtn onClick={() => dispatch({ type: 'INCR' })}>
+        <StyledProductQ>{localState.quantity}</StyledProductQ>
+        <StyledProductBtn onClick={() => localDispatch({ type: 'INCR' })}>
           +
         </StyledProductBtn>
       </div>
-      <StyledAddToCartBtn>Add to cart</StyledAddToCartBtn>
+      <StyledAddToCartBtn
+        disabled={localState.quantity < 1}
+        onClick={clickHandler}
+      >
+        Add to cart
+      </StyledAddToCartBtn>
     </StyledCardDiv>
   );
 };

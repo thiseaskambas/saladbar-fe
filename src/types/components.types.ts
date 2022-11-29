@@ -4,6 +4,7 @@ export interface INavItem {
   submenu?: INavSubItem;
   mustBeLoggedIn: boolean;
   alwaysShow?: boolean;
+  isCart?: true;
 }
 
 export type INavSubItem = Array<INavItem>;
