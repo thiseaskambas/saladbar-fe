@@ -1,11 +1,19 @@
-import { Field, Formik } from 'formik';
+import { ErrorMessage, Field, Formik } from 'formik';
+import { useState } from 'react';
 import * as Yup from 'yup';
+import images from '../assets';
 import { createProduct, initializeProducts } from '../store/products.slice';
 import { useAppDispatch } from '../store/store';
 import { ProductCourseType } from '../types/product.types';
+import {
+  StyledForm,
+  StyledImgCtn,
+  StyledInnerDiv,
+  StyledMessageCtn,
+} from './styles/form.styles';
 
 import {
-  StyledProductForm,
+  StyledPhotoContainer,
   StyledProductMain,
 } from './styles/productForm.styles';
 
@@ -22,16 +30,34 @@ const validationSchema = Yup.object().shape({
   productCourseType: Yup.string().matches(
     /(starter|main|desert|drink|side|other)/
   ),
+  image: Yup.mixed()
+    .test('required', 'Please provide a file', (file) => {
+      if (file && file.size) {
+        return true;
+      }
+      return false;
+    })
+    .test('fileSize', 'The file is too large', (file) => {
+      return file && file.size <= 20000000;
+    })
+    .test(
+      'fileType',
+      'Incorrect file type',
+      (file) =>
+        file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)
+    ),
 });
 
 const ProductForm = () => {
   const dispatch = useAppDispatch();
+  const [url, setUrl] = useState('');
   const initialValues: IFormValues = {
-    name: 'deleteme',
-    price: '0',
+    name: '',
+    price: '',
     productCourseType: 'starter',
     image: null,
   };
+
   return (
     <StyledProductMain>
       <Formik
@@ -50,6 +76,7 @@ const ProductForm = () => {
 
           try {
             console.log({ input });
+            URL.revokeObjectURL(url);
             await dispatch(createProduct(input)).unwrap();
             await dispatch(initializeProducts()).unwrap();
           } catch (err) {
@@ -58,16 +85,31 @@ const ProductForm = () => {
         }}
       >
         {(formik) => (
-          <StyledProductForm onSubmit={formik.handleSubmit}>
-            <div>
+          <StyledForm onSubmit={formik.handleSubmit}>
+            {url ? (
+              <StyledPhotoContainer>
+                <img id="photo" src={url} alt="" />
+              </StyledPhotoContainer>
+            ) : (
+              <StyledImgCtn>
+                <img src={images['logo.blue.XS.png']} alt="" />
+              </StyledImgCtn>
+            )}
+            <StyledInnerDiv>
               <label htmlFor="name">Product name:</label>
               <Field type="text" name="name" />
-            </div>
-            <div>
+              <StyledMessageCtn>
+                <ErrorMessage name="name" />
+              </StyledMessageCtn>
+            </StyledInnerDiv>
+            <StyledInnerDiv>
               <label htmlFor="price">Product price:</label>
               <Field type="number" name="price" />
-            </div>
-            <div>
+              <StyledMessageCtn>
+                <ErrorMessage name="price" />
+              </StyledMessageCtn>
+            </StyledInnerDiv>
+            <StyledInnerDiv>
               <Field name="productCourseType" as="select">
                 <option value="" disabled={true}>
                   --select a type--
@@ -78,21 +120,35 @@ const ProductForm = () => {
                   </option>
                 ))}
               </Field>
-            </div>
-            <div>
+            </StyledInnerDiv>
+            <StyledInnerDiv>
               <input
                 type="file"
                 name="image"
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onChange={(event: any) => {
-                  formik.setFieldValue('image', event.currentTarget.files[0]);
+                  const imgEl = document.getElementById(
+                    'photo'
+                  ) as HTMLImageElement;
+                  URL.revokeObjectURL(imgEl?.src);
+                  const file = event.currentTarget.files[0];
+                  if (file) {
+                    console.log({ file });
+                    formik.setFieldValue('image', file);
+                    setUrl(() => URL.createObjectURL(file));
+                  } else {
+                    setUrl(() => '');
+                  }
                 }}
               />
-            </div>
-            <div>
+              <StyledMessageCtn>
+                <ErrorMessage name="image" />
+              </StyledMessageCtn>
+            </StyledInnerDiv>
+            <StyledInnerDiv>
               <button type="submit">Create product</button>
-            </div>
-          </StyledProductForm>
+            </StyledInnerDiv>
+          </StyledForm>
         )}
       </Formik>
     </StyledProductMain>
