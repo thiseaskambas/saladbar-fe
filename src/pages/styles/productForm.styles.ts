@@ -17,3 +17,11 @@ export const StyledProductMain = styled.main`
   display: grid;
   place-items: center;
 `;
+
+export const StyledPhotoContainer = styled.div`
+  max-width: 200px;
+  margin: 0 auto;
+  & img {
+    width: 100%;
+  }
+`;
