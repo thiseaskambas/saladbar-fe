@@ -5,7 +5,7 @@ import {
   StyledDashSideBar,
   StyledSideBarCtn,
   StyledSideBarHeading,
-} from './styles/dashSide.styled';
+} from './styles/dashSide.styles';
 
 interface Props {
   show: boolean;

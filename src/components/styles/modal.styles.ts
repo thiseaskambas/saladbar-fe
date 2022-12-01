@@ -12,7 +12,7 @@ export const ModalBackgroundDiv = styled.div`
 `;
 
 export const ModalCenteredDiv = styled.div`
-  background-color: lightgreen;
+  background-color: ${({ theme }) => theme.colors.lightGray};
   position: fixed;
   top: 50%;
   left: 50%;
@@ -22,4 +22,16 @@ export const ModalCenteredDiv = styled.div`
   padding: 1rem;
   width: fit-content;
   height: fit-content;
+`;
+
+export const StyledCloseBtn = styled.button`
+  background-color: ${({ theme }) => theme.colors.orange};
+  display: block;
+  color: white;
+  height: 1.5rem;
+  width: 1.5rem;
+  position: relative;
+  top: -1.5rem;
+  left: -1.5rem;
+  border-radius: 50%;
 `;

@@ -1,4 +1,4 @@
-import { StyledHamburger } from './styles/hamburger.styled';
+import { StyledHamburger } from './styles/hamburger.styles';
 
 interface Props {
   clickHandler: () => void;

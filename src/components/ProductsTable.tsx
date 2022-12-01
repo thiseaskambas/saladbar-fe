@@ -5,6 +5,7 @@ import Modal from './Modal';
 import { StyledTable } from './styles/productsTables.styles';
 
 import ProductUpdateForm from '../pages/ProductUpdateForm';
+import DeleteProduct from './DeleteProduct';
 
 const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -26,6 +27,10 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const openDeleteHandler = (product: IProduct) => {
     setIsDeleteOpen(true);
     setIsSelectedProduct(product);
+  };
+
+  const deleteHandler = () => {
+    console.log('deletiiiinng');
   };
 
   return (
@@ -56,7 +61,13 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
         )}
       </Modal>
       <Modal onClose={closeModalHandler} open={isDeleteOpen}>
-        {isSelectedProduct && 'DELETEEEE'}
+        {isSelectedProduct && (
+          <DeleteProduct
+            productName={isSelectedProduct.name}
+            onCancel={closeModalHandler}
+            onDelete={deleteHandler}
+          />
+        )}
       </Modal>
     </>
   );

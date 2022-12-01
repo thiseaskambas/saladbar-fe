@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
-import { StyledNavButton } from './styles/navButton.styled';
-import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styled';
+import { StyledNavButton } from './styles/navButton.styles';
+import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styles';
 import images from '../assets';
 
 interface IProps {
