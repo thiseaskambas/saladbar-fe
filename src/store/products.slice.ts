@@ -18,8 +18,18 @@ export const initializeProducts = createAsyncThunk(
 
 export const createProduct = createAsyncThunk(
   'products/createOne',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (input: any) => {
     const response = await productServices.createOne(input);
+    return response.data;
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  'products/updateOne',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any) => {
+    const response = await productServices.updateOne(inputObj);
     return response.data;
   }
 );

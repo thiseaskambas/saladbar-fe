@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from '../utils/axios';
 
 const getAll = async () => {
@@ -12,4 +13,15 @@ const createOne = async (input: any) => {
   return response;
 };
 
-export default { getAll, createOne };
+const updateOne = async (inputObj: any) => {
+  const response = await axios.axiosPrivate.patch(
+    `/products/${inputObj.id}`,
+    inputObj.input,
+    {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }
+  );
+  return response;
+};
+
+export default { getAll, createOne, updateOne };

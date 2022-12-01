@@ -1,7 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ProductsTable from '../components/ProductsTable';
+import { initializeProducts } from '../store/products.slice';
+import { RootState, useAppDispatch } from '../store/store';
+import { StyledProductsMain } from './styles/productsPage.styles';
 
 const Products = () => {
-  return <main>Products</main>;
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const productsState = useSelector((state: RootState) => state.products);
+
+  useEffect(() => {
+    let isMounted = true;
+    const initProducts = async () => {
+      try {
+        await dispatch(initializeProducts()).unwrap();
+      } catch (err) {
+        //TODO: NOTIFICATION
+        navigate('/login', { state: { from: location }, replace: true });
+      }
+    };
+    if (productsState.status === 'idle' && isMounted) {
+      initProducts();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  return (
+    <StyledProductsMain>
+      {productsState.status === 'succeeded' && (
+        <ProductsTable products={productsState.products} />
+      )}
+    </StyledProductsMain>
+  );
 };
 
 export default Products;
