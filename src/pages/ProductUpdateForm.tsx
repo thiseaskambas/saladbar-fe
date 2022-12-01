@@ -2,9 +2,9 @@ import { ErrorMessage, Field, Formik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
-import { createProduct, initializeProducts } from '../store/products.slice';
+import { initializeProducts, updateProduct } from '../store/products.slice';
 import { useAppDispatch } from '../store/store';
-import { ProductCourseType } from '../types/product.types';
+import { IProduct, ProductCourseType } from '../types/product.types';
 import {
   StyledForm,
   StyledImgCtn,
@@ -24,6 +24,10 @@ interface IFormValues {
   image: File | null;
 }
 
+interface IProps {
+  existingProduct: IProduct;
+}
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
   price: Yup.number().required('Please enter a price'),
@@ -31,30 +35,28 @@ const validationSchema = Yup.object().shape({
     /(starter|main|desert|drink|side|other)/
   ),
   image: Yup.mixed()
-    .test('required', 'Please provide a file', (file) => {
-      if (file && file.size) {
-        return true;
-      }
-      return false;
-    })
-    .test('fileSize', 'The file is too large', (file) => {
-      return file && file.size <= 20000000;
-    })
+    .test(
+      'fileSize',
+      'The file is too large',
+      (file) => !file || (file && file.size <= 20000000)
+    )
     .test(
       'fileType',
       'Incorrect file type',
       (file) =>
-        file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)
+        !file ||
+        (file && ['image/png', 'image/jpg', 'image/jpeg'].includes(file.type))
     ),
 });
 
-const ProductForm = () => {
+const ProductUpdateForm = ({ existingProduct }: IProps) => {
   const dispatch = useAppDispatch();
   const [url, setUrl] = useState('');
+
   const initialValues: IFormValues = {
-    name: '',
-    price: '',
-    productCourseType: 'starter',
+    name: existingProduct.name || '',
+    price: existingProduct.price.toString() || '',
+    productCourseType: existingProduct.productCourseType || 'starter',
     image: null,
   };
 
@@ -65,15 +67,16 @@ const ProductForm = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, actions) => {
           const input = new FormData();
-          if (values.image) {
-            input.append('image', values.image, values.image.name);
-          }
-          input.append('name', values.name);
-          input.append('price', values.price);
-          input.append('productCourseType', values.productCourseType);
-
+          values.image &&
+            input.append('image', values.image, values.image?.name);
+          values.name && input.append('name', values.name);
+          values.price && input.append('price', values.price);
+          values.productCourseType &&
+            input.append('productCourseType', values.productCourseType);
           try {
-            await dispatch(createProduct(input)).unwrap();
+            await dispatch(
+              updateProduct({ input, id: existingProduct.id })
+            ).unwrap();
             await dispatch(initializeProducts()).unwrap();
             actions.resetForm({ values: { ...initialValues } });
             setUrl('');
@@ -89,6 +92,10 @@ const ProductForm = () => {
             {url ? (
               <StyledPhotoContainer>
                 <img id="photo" src={url} alt="" />
+              </StyledPhotoContainer>
+            ) : existingProduct.image ? (
+              <StyledPhotoContainer>
+                <img id="photo" src={existingProduct.image.secure_url} alt="" />
               </StyledPhotoContainer>
             ) : (
               <StyledImgCtn>
@@ -136,6 +143,7 @@ const ProductForm = () => {
                     formik.setFieldValue('image', file);
                     setUrl(() => URL.createObjectURL(file));
                   } else {
+                    formik.setFieldValue('image', null);
                     setUrl(() => '');
                   }
                 }}
@@ -145,7 +153,7 @@ const ProductForm = () => {
               </StyledMessageCtn>
             </StyledInnerDiv>
             <StyledInnerDiv>
-              <button type="submit">Create product</button>
+              <button type="submit">Update Product</button>
             </StyledInnerDiv>
           </StyledForm>
         )}
@@ -154,4 +162,4 @@ const ProductForm = () => {
   );
 };
 
-export default ProductForm;
+export default ProductUpdateForm;

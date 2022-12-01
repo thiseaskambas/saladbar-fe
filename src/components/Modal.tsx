@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ModalBackgroundDiv, ModalCenteredDiv } from './styles/modal.styled';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   open: boolean;
   onClose: () => void;
 }

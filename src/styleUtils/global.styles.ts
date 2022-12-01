@@ -17,6 +17,9 @@ const GlobalStyles = createGlobalStyle`
     padding: 1rem;
     z-index: 0;
   }
+  #portal{
+    font-family: 'Inter', sans-serif;
+  }
 h1,
 h2,
 h3,

@@ -12,4 +12,5 @@ export const StyledDashContent = styled.div<Props>`
   height: fit-content;
   grid-template-columns: repeat(auto-fit, 235px);
   gap: 2rem;
+  margin-bottom: 42px;
 `;
