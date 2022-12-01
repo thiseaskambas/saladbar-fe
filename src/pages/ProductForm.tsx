@@ -66,8 +66,7 @@ const ProductForm = () => {
         onSubmit={async (values, actions) => {
           const input = new FormData();
           if (values.image) {
-            console.log(values.image);
-            input.append('image', values.image, values.image?.name);
+            input.append('image', values.image, values.image.name);
           }
           input.append('name', values.name);
           input.append('price', values.price);
