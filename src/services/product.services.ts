@@ -11,7 +11,7 @@ const createOne = async (input: any) => {
   const response = await axios.axiosPrivate.post(`/products/`, input, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-  return response;
+  return response.data.data;
 };
 
 const updateOne = async (inputObj: any) => {
@@ -22,12 +22,12 @@ const updateOne = async (inputObj: any) => {
       headers: { 'Content-Type': 'multipart/form-data' },
     }
   );
-  return response;
+  return response.data.data;
 };
 
 const deleteOne = async (id: IProduct['id']) => {
   const response = await axios.axiosPrivate.delete(`/products/${id}`);
-  return response;
+  return response.data;
 };
 
 export default { getAll, createOne, updateOne, deleteOne };

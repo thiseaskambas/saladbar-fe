@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Formik } from 'formik';
 import { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
-import { createProduct, initializeProducts } from '../store/products.slice';
+import { createProduct } from '../store/products.slice';
 import { useAppDispatch } from '../store/store';
 import { ProductCourseType } from '../types/product.types';
 import {
@@ -74,8 +74,8 @@ const ProductForm = () => {
           input.append('productCourseType', values.productCourseType);
 
           try {
-            await dispatch(createProduct(input)).unwrap();
-            await dispatch(initializeProducts()).unwrap();
+            await dispatch(createProduct(input));
+
             URL.revokeObjectURL(url);
             setUrl('');
             actions.resetForm({ values: { ...initialValues } });

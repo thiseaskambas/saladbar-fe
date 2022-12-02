@@ -14,12 +14,12 @@ const PersistLogin = () => {
   );
   useEffect(() => {
     let isMounted = true;
-    console.log({ persist });
+
     const verifyRefreshToken = async () => {
       try {
         await dispatch(refreshToken()).unwrap();
       } catch (err) {
-        // console.log(err);
+        console.log(err);
       } finally {
         isMounted && setIsLoading(false);
       }

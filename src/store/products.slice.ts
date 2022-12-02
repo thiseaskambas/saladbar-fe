@@ -19,7 +19,7 @@ export const initializeProducts = createAsyncThunk(
 export const createProduct = createAsyncThunk(
   'products/createOne',
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async (input: any) => {
+  async (input: any): Promise<IProduct> => {
     const response = await productServices.createOne(input);
     return response.data;
   }
@@ -28,7 +28,7 @@ export const createProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   'products/updateOne',
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async (inputObj: any) => {
+  async (inputObj: any): Promise<IProduct> => {
     const response = await productServices.updateOne(inputObj);
     return response.data;
   }
@@ -62,6 +62,15 @@ const productsSlice = createSlice({
       .addCase(deleteProduct.fulfilled, (state, action) => {
         const temp = state.products.filter((pr) => pr.id !== action.payload);
         state.products = [...temp];
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        const temp = state.products.map((pr) =>
+          pr.id === action.payload.id ? { ...action.payload } : pr
+        );
+        state.products = [...temp];
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.products.push(action.payload);
       });
   },
 });

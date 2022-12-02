@@ -68,7 +68,10 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
       </StyledTable>
       <Modal onClose={closeModalHandler} open={isEditOpen}>
         {isSelectedProduct && (
-          <ProductUpdateForm existingProduct={isSelectedProduct} />
+          <ProductUpdateForm
+            existingProduct={isSelectedProduct}
+            onEndSubmit={closeModalHandler}
+          />
         )}
       </Modal>
       <Modal onClose={closeModalHandler} open={isDeleteOpen}>

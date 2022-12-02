@@ -2,7 +2,7 @@ import { ErrorMessage, Field, Formik } from 'formik';
 import { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
-import { initializeProducts, updateProduct } from '../store/products.slice';
+import { updateProduct } from '../store/products.slice';
 import { useAppDispatch } from '../store/store';
 import { IProduct, ProductCourseType } from '../types/product.types';
 import {
@@ -26,6 +26,7 @@ interface IFormValues {
 
 interface IProps {
   existingProduct: IProduct;
+  onEndSubmit: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -49,7 +50,7 @@ const validationSchema = Yup.object().shape({
     ),
 });
 
-const ProductUpdateForm = ({ existingProduct }: IProps) => {
+const ProductUpdateForm = ({ existingProduct, onEndSubmit }: IProps) => {
   const [url, setUrl] = useState('');
   const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -78,7 +79,6 @@ const ProductUpdateForm = ({ existingProduct }: IProps) => {
             await dispatch(
               updateProduct({ input, id: existingProduct.id })
             ).unwrap();
-            await dispatch(initializeProducts()).unwrap();
             actions.resetForm({ values: { ...initialValues } });
             URL.revokeObjectURL(url);
             setUrl('');
@@ -86,6 +86,7 @@ const ProductUpdateForm = ({ existingProduct }: IProps) => {
             if (inputRef.current) {
               inputRef.current.value = '';
             }
+            onEndSubmit();
           } catch (err) {
             console.log(err);
           }
