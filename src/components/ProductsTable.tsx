@@ -5,8 +5,12 @@ import Modal from './Modal';
 import { StyledTable } from './styles/productsTables.styles';
 
 import ProductUpdateForm from '../pages/ProductUpdateForm';
+import DeleteProduct from './DeleteProduct';
+import { useAppDispatch } from '../store/store';
+import { deleteProduct } from '../store/products.slice';
 
 const ProductsTable = ({ products }: { products: IProduct[] }) => {
+  const dispatch = useAppDispatch();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isSelectedProduct, setIsSelectedProduct] = useState<null | IProduct>(
@@ -26,6 +30,18 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const openDeleteHandler = (product: IProduct) => {
     setIsDeleteOpen(true);
     setIsSelectedProduct(product);
+    console.log(product);
+  };
+
+  const deleteHandler = async () => {
+    if (isSelectedProduct) {
+      try {
+        await dispatch(deleteProduct(isSelectedProduct.id)).unwrap();
+        closeModalHandler();
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   return (
@@ -56,7 +72,13 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
         )}
       </Modal>
       <Modal onClose={closeModalHandler} open={isDeleteOpen}>
-        {isSelectedProduct && 'DELETEEEE'}
+        {isSelectedProduct && (
+          <DeleteProduct
+            productName={isSelectedProduct.name}
+            onCancel={closeModalHandler}
+            onDelete={deleteHandler}
+          />
+        )}
       </Modal>
     </>
   );

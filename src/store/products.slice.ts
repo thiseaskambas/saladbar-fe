@@ -34,6 +34,14 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+export const deleteProduct = createAsyncThunk(
+  'products/deleteOne',
+  async (id: IProduct['id']) => {
+    await productServices.deleteOne(id);
+    return id;
+  }
+);
+
 const productsSlice = createSlice({
   name: 'products',
   initialState,
@@ -50,6 +58,10 @@ const productsSlice = createSlice({
       })
       .addCase(initializeProducts.rejected, (state) => {
         state.status = 'failed';
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        const temp = state.products.filter((pr) => pr.id !== action.payload);
+        state.products = [...temp];
       });
   },
 });

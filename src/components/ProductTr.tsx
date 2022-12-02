@@ -1,7 +1,7 @@
 import { IProduct } from '../types/product.types';
 
 import {
-  StyledDeleteBtn,
+  StyledDeleteSymbolBtn,
   StyledPriceTd,
   StyledTd,
   StyledTr,
@@ -25,7 +25,7 @@ const ProductTr = ({ product, onEdit, onDelete }: IProps) => {
       </StyledTd>
       <StyledTd onClick={() => onEdit()}>{product.productCourseType}</StyledTd>
       <StyledTd onClick={() => onDelete()}>
-        <StyledDeleteBtn>&#10008;</StyledDeleteBtn>
+        <StyledDeleteSymbolBtn>&#10008;</StyledDeleteSymbolBtn>
       </StyledTd>
     </StyledTr>
   );

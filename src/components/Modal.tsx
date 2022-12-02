@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ModalBackgroundDiv, ModalCenteredDiv } from './styles/modal.styled';
+import {
+  ModalBackgroundDiv,
+  ModalCenteredDiv,
+  StyledCloseBtn,
+} from './styles/modal.styles';
 
 interface Props {
   children?: React.ReactNode;
@@ -15,12 +19,8 @@ const Modal = ({ children, open, onClose }: Props) => {
     <>
       <ModalBackgroundDiv onClick={onClose} />
       <ModalCenteredDiv>
-        <div>
-          {children}
-          <div>
-            <button onClick={onClose}>close</button>
-          </div>
-        </div>
+        <StyledCloseBtn onClick={onClose}>&#10005;</StyledCloseBtn>
+        <div>{children}</div>
       </ModalCenteredDiv>
     </>,
     portal

@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Formik } from 'formik';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
 import { createProduct, initializeProducts } from '../store/products.slice';
@@ -49,8 +49,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const ProductForm = () => {
-  const dispatch = useAppDispatch();
   const [url, setUrl] = useState('');
+  const dispatch = useAppDispatch();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const initialValues: IFormValues = {
     name: '',
     price: '',
@@ -75,10 +76,13 @@ const ProductForm = () => {
           try {
             await dispatch(createProduct(input)).unwrap();
             await dispatch(initializeProducts()).unwrap();
-            actions.resetForm({ values: { ...initialValues } });
-            setUrl('');
             URL.revokeObjectURL(url);
+            setUrl('');
+            actions.resetForm({ values: { ...initialValues } });
             actions.setSubmitting(false);
+            if (inputRef.current) {
+              inputRef.current.value = '';
+            }
           } catch (err) {
             console.log(err);
           }
@@ -125,17 +129,15 @@ const ProductForm = () => {
               <input
                 type="file"
                 name="image"
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                onChange={(event: any) => {
-                  const imgEl = document.getElementById(
-                    'photo'
-                  ) as HTMLImageElement;
-                  URL.revokeObjectURL(imgEl?.src);
-                  const file = event.currentTarget.files[0];
+                ref={inputRef}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  URL.revokeObjectURL(url);
+                  const file = event.target.files && event.target.files[0];
                   if (file) {
                     formik.setFieldValue('image', file);
                     setUrl(() => URL.createObjectURL(file));
                   } else {
+                    event.target.value = '';
                     setUrl(() => '');
                   }
                 }}
