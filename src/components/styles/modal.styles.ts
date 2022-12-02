@@ -35,3 +35,21 @@ export const StyledCloseBtn = styled.button`
   left: -1.5rem;
   border-radius: 50%;
 `;
+
+export const StyledCancelBtn = styled.button`
+  padding: 0.2rem 1rem;
+  background-color: ${({ theme }) => theme.colors.skyBlue};
+  color: black;
+  border-radius: 0.3rem;
+  margin-left: 1rem;
+`;
+export const StyledDeleteBtn = styled.button`
+  padding: 0.2rem 1rem;
+  background-color: ${({ theme }) => theme.colors.blue};
+  color: white;
+  border-radius: 0.3rem;
+`;
+
+export const StyledBtnCtnDiv = styled.div`
+  margin-top: 1rem;
+`;

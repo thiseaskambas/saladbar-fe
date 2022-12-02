@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { IProduct } from '../types/product.types';
 import axios from '../utils/axios';
 
 const getAll = async () => {
@@ -24,4 +25,9 @@ const updateOne = async (inputObj: any) => {
   return response;
 };
 
-export default { getAll, createOne, updateOne };
+const deleteOne = async (id: IProduct['id']) => {
+  const response = await axios.axiosPrivate.delete(`/products/${id}`);
+  return response;
+};
+
+export default { getAll, createOne, updateOne, deleteOne };

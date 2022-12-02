@@ -30,7 +30,7 @@ export const StyledTr = styled.tr`
   }
 `;
 
-export const StyledDeleteBtn = styled.button`
+export const StyledDeleteSymbolBtn = styled.button`
   color: darkgray;
   font-size: 2rem;
   padding: 0 0;

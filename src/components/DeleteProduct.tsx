@@ -1,6 +1,10 @@
-import React from 'react';
 import { IProduct } from '../types/product.types';
 import { StyledCtnDiv } from './styles/deleteProduct.styles';
+import {
+  StyledBtnCtnDiv,
+  StyledCancelBtn,
+  StyledDeleteBtn,
+} from './styles/modal.styles';
 
 interface IProps {
   productName: IProduct['name'];
@@ -15,10 +19,10 @@ const DeleteProduct = ({ productName, onCancel, onDelete }: IProps) => {
         Are you sure you want to delete{' '}
         <span className="productname">{productName} ?</span>
       </div>
-      <div>
-        <button onClick={onCancel}>Cancel</button>
-        <button onClick={onDelete}>Delete</button>
-      </div>
+      <StyledBtnCtnDiv>
+        <StyledDeleteBtn onClick={onDelete}>Delete</StyledDeleteBtn>
+        <StyledCancelBtn onClick={onCancel}>Cancel</StyledCancelBtn>
+      </StyledBtnCtnDiv>
     </StyledCtnDiv>
   );
 };
