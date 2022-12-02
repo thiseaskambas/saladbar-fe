@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
 import NavItem from '../components/NavItem';
 import { navItems } from '../utils/navItems';
 import { INavItem } from '../types/components.types';
-
 import {
   StyledLogoContainer,
   StyledMainUl,
@@ -11,9 +11,17 @@ import {
 } from './styles/navBar.styles';
 import { IUser } from '../types/user.types';
 import images from '../assets/index';
+import { StyledLogoutBtn } from '../components/styles/navLInk.styles';
+import Modal from '../components/Modal';
+import LogoutPrompt from '../components/LogoutPrompt';
+import { useAppDispatch } from '../store/store';
+import { logUserOut } from '../store/auth.slice';
 
 const NavBar = ({ user }: { user: IUser | null }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -27,6 +35,13 @@ const NavBar = ({ user }: { user: IUser | null }) => {
     }
   }, [user]);
 
+  const logoutHandler = () => {
+    dispatch(logUserOut())
+      .unwrap()
+      .then(() => setIsLogoutModalOpen(false))
+      .then(() => navigate('/', { replace: true }));
+  };
+
   return (
     <StyledNav>
       <StyledLogoContainer>
@@ -38,10 +53,23 @@ const NavBar = ({ user }: { user: IUser | null }) => {
         {navItemsState.map((item: INavItem) => {
           const depthLevel = 0;
           return (
-            //TODO: add isCart boolean
             <NavItem key={item.title} item={item} depthLevel={depthLevel} />
           );
         })}
+        {user && (
+          <StyledLogoutBtn onClick={() => setIsLogoutModalOpen(true)}>
+            LOGOUT
+          </StyledLogoutBtn>
+        )}
+        <Modal
+          open={isLogoutModalOpen}
+          onClose={() => setIsLogoutModalOpen(false)}
+        >
+          <LogoutPrompt
+            onCancel={() => setIsLogoutModalOpen(false)}
+            onLogout={logoutHandler}
+          />
+        </Modal>
       </StyledMainUl>
     </StyledNav>
   );

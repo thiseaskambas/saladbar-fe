@@ -24,6 +24,17 @@ export const ModalCenteredDiv = styled.div`
   height: fit-content;
 `;
 
+export const StyledModalCtnDiv = styled.div`
+  background-color: ${({ theme }) => theme.colors.white};
+  position: relative;
+  top: -1rem;
+  border-radius: 1rem;
+  padding: 1rem;
+  & b {
+    font-weight: 800;
+  }
+`;
+
 export const StyledCloseBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.orange};
   display: block;
@@ -43,7 +54,7 @@ export const StyledCancelBtn = styled.button`
   border-radius: 0.3rem;
   margin-left: 1rem;
 `;
-export const StyledDeleteBtn = styled.button`
+export const StyledConfirmBtn = styled.button`
   padding: 0.2rem 1rem;
   background-color: ${({ theme }) => theme.colors.blue};
   color: white;

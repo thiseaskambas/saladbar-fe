@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { logUserOut } from '../store/auth.slice';
 import { useAppDispatch } from '../store/store';
 
+//NOTE: NOT used finally
+
 const LogOut = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

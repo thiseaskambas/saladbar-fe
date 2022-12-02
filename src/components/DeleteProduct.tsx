@@ -1,9 +1,10 @@
 import { IProduct } from '../types/product.types';
-import { StyledCtnDiv } from './styles/deleteProduct.styles';
+
 import {
   StyledBtnCtnDiv,
   StyledCancelBtn,
-  StyledDeleteBtn,
+  StyledConfirmBtn,
+  StyledModalCtnDiv,
 } from './styles/modal.styles';
 
 interface IProps {
@@ -14,16 +15,15 @@ interface IProps {
 
 const DeleteProduct = ({ productName, onCancel, onDelete }: IProps) => {
   return (
-    <StyledCtnDiv>
+    <StyledModalCtnDiv>
       <div>
-        Are you sure you want to delete{' '}
-        <span className="productname">{productName} ?</span>
+        Are you sure you want to delete <b>{productName} ?</b>
       </div>
       <StyledBtnCtnDiv>
-        <StyledDeleteBtn onClick={onDelete}>Delete</StyledDeleteBtn>
+        <StyledConfirmBtn onClick={onDelete}>Delete</StyledConfirmBtn>
         <StyledCancelBtn onClick={onCancel}>Cancel</StyledCancelBtn>
       </StyledBtnCtnDiv>
-    </StyledCtnDiv>
+    </StyledModalCtnDiv>
   );
 };
 

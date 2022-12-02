@@ -37,6 +37,17 @@ export const StyledNavLink = styled(NavLink)<{
     }}
 `;
 
+export const StyledLogoutBtn = styled.button`
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  font-weight: 300;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.mediumBrown};
+  }
+`;
+
 export const StyledOuterSpan = styled.span`
   background-color: ${({ theme }) => theme.colors.orange};
   color: ${({ theme }) => theme.colors.white};
