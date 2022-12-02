@@ -74,7 +74,7 @@ const ProductForm = () => {
           input.append('productCourseType', values.productCourseType);
 
           try {
-            await dispatch(createProduct(input));
+            await dispatch(createProduct(input)).unwrap();
 
             URL.revokeObjectURL(url);
             setUrl('');
