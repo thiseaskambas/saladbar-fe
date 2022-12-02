@@ -24,7 +24,4 @@ const NavDropDown = ({ submenu, dropdown, depthLevel, moveLeft }: IProps) => {
   );
 };
 
-// NOTE: for components which are part of UI that can be opened and closed multiple times by user (e.g. dropdown-menu, tooltips, popovers etc): use CSS hiding/ displaying, possibly with conditionally adding class in react.
-// for components rendered and hidden only once (e.g. delete an item from a list, close a one-time modal popup etc): use conditional rendering.
-
 export default NavDropDown;

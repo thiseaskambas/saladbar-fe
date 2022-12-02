@@ -24,8 +24,7 @@ const NavItem = ({ item, depthLevel }: IProps) => {
   useEffect(() => {
     const handler = (event: Event): void => {
       //prevent other listeners of the same event from being called.
-      event.stopImmediatePropagation();
-
+      // event.stopImmediatePropagation();
       if (
         dropdown &&
         ref.current &&

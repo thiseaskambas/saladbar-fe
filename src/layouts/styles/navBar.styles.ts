@@ -44,6 +44,7 @@ export const StyledDropUl = styled.ul<{
 `;
 
 export const StyledNav = styled.nav`
+  position: sticky;
   top: 0;
   padding: 1rem;
   z-index: 1;
