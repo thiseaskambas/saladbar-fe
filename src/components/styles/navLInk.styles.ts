@@ -17,9 +17,6 @@ export const StyledNavLink = styled(NavLink)<{
   }
   &.active {
     background-color: ${({ theme }) => theme.colors.darkBrown};
-    /* font-weight: 400; */
-    /* border-bottom: 3px solid darkgray; */
-    /* border-radius: 0; */
   }
 
   ${({ issubmenu, theme }) =>
