@@ -34,6 +34,7 @@ const cartsSlice = createSlice({
       })
       .addCase(initializeCarts.fulfilled, (state, action) => {
         state.carts = action.payload;
+        state.status = 'succeeded';
       });
   },
 });

@@ -3,12 +3,13 @@ import { IUser } from './user.types';
 
 export interface ICart extends Omit<INewCartEntry, 'items'> {
   items: ICartItem[];
-  createdBy: IUser['id'];
-  createdAt: Date;
+  createdBy: Omit<IUser, 'id'>;
+  createdAt: string;
   lastEdited?: ILastEdited;
   totalPriceBeforeDiscount: number;
   totalPrice: number;
   active: boolean;
+  id: string;
 }
 
 export interface INewCartEntry {
