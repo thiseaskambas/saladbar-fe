@@ -1,38 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import CartsTable from '../components/CartsTable';
+import { useInitializeData } from '../hooks/useInititalizeData';
+import { usePagination } from '../hooks/usePagination';
 import { initializeCarts } from '../store/carts.slice';
-import { RootState, useAppDispatch } from '../store/store';
+import { RootState } from '../store/store';
+import { Pagination } from './Pagination';
 import { StyledSharedMain } from './styles/shared.styles';
 
 const CartsDash = () => {
-  const dispatch = useAppDispatch();
   const cartsState = useSelector((state: RootState) => state.carts);
-  useEffect(() => {
-    let isMounted = true;
-    const initCarts = async () => {
-      try {
-        await dispatch(initializeCarts()).unwrap();
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSizeLimit, _setLimit] = useState(25);
 
-    if (isMounted && cartsState.status === 'idle') {
-      initCarts();
-    }
+  useInitializeData(
+    initializeCarts,
+    { page: currentPage - 1, limit: pageSizeLimit },
+    cartsState.status
+  );
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-  console.log(cartsState.carts);
+  const pages = usePagination({
+    currentPage,
+    pageSizeLimit,
+    totalItems: cartsState.totalCarts,
+  });
 
   return (
     <StyledSharedMain>
       {cartsState.status === 'succeeded' && (
         <CartsTable carts={cartsState.carts} />
       )}
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        pages={pages}
+      />
     </StyledSharedMain>
   );
 };

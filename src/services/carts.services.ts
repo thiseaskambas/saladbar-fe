@@ -1,5 +1,9 @@
 import axios from '../utils/axios';
-import { ICartProduct, INewCartEntry } from '../types/cart.types';
+import {
+  ICartProduct,
+  INewCartEntry,
+  IPaginationOptions,
+} from '../types/cart.types';
 
 const formatCart = (cart: ICartProduct[]): INewCartEntry => {
   const items = cart.map((el) => {
@@ -14,9 +18,11 @@ const createOne = async (cart: ICartProduct[]) => {
   return response.data.data;
 };
 
-const initializeCarts = async () => {
-  const response = await axios.axiosPrivate.get(`/carts`);
-  return response.data.data;
+const initializeCarts = async (pageOptions: IPaginationOptions) => {
+  const response = await axios.axiosPrivate.get(`/carts`, {
+    params: pageOptions,
+  });
+  return response.data;
 };
 
 export default { createOne, formatCart, initializeCarts };

@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const StyledSharedMain = styled.main`
   background-color: ${({ theme }) => theme.colors.lightGray};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 `;
 
 export const StyledSharedTable = styled.table`

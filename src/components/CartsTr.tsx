@@ -29,9 +29,9 @@ const CartsTr = ({ cart }: IProps) => {
         <span className="italic">{cart.createdBy.username}</span>
       </StyledSharedTd>
       <StyledSharedPriceTd>{itemsQuantity}</StyledSharedPriceTd>
-      <StyledSharedPriceTd>€{cart.totalPrice}</StyledSharedPriceTd>
+      <StyledSharedPriceTd>€{cart.totalPrice.toFixed(2)}</StyledSharedPriceTd>
       <StyledSharedPriceTd>
-        €{cart.totalPrice / itemsQuantity}
+        €{(cart.totalPrice / itemsQuantity).toFixed(2)}
       </StyledSharedPriceTd>
     </StyledSharedTr>
   );

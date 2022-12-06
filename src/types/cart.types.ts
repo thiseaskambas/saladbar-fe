@@ -49,4 +49,15 @@ export interface ICartInitialState {
 export interface ICartsInitialState {
   carts: ICart[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  totalCarts: number;
+}
+
+export interface IPaginationOptions {
+  page: number;
+  limit: number;
+}
+
+export interface IInitCartsResponse {
+  data: ICart[];
+  count: number;
 }
