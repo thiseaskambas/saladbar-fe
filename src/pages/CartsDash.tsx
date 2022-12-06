@@ -18,8 +18,8 @@ const CartsDash = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, _setLimit] = useState(25);
-  const [afterDate, setAfterDate] = useState<Date | null>(dayStart);
-  const [beforeDate, setBeforeDate] = useState<Date | null>(dayEnd);
+  const [afterDate, _setAfterDate] = useState<Date | null>(dayStart);
+  const [beforeDate, _setBeforeDate] = useState<Date | null>(dayEnd);
 
   const options = useMemo(() => {
     return {
