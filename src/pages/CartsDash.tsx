@@ -2,9 +2,16 @@ import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import 'rsuite/dist/rsuite.min.css';
-import { DateRangePicker } from 'rsuite';
+import { DateRangePicker, InputPicker } from 'rsuite';
 
-import { startOfDay, endOfDay, addDays, subDays } from 'date-fns';
+import {
+  startOfDay,
+  endOfDay,
+  addDays,
+  subDays,
+  startOfMonth,
+  lastDayOfMonth,
+} from 'date-fns';
 import { RangeType } from 'rsuite/esm/DateRangePicker';
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
@@ -33,12 +40,19 @@ const RANGES: RangeType[] = [
     value: [startOfDay(subDays(new Date(), 6)), endOfDay(new Date())],
     closeOverlay: false,
   },
+  {
+    label: 'This Month',
+    value: [startOfMonth(new Date()), endOfDay(lastDayOfMonth(new Date()))],
+    closeOverlay: false,
+  },
 ];
+
+const data = [10, 20, 30].map((item) => ({ label: item, value: item }));
 
 const CartsDash = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSizeLimit, _setLimit] = useState(25);
+  const [pageSizeLimit, setLimit] = useState(10);
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
     null,
     null,
@@ -69,15 +83,28 @@ const CartsDash = () => {
 
   return (
     <StyledSharedMain>
-      <DateRangePicker
-        style={{ width: 230 }}
-        onOk={(value: [Date, Date]) => dateSelectHandler(value)}
-        placeholder="click to select range"
-        preventOverflow={true}
-        showWeekNumbers
-        showOneCalendar={false}
-        ranges={RANGES}
-      />
+      <div>
+        <label>Carts to display : </label>
+        <InputPicker
+          data={data}
+          onChange={(value: string) => {
+            setLimit(Number(value)), setCurrentPage(1);
+          }}
+          cleanable={false}
+          defaultValue="10"
+          placeholder="10"
+          style={{ width: '5rem' }}
+        />
+        <DateRangePicker
+          style={{ width: 230 }}
+          onOk={(value: [Date, Date]) => dateSelectHandler(value)}
+          placeholder="click to select dates"
+          preventOverflow={true}
+          showWeekNumbers
+          showOneCalendar={false}
+          ranges={RANGES}
+        />
+      </div>
 
       {cartsState.status === 'succeeded' && (
         <CartsTable carts={cartsState.carts} />
