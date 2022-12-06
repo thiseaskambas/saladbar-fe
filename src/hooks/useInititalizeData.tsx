@@ -24,5 +24,5 @@ export const useInitializeData = (
     return () => {
       isMounted = false;
     };
-  }, [optionsObj.page]);
+  }, [optionsObj]);
 };
