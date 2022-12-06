@@ -1,6 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import 'rsuite/dist/rsuite.min.css';
+import { DateRangePicker } from 'rsuite';
+
+import { startOfDay, endOfDay, addDays, subDays } from 'date-fns';
+import { RangeType } from 'rsuite/esm/DateRangePicker';
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
@@ -8,6 +13,27 @@ import { initializeCarts } from '../store/carts.slice';
 import { RootState } from '../store/store';
 import { Pagination } from './Pagination';
 import { StyledSharedMain } from './styles/shared.styles';
+
+const RANGES: RangeType[] = [
+  {
+    label: 'today',
+    value: [startOfDay(new Date()), endOfDay(new Date())],
+    closeOverlay: false,
+  },
+  {
+    label: 'yesterday',
+    value: [
+      startOfDay(addDays(new Date(), -1)),
+      endOfDay(addDays(new Date(), -1)),
+    ],
+    closeOverlay: false,
+  },
+  {
+    label: 'last7Days',
+    value: [startOfDay(subDays(new Date(), 6)), endOfDay(new Date())],
+    closeOverlay: false,
+  },
+];
 
 const CartsDash = () => {
   const date1 = new Date();
@@ -40,6 +66,16 @@ const CartsDash = () => {
 
   return (
     <StyledSharedMain>
+      <DateRangePicker
+        style={{ width: 230 }}
+        onOk={(value: [Date, Date]) => console.log(value)}
+        placeholder="click to select range"
+        preventOverflow={true}
+        showWeekNumbers
+        showOneCalendar={false}
+        ranges={RANGES}
+      />
+
       {cartsState.status === 'succeeded' && (
         <CartsTable carts={cartsState.carts} />
       )}
