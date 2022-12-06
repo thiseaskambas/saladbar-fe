@@ -36,25 +36,22 @@ const RANGES: RangeType[] = [
 ];
 
 const CartsDash = () => {
-  const date1 = new Date();
-  const date2 = new Date();
-  const dayStart = new Date(date1.setUTCHours(0, 0, 0, 0));
-  const dayEnd = new Date(date2.setUTCHours(23, 59, 59, 999));
-
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, _setLimit] = useState(25);
-  const [afterDate, _setAfterDate] = useState<Date | null>(dayStart);
-  const [beforeDate, _setBeforeDate] = useState<Date | null>(dayEnd);
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+    null,
+    null,
+  ]);
 
   const options = useMemo(() => {
     return {
       page: currentPage - 1,
       limit: pageSizeLimit,
-      after: afterDate,
-      before: beforeDate,
+      after: dateRange[0],
+      before: dateRange[1],
     };
-  }, [currentPage, pageSizeLimit, beforeDate, afterDate]);
+  }, [currentPage, pageSizeLimit, dateRange[0], dateRange[1]]);
 
   useInitializeData(initializeCarts, options, cartsState.status);
 
@@ -64,11 +61,17 @@ const CartsDash = () => {
     totalItems: cartsState.totalCarts,
   });
 
+  const dateSelectHandler = (range: [Date, Date]) => {
+    const afterDate = new Date(range[0] + ' UTC');
+    const beforeDate = new Date(range[1] + ' UTC');
+    setDateRange([afterDate, beforeDate]);
+  };
+
   return (
     <StyledSharedMain>
       <DateRangePicker
         style={{ width: 230 }}
-        onOk={(value: [Date, Date]) => console.log(value)}
+        onOk={(value: [Date, Date]) => dateSelectHandler(value)}
         placeholder="click to select range"
         preventOverflow={true}
         showWeekNumbers
