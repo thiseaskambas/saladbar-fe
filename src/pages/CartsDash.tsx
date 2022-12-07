@@ -20,12 +20,22 @@ interface IDateRangeState {
   endDate: Date;
   key: string;
 }
-const pageLimits = [10, 20, 30];
 
-const adjustForTimezone = (date: Date): Date => {
-  const timeOffsetInMS: number = date.getTimezoneOffset() * 60000;
-  date.setTime(date.getTime() - timeOffsetInMS);
-  return date;
+const PAGE_LIMITS = [10, 20, 30];
+
+const convertToUTCString = (date: Date): string => {
+  return DateTime.fromJSDate(date)
+    .setZone('utc', {
+      keepLocalTime: true,
+    })
+    .toString();
+};
+const convertToUTCEndDayString = (date: Date): string => {
+  return DateTime.fromMillis(date.setUTCHours(23, 59, 59, 999))
+    .setZone('utc', {
+      keepLocalTime: false,
+    })
+    .toString();
 };
 
 const CartsDash = () => {
@@ -35,7 +45,7 @@ const CartsDash = () => {
   const [afterDate, setAfterDate] = useState<string | null>(null);
   const [beforeDate, setBeforeDate] = useState<string | null>(null);
   const [dispaly, setDisplay] = useState(false);
-  const [state, setState] = useState<IDateRangeState[]>([
+  const [rangeState, setRangeState] = useState<IDateRangeState[]>([
     {
       startDate: new Date(),
       endDate: new Date(),
@@ -61,24 +71,24 @@ const CartsDash = () => {
   });
 
   const dateRangeHandler = ({ startDate, endDate }: IDateRangeState) => {
-    const utcAfter = DateTime.fromJSDate(startDate)
-      .setZone('utc', {
-        keepLocalTime: true,
-      })
-      .toString();
-    const utcBefore = DateTime.fromJSDate(endDate)
-      .setZone('utc', {
-        keepLocalTime: true,
-      })
-      .toString();
-    console.log({ utcAfter });
-    setAfterDate(utcAfter);
-    setBeforeDate(utcBefore);
+    setAfterDate(convertToUTCString(startDate));
+    if (startDate.toISOString() === endDate.toISOString()) {
+      setBeforeDate(convertToUTCEndDayString(endDate));
+    } else {
+      setBeforeDate(convertToUTCString(endDate));
+    }
   };
 
   return (
     <StyledSharedMain>
       <div>
+        <select onChange={(e) => setLimit(Number(e.target.value))}>
+          {PAGE_LIMITS.map((el) => (
+            <option key={el} value={el}>
+              {el}
+            </option>
+          ))}
+        </select>
         <button onClick={() => setDisplay((prev) => !prev)}>
           Select dates
         </button>
@@ -86,16 +96,17 @@ const CartsDash = () => {
           <div>
             <DateRangePicker
               // @ts-expect-error can't find docs
-              onChange={(item) => setState(() => [item.selection])}
+              onChange={(item) => setRangeState(() => [item.selection])}
               // @ts-expect-error can't find docs
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               months={1}
-              ranges={state}
+              ranges={rangeState}
               direction="horizontal"
               weekStartsOn={1}
+              maxDate={new Date()}
             />
-            <button onClick={() => dateRangeHandler(state[0])}>
+            <button onClick={() => dateRangeHandler(rangeState[0])}>
               Select dates
             </button>
           </div>
