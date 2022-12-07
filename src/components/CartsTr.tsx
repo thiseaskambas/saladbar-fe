@@ -7,9 +7,10 @@ import { ICart } from '../types/cart.types';
 
 interface IProps {
   cart: ICart;
+  onClick?: () => void;
 }
 
-const CartsTr = ({ cart }: IProps) => {
+const CartsTr = ({ cart, onClick }: IProps) => {
   const date = new Date(cart.createdAt);
   const formatedDate = date.toLocaleDateString('en-gb', {
     year: '2-digit',
@@ -23,7 +24,7 @@ const CartsTr = ({ cart }: IProps) => {
     0
   );
   return (
-    <StyledSharedTr>
+    <StyledSharedTr onClick={onClick}>
       <StyledSharedTd>{formatedDate.split(',').join(' - ')}</StyledSharedTd>
       <StyledSharedTd>
         <span className="italic">{cart.createdBy.username}</span>
@@ -38,19 +39,3 @@ const CartsTr = ({ cart }: IProps) => {
 };
 
 export default CartsTr;
-
-/*
- const adjusted = adjustForTimezone(date).toLocaleDateString('en-gb', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    timeZoneName: 'long',
-  });
-  
-  const adjustForTimezone = (date: Date): Date => {
-  const timeOffsetInMS: number = date.getTimezoneOffset() * 60000;
-  date.setTime(date.getTime() + timeOffsetInMS);
-  return date;
-};*/

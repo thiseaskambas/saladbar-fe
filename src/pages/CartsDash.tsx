@@ -1,19 +1,24 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 
-import { DateTime } from 'luxon';
-
+import helpers from '../utils/functionHelpers';
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
 import { initializeCarts } from '../store/carts.slice';
 import { RootState } from '../store/store';
 import { Pagination } from './Pagination';
-import { StyledSharedMain } from './styles/shared.styles';
+import { StyledSharedMain, StyledSharedSelect } from './styles/shared.styles';
+import {
+  StyledDatePickerCtnDiv,
+  StyledCartDashBtn,
+  StyledCartDashDateBtn,
+  StyledCartDateBtnCtnDiv,
+} from './styles/cartsDash.styles';
 
 interface IDateRangeState {
   startDate: Date;
@@ -23,28 +28,14 @@ interface IDateRangeState {
 
 const PAGE_LIMITS = [10, 20, 30];
 
-const convertToUTCString = (date: Date): string => {
-  return DateTime.fromJSDate(date)
-    .setZone('utc', {
-      keepLocalTime: true,
-    })
-    .toString();
-};
-const convertToUTCEndDayString = (date: Date): string => {
-  return DateTime.fromMillis(date.setUTCHours(23, 59, 59, 999))
-    .setZone('utc', {
-      keepLocalTime: false,
-    })
-    .toString();
-};
-
 const CartsDash = () => {
+  console.log('here');
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, setLimit] = useState(10);
   const [afterDate, setAfterDate] = useState<string | null>(null);
   const [beforeDate, setBeforeDate] = useState<string | null>(null);
-  const [dispaly, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(false);
   const [rangeState, setRangeState] = useState<IDateRangeState[]>([
     {
       startDate: new Date(),
@@ -71,29 +62,39 @@ const CartsDash = () => {
   });
 
   const dateRangeHandler = ({ startDate, endDate }: IDateRangeState) => {
-    setAfterDate(convertToUTCString(startDate));
+    setAfterDate(helpers.convertToUTCString(startDate));
     if (startDate.toISOString() === endDate.toISOString()) {
-      setBeforeDate(convertToUTCEndDayString(endDate));
+      setBeforeDate(helpers.convertToUTCEndDayString(endDate));
     } else {
-      setBeforeDate(convertToUTCString(endDate));
+      setBeforeDate(helpers.convertToUTCString(endDate));
     }
+    setDisplay(() => false);
+    setCurrentPage(1);
   };
 
   return (
     <StyledSharedMain>
       <div>
-        <select onChange={(e) => setLimit(Number(e.target.value))}>
+        <StyledSharedSelect
+          isDisplayed={!display}
+          onChange={(e) => {
+            setLimit(Number(e.target.value)), setCurrentPage(1);
+          }}
+        >
           {PAGE_LIMITS.map((el) => (
             <option key={el} value={el}>
               {el}
             </option>
           ))}
-        </select>
-        <button onClick={() => setDisplay((prev) => !prev)}>
+        </StyledSharedSelect>
+        <StyledCartDashBtn
+          onClick={() => setDisplay((prev) => !prev)}
+          isDisplayed={!display}
+        >
           Select dates
-        </button>
-        {dispaly && (
-          <div>
+        </StyledCartDashBtn>
+        {display && (
+          <StyledDatePickerCtnDiv>
             <DateRangePicker
               // @ts-expect-error can't find docs
               onChange={(item) => setRangeState(() => [item.selection])}
@@ -106,15 +107,30 @@ const CartsDash = () => {
               weekStartsOn={1}
               maxDate={new Date()}
             />
-            <button onClick={() => dateRangeHandler(rangeState[0])}>
-              Select dates
-            </button>
-          </div>
+
+            <StyledCartDateBtnCtnDiv>
+              <StyledCartDashDateBtn
+                onClick={() => setDisplay(false)}
+                isDisplayed={display}
+                btnType="cancel"
+              >
+                Cancel
+              </StyledCartDashDateBtn>
+              <StyledCartDashDateBtn
+                onClick={() => dateRangeHandler(rangeState[0])}
+                isDisplayed={display}
+              >
+                Confirm
+              </StyledCartDashDateBtn>
+            </StyledCartDateBtnCtnDiv>
+          </StyledDatePickerCtnDiv>
         )}
       </div>
 
-      {cartsState.status === 'succeeded' && (
+      {cartsState.status === 'succeeded' && cartsState.carts.length > 0 ? (
         <CartsTable carts={cartsState.carts} />
+      ) : (
+        <div>no carts to show for the selected dates</div>
       )}
       <Pagination
         currentPage={currentPage}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ModalBackgroundDiv = styled.div`
+export const StyledModalBackgroundDiv = styled.div`
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   top: 0;
@@ -11,39 +11,50 @@ export const ModalBackgroundDiv = styled.div`
   z-index: 10;
 `;
 
-export const ModalCenteredDiv = styled.div`
-  background-color: ${({ theme }) => theme.colors.lightGray};
+export const StyledModalCenteredDiv = styled.div`
+  background-color: ${({ theme }) => theme.colors.white};
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
   border-radius: 1rem;
-  padding: 1rem;
   width: fit-content;
   height: fit-content;
 `;
 
 export const StyledModalCtnDiv = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
-  position: relative;
-  top: -1rem;
-  border-radius: 1rem;
-  padding: 1rem;
+  border-radius: 0 0 1rem 1rem;
+  padding: 0 1rem 1rem 1rem;
+  z-index: 10;
   & b {
     font-weight: 800;
   }
 `;
 
+export const StyledModalHeader = styled.div`
+  background-color: ${({ theme }) => theme.colors.blue};
+  border-radius: 1rem 1rem 0 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  & h1 {
+    font-weight: 800;
+    margin: auto;
+    position: relative;
+    left: -1rem;
+  }
+`;
+
 export const StyledCloseBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.orange};
-  display: block;
   color: white;
-  height: 1.5rem;
-  width: 1.5rem;
-  position: relative;
-  top: -1.5rem;
-  left: -1.5rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  margin: 0.5rem;
   border-radius: 50%;
 `;
 

@@ -12,6 +12,7 @@ export const initializeProducts = createAsyncThunk(
   'products/initializeProducts',
   async (): Promise<IProduct[]> => {
     const response = await productServices.getAll();
+    console.log('init products');
     return response.data;
   }
 );

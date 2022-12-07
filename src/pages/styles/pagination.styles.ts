@@ -6,7 +6,11 @@ export const StyledPagesUl = styled.ul`
   gap: 0.5rem;
 
   & .active {
-    color: ${({ theme }) => theme.colors.blue};
+    color: ${({ theme }) => theme.colors.newBlue};
     text-decoration: underline;
+  }
+
+  & button:disabled {
+    cursor: default;
   }
 `;

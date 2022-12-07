@@ -8,6 +8,7 @@ import DeleteProduct from './DeleteProduct';
 import { useAppDispatch } from '../store/store';
 import { deleteProduct } from '../store/products.slice';
 import { StyledSharedTable } from '../pages/styles/shared.styles';
+import { StyledModalCtnDiv } from './styles/modal.styles';
 
 const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const dispatch = useAppDispatch();
@@ -66,15 +67,25 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
           ))}
         </tbody>
       </StyledSharedTable>
-      <Modal onClose={closeModalHandler} open={isEditOpen}>
+      <Modal
+        onClose={closeModalHandler}
+        open={isEditOpen}
+        modalTitle="Edit Product"
+      >
         {isSelectedProduct && (
-          <ProductUpdateForm
-            existingProduct={isSelectedProduct}
-            onEndSubmit={closeModalHandler}
-          />
+          <StyledModalCtnDiv>
+            <ProductUpdateForm
+              existingProduct={isSelectedProduct}
+              onEndSubmit={closeModalHandler}
+            />
+          </StyledModalCtnDiv>
         )}
       </Modal>
-      <Modal onClose={closeModalHandler} open={isDeleteOpen}>
+      <Modal
+        onClose={closeModalHandler}
+        open={isDeleteOpen}
+        modalTitle="Delete Product?"
+      >
         {isSelectedProduct && (
           <DeleteProduct
             productName={isSelectedProduct.name}
