@@ -1,6 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRangePicker } from 'react-date-range';
+
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
@@ -17,6 +21,14 @@ const CartsDash = () => {
   const [pageSizeLimit, setLimit] = useState(10);
   const [afterDate, setAfterDate] = useState<Date | null>(null);
   const [beforeDate, setBeforeDate] = useState<Date | null>(null);
+  const [dispaly, setDisplay] = useState(false);
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
 
   const options = useMemo(() => {
     return {
@@ -46,20 +58,27 @@ const CartsDash = () => {
 
   return (
     <StyledSharedMain>
-      <form>
-        <select onChange={(e) => setLimit(Number(e.target.value))}>
-          {pageLimits.map((el) => (
-            <option key={el} value={el}>
-              {el}
-            </option>
-          ))}
-        </select>
-        <input type="date" onChange={(e) => afterDateHandler(e.target.value)} />
-        <input
-          type="date"
-          onChange={(e) => beforeDateHandler(e.target.value)}
-        />
-      </form>
+      <div>
+        <button onClick={() => setDisplay((prev) => !prev)}>
+          Select dates
+        </button>
+        {dispaly && (
+          <div>
+            <DateRangePicker
+              // @ts-expect-error can't find docs
+              onChange={(item) => setState([item.selection])}
+              // @ts-expect-error can't find docs
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={1}
+              ranges={state}
+              direction="horizontal"
+              weekStartsOn={1}
+            />
+            <button onClick={() => console.log(state)}>Select dates</button>
+          </div>
+        )}
+      </div>
 
       {cartsState.status === 'succeeded' && (
         <CartsTable carts={cartsState.carts} />
