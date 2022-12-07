@@ -5,6 +5,8 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRangePicker } from 'react-date-range';
 
+import { DateTime } from 'luxon';
+
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
@@ -30,8 +32,8 @@ const CartsDash = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, setLimit] = useState(10);
-  const [afterDate, setAfterDate] = useState<Date | null>(null);
-  const [beforeDate, setBeforeDate] = useState<Date | null>(null);
+  const [afterDate, setAfterDate] = useState<string | null>(null);
+  const [beforeDate, setBeforeDate] = useState<string | null>(null);
   const [dispaly, setDisplay] = useState(false);
   const [state, setState] = useState<IDateRangeState[]>([
     {
@@ -59,9 +61,19 @@ const CartsDash = () => {
   });
 
   const dateRangeHandler = ({ startDate, endDate }: IDateRangeState) => {
-    console.log({ startDate, adjusted: adjustForTimezone(startDate) });
-    setAfterDate(startDate);
-    setBeforeDate(endDate);
+    const utcAfter = DateTime.fromJSDate(startDate)
+      .setZone('utc', {
+        keepLocalTime: true,
+      })
+      .toString();
+    const utcBefore = DateTime.fromJSDate(endDate)
+      .setZone('utc', {
+        keepLocalTime: true,
+      })
+      .toString();
+    console.log({ utcAfter });
+    setAfterDate(utcAfter);
+    setBeforeDate(utcBefore);
   };
 
   return (
