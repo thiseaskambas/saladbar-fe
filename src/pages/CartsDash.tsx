@@ -13,7 +13,18 @@ import { RootState } from '../store/store';
 import { Pagination } from './Pagination';
 import { StyledSharedMain } from './styles/shared.styles';
 
+interface IDateRangeState {
+  startDate: Date;
+  endDate: Date;
+  key: string;
+}
 const pageLimits = [10, 20, 30];
+
+const adjustForTimezone = (date: Date): Date => {
+  const timeOffsetInMS: number = date.getTimezoneOffset() * 60000;
+  date.setTime(date.getTime() - timeOffsetInMS);
+  return date;
+};
 
 const CartsDash = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
@@ -22,7 +33,7 @@ const CartsDash = () => {
   const [afterDate, setAfterDate] = useState<Date | null>(null);
   const [beforeDate, setBeforeDate] = useState<Date | null>(null);
   const [dispaly, setDisplay] = useState(false);
-  const [state, setState] = useState([
+  const [state, setState] = useState<IDateRangeState[]>([
     {
       startDate: new Date(),
       endDate: new Date(),
@@ -47,13 +58,10 @@ const CartsDash = () => {
     totalItems: cartsState.totalCarts,
   });
 
-  const afterDateHandler = (date: string) => {
-    const utcAfterDate = new Date(date + ' UTC');
-    setAfterDate(utcAfterDate);
-  };
-  const beforeDateHandler = (date: string) => {
-    const utcBeforeDate = new Date(date + ' UTC');
-    setBeforeDate(utcBeforeDate);
+  const dateRangeHandler = ({ startDate, endDate }: IDateRangeState) => {
+    console.log({ startDate, adjusted: adjustForTimezone(startDate) });
+    setAfterDate(startDate);
+    setBeforeDate(endDate);
   };
 
   return (
@@ -66,7 +74,7 @@ const CartsDash = () => {
           <div>
             <DateRangePicker
               // @ts-expect-error can't find docs
-              onChange={(item) => setState([item.selection])}
+              onChange={(item) => setState(() => [item.selection])}
               // @ts-expect-error can't find docs
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
@@ -75,7 +83,9 @@ const CartsDash = () => {
               direction="horizontal"
               weekStartsOn={1}
             />
-            <button onClick={() => console.log(state)}>Select dates</button>
+            <button onClick={() => dateRangeHandler(state[0])}>
+              Select dates
+            </button>
           </div>
         )}
       </div>
