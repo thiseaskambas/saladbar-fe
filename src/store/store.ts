@@ -5,7 +5,7 @@ import authReducer from './auth.slice';
 import notifReducer from './notification.slice';
 import cartReducer from './cart.slice';
 import cartsReducer from './carts.slice';
-
+import updateCartReducer from './cartUpdate.slice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,6 +13,7 @@ export const store = configureStore({
     notification: notifReducer,
     cart: cartReducer,
     carts: cartsReducer,
+    updateCart: updateCartReducer,
   },
 });
 

@@ -6,6 +6,8 @@ import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import { ICart, ICartItem, ICartItemEntry } from '../types/cart.types';
 import { IProduct } from '../types/product.types';
+import { CartAddedProductTRow } from './CartAddedProductTRow';
+import { CartUpdateTRow } from './CartUpdateTRow';
 import {
   StyledCartUpdateBtn,
   StyledCartUpdateWarnBtn,
@@ -16,61 +18,6 @@ interface IProps {
   cart: ICart;
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const CartUpdateTRow = ({ cartItem }: { cartItem: ICartItem }) => {
-  const [quantity, setQuantity] = useState(cartItem.quantity);
-  return (
-    <tr>
-      <td>{cartItem.product?.name || 'product has been deleted'}</td>
-      <td>{quantity}</td>
-      <td>{cartItem.itemPrice}</td>
-      <td>
-        <StyledCartUpdateBtn
-          type="button"
-          onClick={() => setQuantity((prev) => prev - 1)}
-        >
-          -
-        </StyledCartUpdateBtn>{' '}
-        <StyledCartUpdateBtn
-          type="button"
-          onClick={() => setQuantity((prev) => prev + 1)}
-        >
-          +
-        </StyledCartUpdateBtn>
-      </td>
-    </tr>
-  );
-};
-const CartAddedProductTRow = ({
-  cartItem,
-  product,
-}: {
-  cartItem: ICartItemEntry;
-  product?: IProduct;
-}) => {
-  const [quantity, setQuantity] = useState(cartItem.quantity);
-  return (
-    <tr>
-      <td>{product?.name}</td>
-      <td>{quantity}</td>
-      <td>{product?.price}</td>
-      <td>
-        <StyledCartUpdateBtn
-          type="button"
-          onClick={() => setQuantity((prev) => prev - 1)}
-        >
-          -
-        </StyledCartUpdateBtn>{' '}
-        <StyledCartUpdateBtn
-          type="button"
-          onClick={() => setQuantity((prev) => prev + 1)}
-        >
-          +
-        </StyledCartUpdateBtn>
-      </td>
-    </tr>
-  );
-};
 
 const toCartEntries = (cartItems: ICartItem[]): ICartItemEntry[] => {
   const transformed = cartItems.map((item) => {
@@ -86,6 +33,7 @@ const toCartEntries = (cartItems: ICartItem[]): ICartItemEntry[] => {
 const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
   const dispatch = useAppDispatch();
   const cartItems: ICartItem[] = cart.items;
+  console.log({ cartItems });
   const [selectedProduct, setSelectedProduct] = useState<IProduct['id'] | null>(
     null
   );
@@ -147,7 +95,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
             <tr>
               <th>Name</th>
               <th>Quantity</th>
-              <th>Price</th>
+              {/* <th>Price</th> */}
               <th></th>
             </tr>
           </thead>

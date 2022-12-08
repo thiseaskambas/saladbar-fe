@@ -27,7 +27,7 @@ export interface ICartItem extends Omit<ICartItemEntry, 'product'> {
 
 export interface INewCartEntry {
   items: ICartItemEntry[];
-  discount: number;
+  discount?: number;
 }
 
 export interface ICartItemEntry {
@@ -40,12 +40,6 @@ export interface ICartProduct {
   product: IProduct;
   quantity: number;
   discount?: number;
-}
-
-export interface ICartInitialState {
-  products: ICartProduct[];
-  discount: number;
-  totalItems: number;
 }
 
 export interface ICartsInitialState {
@@ -62,4 +56,15 @@ export interface IPaginationOptions {
 export interface IInitCartsResponse {
   data: ICart[];
   count: number;
+}
+
+export interface ICartInitialState {
+  products: ICartProduct[];
+  discount: number;
+  totalItems: number;
+}
+
+export interface IUpdateCart extends Omit<ICartInitialState, 'products'> {
+  existingItems: ICartProduct[];
+  newEntries: INewCartEntry;
 }
