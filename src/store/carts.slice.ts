@@ -30,6 +30,14 @@ export const initializeCarts = createAsyncThunk(
   }
 );
 
+export const deleteCart = createAsyncThunk(
+  'carts/deleteOne',
+  async (cartId: ICart['id']) => {
+    const response = await cartsServices.deleteOne(cartId);
+    return { data: response.data, cartId };
+  }
+);
+
 const cartsSlice = createSlice({
   name: 'carts',
   initialState,
@@ -44,6 +52,12 @@ const cartsSlice = createSlice({
         state.carts = action.payload.data;
         state.totalCarts = action.payload.count;
         state.status = 'succeeded';
+      })
+      .addCase(deleteCart.fulfilled, (state, action) => {
+        const temp = state.carts.filter(
+          (crt) => crt.id !== action.payload.cartId
+        );
+        state.carts = [...temp];
       });
   },
 });

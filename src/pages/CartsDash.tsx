@@ -29,7 +29,6 @@ interface IDateRangeState {
 const PAGE_LIMITS = [10, 20, 30];
 
 const CartsDash = () => {
-  console.log('here');
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, setLimit] = useState(10);

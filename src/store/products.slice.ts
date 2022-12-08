@@ -38,8 +38,8 @@ export const updateProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   'products/deleteOne',
   async (id: IProduct['id']) => {
-    await productServices.deleteOne(id);
-    return id;
+    const response = await productServices.deleteOne(id);
+    return { data: response.data, id };
   }
 );
 
@@ -61,7 +61,7 @@ const productsSlice = createSlice({
         state.status = 'failed';
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        const temp = state.products.filter((pr) => pr.id !== action.payload);
+        const temp = state.products.filter((pr) => pr.id !== action.payload.id);
         state.products = [...temp];
       })
       .addCase(updateProduct.fulfilled, (state, action) => {

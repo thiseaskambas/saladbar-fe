@@ -40,10 +40,14 @@ export const StyledSharedPriceTd = styled.td`
   padding: 0 1rem;
 `;
 
-export const StyledSharedSelect = styled.select<{ isDisplayed: boolean }>`
+export const StyledSharedSelect = styled.select<{
+  isDisplayed: boolean;
+  bgColor?: 'white' | 'blue';
+}>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
-  background-color: ${({ theme }) => theme.colors.newBlue};
-  color: white;
+  background-color: ${({ theme, bgColor }) =>
+    bgColor === 'white' ? theme.colors.white : theme.colors.newBlue};
+  color: ${({ bgColor }) => (bgColor === 'white' ? 'black' : 'white')};
   border: 1px solid ${({ theme }) => theme.colors.gray};
   border-radius: 0.25rem;
   padding: 0.3rem 0.5rem;

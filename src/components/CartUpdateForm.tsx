@@ -1,12 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { StyledSharedSelect } from '../pages/styles/shared.styles';
+import { deleteCart } from '../store/carts.slice';
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import { ICart, ICartItem, ICartItemEntry } from '../types/cart.types';
 import { IProduct } from '../types/product.types';
+import {
+  StyledCartUpdateBtn,
+  StyledCartUpdateWarnBtn,
+  StyledUpdateCartForm,
+} from './styles/cartUpdateForm';
 
 interface IProps {
   cart: ICart;
+  setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CartUpdateTRow = ({ cartItem }: { cartItem: ICartItem }) => {
@@ -17,12 +25,18 @@ const CartUpdateTRow = ({ cartItem }: { cartItem: ICartItem }) => {
       <td>{quantity}</td>
       <td>{cartItem.itemPrice}</td>
       <td>
-        <button type="button" onClick={() => setQuantity((prev) => prev - 1)}>
+        <StyledCartUpdateBtn
+          type="button"
+          onClick={() => setQuantity((prev) => prev - 1)}
+        >
           -
-        </button>{' '}
-        <button type="button" onClick={() => setQuantity((prev) => prev + 1)}>
+        </StyledCartUpdateBtn>{' '}
+        <StyledCartUpdateBtn
+          type="button"
+          onClick={() => setQuantity((prev) => prev + 1)}
+        >
           +
-        </button>
+        </StyledCartUpdateBtn>
       </td>
     </tr>
   );
@@ -41,12 +55,18 @@ const CartAddedProductTRow = ({
       <td>{quantity}</td>
       <td>{product?.price}</td>
       <td>
-        <button type="button" onClick={() => setQuantity((prev) => prev - 1)}>
+        <StyledCartUpdateBtn
+          type="button"
+          onClick={() => setQuantity((prev) => prev - 1)}
+        >
           -
-        </button>{' '}
-        <button type="button" onClick={() => setQuantity((prev) => prev + 1)}>
+        </StyledCartUpdateBtn>{' '}
+        <StyledCartUpdateBtn
+          type="button"
+          onClick={() => setQuantity((prev) => prev + 1)}
+        >
           +
-        </button>
+        </StyledCartUpdateBtn>
       </td>
     </tr>
   );
@@ -63,7 +83,7 @@ const toCartEntries = (cartItems: ICartItem[]): ICartItemEntry[] => {
   return transformed;
 };
 
-const CartUpdateForm = ({ cart }: IProps) => {
+const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
   const dispatch = useAppDispatch();
   const cartItems: ICartItem[] = cart.items;
   const [selectedProduct, setSelectedProduct] = useState<IProduct['id'] | null>(
@@ -73,7 +93,10 @@ const CartUpdateForm = ({ cart }: IProps) => {
   const { products, status } = useSelector(
     (state: RootState) => state.products
   );
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const selectRef = useRef<HTMLSelectElement | null>(null);
+
+  //TODO:initialize/fetch users /refactor useEffect hook
   useEffect(() => {
     let isMounted = true;
     const initProducts = async () => {
@@ -96,23 +119,36 @@ const CartUpdateForm = ({ cart }: IProps) => {
     console.log([...toCartEntries(cartItems), ...newCartEntries]);
   };
 
+  const deleteHandler = async () => {
+    try {
+      await dispatch(deleteCart(cart.id)).unwrap();
+      setIsFormOpen(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <form onSubmit={(e) => submitHandler(e)}>
+    <StyledUpdateCartForm onSubmit={(e) => submitHandler(e)}>
       <div>
         <label htmlFor="creator">Created by </label>
-        <select name="creator" id="creator">
+        <StyledSharedSelect
+          name="creator"
+          id="creator"
+          isDisplayed={true}
+          bgColor="white"
+        >
           <option>{cart.createdBy.username}</option>
-        </select>
+        </StyledSharedSelect>
       </div>
       <div>
-        <h2>add or remove products</h2>
         <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Quantity</th>
               <th>Price</th>
-              <th>Remove/Add</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -131,8 +167,10 @@ const CartUpdateForm = ({ cart }: IProps) => {
             ))}
           </tbody>
         </table>
-        <div>
-          <select
+        <div className="select-ctn">
+          <StyledSharedSelect
+            isDisplayed={true}
+            bgColor="white"
             name="products"
             id="products"
             onChange={(e) => setSelectedProduct(e.target.value)}
@@ -156,8 +194,8 @@ const CartUpdateForm = ({ cart }: IProps) => {
                 {el.name} | €{el.price}
               </option>
             ))}
-          </select>
-          <button
+          </StyledSharedSelect>
+          <StyledCartUpdateBtn
             type="button"
             onClick={() => {
               if (selectedProduct) {
@@ -172,11 +210,46 @@ const CartUpdateForm = ({ cart }: IProps) => {
             }}
           >
             add
-          </button>
+          </StyledCartUpdateBtn>
+        </div>
+        <div className="btn-ctn">
+          <StyledCartUpdateBtn
+            type="button"
+            onClick={() => setIsFormOpen(false)}
+          >
+            Cancel
+          </StyledCartUpdateBtn>
+
+          <StyledCartUpdateBtn type="submit">Submit</StyledCartUpdateBtn>
         </div>
       </div>
-      <button type="submit">Submit</button>
-    </form>
+      {!isDeleteClicked && (
+        <StyledCartUpdateWarnBtn
+          bgColor="orange"
+          type="button"
+          onClick={() => setIsDeleteClicked((prev) => !prev)}
+        >
+          Delete cart
+        </StyledCartUpdateWarnBtn>
+      )}
+      {isDeleteClicked && (
+        <div className="delete-confirm">
+          <p>Are you sure ?</p>
+          <div>
+            <StyledCartUpdateWarnBtn
+              type="button"
+              onClick={() => setIsDeleteClicked(false)}
+              bgColor="orange"
+            >
+              No
+            </StyledCartUpdateWarnBtn>
+            <StyledCartUpdateWarnBtn type="button" onClick={deleteHandler}>
+              Yes
+            </StyledCartUpdateWarnBtn>
+          </div>
+        </div>
+      )}
+    </StyledUpdateCartForm>
   );
 };
 

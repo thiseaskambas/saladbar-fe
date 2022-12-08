@@ -1,5 +1,6 @@
 import axios from '../utils/axios';
 import {
+  ICart,
   ICartProduct,
   INewCartEntry,
   IPaginationOptions,
@@ -25,4 +26,9 @@ const initializeCarts = async (pageOptions: IPaginationOptions) => {
   return response.data;
 };
 
-export default { createOne, formatCart, initializeCarts };
+const deleteOne = async (id: ICart['id']) => {
+  const response = await axios.axiosPrivate.delete(`/carts/${id}`);
+  return response.data;
+};
+
+export default { createOne, formatCart, initializeCarts, deleteOne };

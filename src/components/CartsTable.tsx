@@ -44,7 +44,12 @@ const CartsTable = ({ carts }: IProps) => {
         modalTitle="Edit Cart"
       >
         <StyledModalCtnDiv>
-          {isSelectedCart && <CartUpdateForm cart={isSelectedCart} />}
+          {isSelectedCart && (
+            <CartUpdateForm
+              cart={isSelectedCart}
+              setIsFormOpen={setIsEditOpen}
+            />
+          )}
         </StyledModalCtnDiv>
       </Modal>
     </>
