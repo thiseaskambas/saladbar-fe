@@ -4,7 +4,8 @@ import { StyledSharedSelect } from '../pages/styles/shared.styles';
 import { deleteCart } from '../store/carts.slice';
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
-import { ICart, ICartItem, ICartItemEntry } from '../types/cart.types';
+import { ICart, ICartItem } from '../types/cart.types';
+import { ILocalCartItemFormated } from '../types/localCart.types';
 import { IProduct } from '../types/product.types';
 import { CartAddedProductTRow } from './CartAddedProductTRow';
 import { CartUpdateTRow } from './CartUpdateTRow';
@@ -19,7 +20,7 @@ interface IProps {
   setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const toCartEntries = (cartItems: ICartItem[]): ICartItemEntry[] => {
+const toCartEntries = (cartItems: ICartItem[]): ILocalCartItemFormated[] => {
   const transformed = cartItems.map((item) => {
     return {
       product: item.product?.id || Math.random().toString(),
@@ -37,7 +38,9 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
   const [selectedProduct, setSelectedProduct] = useState<IProduct['id'] | null>(
     null
   );
-  const [newCartEntries, setNewCartEntries] = useState<ICartItemEntry[]>([]);
+  const [newCartEntries, setNewCartEntries] = useState<
+    ILocalCartItemFormated[]
+  >([]);
   const { products, status } = useSelector(
     (state: RootState) => state.products
   );

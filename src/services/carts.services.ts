@@ -1,19 +1,19 @@
 import axios from '../utils/axios';
+import { ICart, IPaginationOptions } from '../types/cart.types';
 import {
-  ICart,
-  ICartProduct,
-  INewCartEntry,
-  IPaginationOptions,
-} from '../types/cart.types';
+  ILocalCartItem,
+  ILocalCartItemFormated,
+  ILocalCartToBeSaved,
+} from '../types/localCart.types';
 
-const formatCart = (cart: ICartProduct[]): INewCartEntry => {
-  const items = cart.map((el) => {
+const formatCart = (cart: ILocalCartItem[]): ILocalCartToBeSaved => {
+  const items: ILocalCartItemFormated[] = cart.map((el) => {
     return { product: el.product.id, quantity: el.quantity };
   });
   return { items, discount: 0 };
 };
 
-const createOne = async (cart: ICartProduct[]) => {
+const createOne = async (cart: ILocalCartItem[]) => {
   const formated = formatCart(cart);
   const response = await axios.axiosPrivate.post(`/carts/`, formated);
   return response.data.data;
