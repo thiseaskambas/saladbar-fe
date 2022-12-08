@@ -1,3 +1,4 @@
+import { ILocalCartToBeSaved } from './localCart.types';
 import { IProduct } from './product.types';
 import { IUser } from './user.types';
 
@@ -42,4 +43,9 @@ export interface IPaginationOptions {
 export interface IInitCartsResponse {
   data: ICart[];
   count: number;
+}
+
+export interface IUpdateCartDataToSend {
+  cart: ILocalCartToBeSaved;
+  id: ICart['id'];
 }

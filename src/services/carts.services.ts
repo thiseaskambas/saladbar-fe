@@ -1,5 +1,9 @@
 import axios from '../utils/axios';
-import { ICart, IPaginationOptions } from '../types/cart.types';
+import {
+  ICart,
+  IPaginationOptions,
+  IUpdateCartDataToSend,
+} from '../types/cart.types';
 import {
   ILocalCartItem,
   ILocalCartItemFormated,
@@ -31,4 +35,13 @@ const deleteOne = async (id: ICart['id']) => {
   return response.data;
 };
 
-export default { createOne, formatCart, initializeCarts, deleteOne };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const updateOne = async (inputObj: IUpdateCartDataToSend) => {
+  const response = await axios.axiosPrivate.patch(
+    `/carts/${inputObj.id}`,
+    inputObj.cart
+  );
+  return response.data;
+};
+
+export default { createOne, formatCart, initializeCarts, deleteOne, updateOne };

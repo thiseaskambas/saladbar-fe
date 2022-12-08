@@ -3,38 +3,38 @@ import { IUpdateCart } from '../types/localCart.types';
 
 const initialState: IUpdateCart = {
   existingItems: [],
-  totalItems: 0,
   discount: 0,
   newItems: [],
+  totalItems: 0,
 };
 
 const cartUpdateSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    initCart(state, action) {
-      state.existingItems.push(action.payload.products);
-      state.totalItems = action.payload.totalItems;
+    initCartUpdate(state, action) {
+      state.existingItems = [...action.payload.items];
       state.discount = action.payload?.discount || 0;
+      state.newItems = [];
     },
     addNewItem(state, action) {
       const index = state.newItems.findIndex(
-        (pr) => pr.product === action.payload.productID
+        (pr) => pr.product === action.payload
       );
       if (index === -1) {
         state.newItems.push({
-          product: action.payload.product,
-          quantity: action.payload.quantity,
+          product: action.payload,
+          quantity: 1,
         });
       } else {
-        state.newItems[index].quantity += action.payload.quantity;
+        state.newItems[index].quantity += 1;
       }
-      state.totalItems += action.payload.quantity;
+      state.totalItems += 1;
       return state;
     },
     removeNewItem(state, action) {
       const temp = state.newItems.map((el) =>
-        el.product === action.payload.productID && el.quantity > 0
+        el.product === action.payload && el.quantity > 0
           ? { ...el, quantity: el.quantity - 1 }
           : el
       );
@@ -42,12 +42,37 @@ const cartUpdateSlice = createSlice({
       state.totalItems -= 1;
       return state;
     },
-    resetCart() {
-      return initialState;
+    removeExistingItem(state, action) {
+      console.log('removing from ', action.payload);
+      const temp = state.existingItems.map((el) =>
+        el.product.id === action.payload && el.quantity > 0
+          ? { ...el, quantity: el.quantity - 1 }
+          : el
+      );
+      state.existingItems = [...temp];
+      state.totalItems -= 1;
+      return state;
+    },
+    addExistingItem(state, action) {
+      const index = state.existingItems.findIndex(
+        (pr) => pr.product.id === action.payload
+      );
+      if (index === -1) {
+        return state;
+      } else {
+        state.existingItems[index].quantity += 1;
+      }
+      state.totalItems += 1;
+      return state;
     },
   },
 });
 
-// export const { addToCart, removeFromCart, resetCart, initCart } =
-// cartUpdateSlice.actions;
+export const {
+  addNewItem,
+  removeNewItem,
+  addExistingItem,
+  initCartUpdate,
+  removeExistingItem,
+} = cartUpdateSlice.actions;
 export default cartUpdateSlice.reducer;

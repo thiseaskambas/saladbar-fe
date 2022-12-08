@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StyledSharedSelect } from '../pages/styles/shared.styles';
 import { deleteCart } from '../store/carts.slice';
+import { addNewItem, initCartUpdate } from '../store/cartUpdate.slice';
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import { ICart, ICartItem } from '../types/cart.types';
 import { ILocalCartItemFormated } from '../types/localCart.types';
-import { IProduct } from '../types/product.types';
+
 import { CartAddedProductTRow } from './CartAddedProductTRow';
 import { CartUpdateTRow } from './CartUpdateTRow';
 import {
@@ -23,28 +24,28 @@ interface IProps {
 const toCartEntries = (cartItems: ICartItem[]): ILocalCartItemFormated[] => {
   const transformed = cartItems.map((item) => {
     return {
-      product: item.product?.id || Math.random().toString(),
+      product: item.product.id,
       quantity: item.quantity,
-      // discount: item?.discount,
+      discount: item?.discount || 0,
     };
   });
   return transformed;
 };
 
 const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
+  console.log({ cart });
   const dispatch = useAppDispatch();
-  const cartItems: ICartItem[] = cart.items;
-  console.log({ cartItems });
-  const [selectedProduct, setSelectedProduct] = useState<IProduct['id'] | null>(
-    null
+  const { existingItems, newItems } = useSelector(
+    (state: RootState) => state.updateCart
   );
-  const [newCartEntries, setNewCartEntries] = useState<
-    ILocalCartItemFormated[]
-  >([]);
   const { products, status } = useSelector(
     (state: RootState) => state.products
   );
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null
+  );
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
+
   const selectRef = useRef<HTMLSelectElement | null>(null);
 
   //TODO:initialize/fetch users /refactor useEffect hook
@@ -65,9 +66,28 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
     };
   }, []);
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    let isMounted = true;
+    isMounted &&
+      dispatch(
+        initCartUpdate({ items: cart.items, discount: cart?.discount || 0 })
+      );
+    return () => {
+      isMounted = false;
+    };
+  }, [cart]);
+
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log([...toCartEntries(cartItems), ...newCartEntries]);
+    const cartDataToSend: ILocalCartItemFormated[] = [
+      ...toCartEntries(existingItems),
+      ...newItems,
+    ];
+    console.log({ cartDataToSend });
+    // await dispatch(
+    // updateCart({ cart: { items: cartDataToSend }, id: cart.id })
+    // ).unwrap();
+    // setIsFormOpen(false);
   };
 
   const deleteHandler = async () => {
@@ -98,18 +118,18 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
             <tr>
               <th>Name</th>
               <th>Quantity</th>
-              {/* <th>Price</th> */}
+              <th>Price</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {cartItems.map((el) => (
+            {existingItems.map((el) => (
               <CartUpdateTRow
                 key={el.product?.id || Math.random()}
                 cartItem={el}
               />
             ))}
-            {newCartEntries.map((el) => (
+            {newItems.map((el) => (
               <CartAddedProductTRow
                 key={el.product}
                 cartItem={el}
@@ -124,7 +144,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
             bgColor="white"
             name="products"
             id="products"
-            onChange={(e) => setSelectedProduct(e.target.value)}
+            onChange={(e) => setSelectedProductId(e.target.value)}
             defaultValue="disabled"
             ref={selectRef}
           >
@@ -136,10 +156,10 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
                 key={el.id}
                 value={el.id}
                 disabled={
-                  cartItems.findIndex((itm) => itm.product?.id === el.id) !==
-                    -1 ||
-                  newCartEntries.findIndex((itm) => itm.product === el.id) !==
-                    -1
+                  existingItems.findIndex(
+                    (itm) => itm.product?.id === el.id
+                  ) !== -1 ||
+                  newItems.findIndex((itm) => itm.product === el.id) !== -1
                 }
               >
                 {el.name} | €{el.price}
@@ -149,11 +169,9 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
           <StyledCartUpdateBtn
             type="button"
             onClick={() => {
-              if (selectedProduct) {
-                setNewCartEntries((prev) => [
-                  ...prev,
-                  { product: selectedProduct, quantity: 1 },
-                ]);
+              if (selectedProductId) {
+                console.log('adding ', selectedProductId);
+                dispatch(addNewItem(selectedProductId));
               }
               if (selectRef.current) {
                 selectRef.current.value = 'disabled';

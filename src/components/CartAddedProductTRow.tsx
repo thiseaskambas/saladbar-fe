@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { addNewItem, removeNewItem } from '../store/cartUpdate.slice';
+import { useAppDispatch } from '../store/store';
 import { ILocalCartItemFormated } from '../types/localCart.types';
 
 import { IProduct } from '../types/product.types';
@@ -10,22 +11,22 @@ interface IProps {
 }
 
 export const CartAddedProductTRow = ({ cartItem, product }: IProps) => {
-  const [quantity, setQuantity] = useState(cartItem.quantity);
+  const dispatch = useAppDispatch();
   return (
     <tr>
       <td>{product?.name}</td>
-      <td>{quantity}</td>
-      {/* <td>€ {product?.price}</td> */}
+      <td>{cartItem.quantity}</td>
+      <td>€ {product?.price}</td>
       <td>
         <StyledCartUpdateBtn
           type="button"
-          onClick={() => setQuantity((prev) => prev - 1)}
+          onClick={() => dispatch(removeNewItem(cartItem.product))}
         >
           -
         </StyledCartUpdateBtn>{' '}
         <StyledCartUpdateBtn
           type="button"
-          onClick={() => setQuantity((prev) => prev + 1)}
+          onClick={() => dispatch(addNewItem(cartItem.product))}
         >
           +
         </StyledCartUpdateBtn>

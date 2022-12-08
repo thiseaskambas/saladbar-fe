@@ -5,6 +5,7 @@ import {
   ICartsState,
   IInitCartsResponse,
   IPaginationOptions,
+  IUpdateCartDataToSend,
 } from '../types/cart.types';
 import { ILocalCartItem } from '../types/localCart.types';
 
@@ -38,6 +39,15 @@ export const deleteCart = createAsyncThunk(
   }
 );
 
+export const updateCart = createAsyncThunk(
+  'carts/updateOne',
+  async (cartIdObj: IUpdateCartDataToSend): Promise<ICart> => {
+    const response = await cartsServices.updateOne(cartIdObj);
+    console.log(response.data.data);
+    return response.data.data;
+  }
+);
+
 const cartsSlice = createSlice({
   name: 'carts',
   initialState,
@@ -56,6 +66,12 @@ const cartsSlice = createSlice({
       .addCase(deleteCart.fulfilled, (state, action) => {
         const temp = state.carts.filter(
           (crt) => crt.id !== action.payload.cartId
+        );
+        state.carts = [...temp];
+      })
+      .addCase(updateCart.fulfilled, (state, action) => {
+        const temp = state.carts.map((cart) =>
+          cart.id === action.payload.id ? action.payload : cart
         );
         state.carts = [...temp];
       });
