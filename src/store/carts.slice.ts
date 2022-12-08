@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import cartsServices from '../services/carts.services';
 import {
   ICart,
-  ICartProduct,
-  ICartsInitialState,
+  ICartsState,
   IInitCartsResponse,
   IPaginationOptions,
 } from '../types/cart.types';
+import { ILocalCartItem } from '../types/localCart.types';
 
-const initialState: ICartsInitialState = {
+const initialState: ICartsState = {
   carts: [],
   totalCarts: 0,
   status: 'idle',
@@ -16,7 +16,7 @@ const initialState: ICartsInitialState = {
 
 export const createOneCart = createAsyncThunk(
   'carts/create',
-  async (cart: ICartProduct[]): Promise<ICart> => {
+  async (cart: ILocalCartItem[]): Promise<ICart> => {
     const response = await cartsServices.createOne(cart);
     return response.data;
   }

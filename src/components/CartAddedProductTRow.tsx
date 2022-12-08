@@ -1,15 +1,15 @@
 import { useState } from 'react';
-import { ICartItemEntry } from '../types/cart.types';
+import { ILocalCartItemFormated } from '../types/localCart.types';
+
 import { IProduct } from '../types/product.types';
 import { StyledCartUpdateBtn } from './styles/cartUpdateForm';
 
-export const CartAddedProductTRow = ({
-  cartItem,
-  product,
-}: {
-  cartItem: ICartItemEntry;
+interface IProps {
+  cartItem: ILocalCartItemFormated;
   product?: IProduct;
-}) => {
+}
+
+export const CartAddedProductTRow = ({ cartItem, product }: IProps) => {
   const [quantity, setQuantity] = useState(cartItem.quantity);
   return (
     <tr>

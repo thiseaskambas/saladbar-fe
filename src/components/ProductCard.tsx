@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 import { IProduct } from '../types/product.types';
-import { addToCart } from '../store/cart.slice';
+import { addToCart } from '../store/localCart.slice';
 import {
   StyledAddToCartBtn,
   StyledCardDiv,

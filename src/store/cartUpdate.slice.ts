@@ -1,13 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IUpdateCart } from '../types/cart.types';
+import { IUpdateCart } from '../types/localCart.types';
 
 const initialState: IUpdateCart = {
   existingItems: [],
   totalItems: 0,
   discount: 0,
-  newEntries: {
-    items: [],
-  },
+  newItems: [],
 };
 
 const cartUpdateSlice = createSlice({
@@ -17,33 +15,33 @@ const cartUpdateSlice = createSlice({
     initCart(state, action) {
       state.existingItems.push(action.payload.products);
       state.totalItems = action.payload.totalItems;
-      state.discount = action.payload.discount;
+      state.discount = action.payload?.discount || 0;
     },
-    // addToCart(state, action) {
-    //   const index = state.newEntries.items.findIndex(
-    //     (pr) => pr.product === action.payload.product.id
-    //   );
-    //   if (index === -1) {
-    //     state.products.push({
-    //       product: action.payload.product,
-    //       quantity: action.payload.quantity,
-    //     });
-    //   } else {
-    //     state.products[index].quantity += action.payload.quantity;
-    //   }
-    //   state.totalItems += action.payload.quantity;
-    //   return state;
-    // },
-    // removeFromCart(state, action) {
-    //   const temp = state.products.map((el) =>
-    //     el.product.id === action.payload && el.quantity > 0
-    //       ? { ...el, quantity: el.quantity - 1 }
-    //       : el
-    //   );
-    //   state.products = temp;
-    //   state.totalItems -= 1;
-    //   return state;
-    // },
+    addNewItem(state, action) {
+      const index = state.newItems.findIndex(
+        (pr) => pr.product === action.payload.productID
+      );
+      if (index === -1) {
+        state.newItems.push({
+          product: action.payload.product,
+          quantity: action.payload.quantity,
+        });
+      } else {
+        state.newItems[index].quantity += action.payload.quantity;
+      }
+      state.totalItems += action.payload.quantity;
+      return state;
+    },
+    removeNewItem(state, action) {
+      const temp = state.newItems.map((el) =>
+        el.product === action.payload.productID && el.quantity > 0
+          ? { ...el, quantity: el.quantity - 1 }
+          : el
+      );
+      state.newItems = [...temp];
+      state.totalItems -= 1;
+      return state;
+    },
     resetCart() {
       return initialState;
     },
