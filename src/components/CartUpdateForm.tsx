@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StyledSharedSelect } from '../pages/styles/shared.styles';
-import { deleteCart } from '../store/carts.slice';
+import { deleteCart, updateCart } from '../store/carts.slice';
 import { addNewItem, initCartUpdate } from '../store/cartUpdate.slice';
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
@@ -22,18 +22,20 @@ interface IProps {
 }
 
 const toCartEntries = (cartItems: ICartItem[]): ILocalCartItemFormated[] => {
-  const transformed = cartItems.map((item) => {
-    return {
-      product: item.product.id,
-      quantity: item.quantity,
-      discount: item?.discount || 0,
-    };
+  const transformed: ILocalCartItemFormated[] = [];
+  cartItems.forEach((item) => {
+    if (item.quantity > 0) {
+      transformed.push({
+        product: item.product.id,
+        quantity: item.quantity,
+        discount: item?.discount || 0,
+      });
+    }
   });
   return transformed;
 };
 
 const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
-  console.log({ cart });
   const dispatch = useAppDispatch();
   const { existingItems, newItems } = useSelector(
     (state: RootState) => state.updateCart
@@ -84,10 +86,14 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
       ...newItems,
     ];
     console.log({ cartDataToSend });
-    // await dispatch(
-    // updateCart({ cart: { items: cartDataToSend }, id: cart.id })
-    // ).unwrap();
-    // setIsFormOpen(false);
+    if (cartDataToSend.length > 0) {
+      await dispatch(
+        updateCart({ cart: { items: cartDataToSend }, id: cart.id })
+      ).unwrap();
+      setIsFormOpen(false);
+    } else {
+      setIsDeleteClicked(true);
+    }
   };
 
   const deleteHandler = async () => {
@@ -203,7 +209,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
       )}
       {isDeleteClicked && (
         <div className="delete-confirm">
-          <p>Are you sure ?</p>
+          <p>Are you sure you want to delete the cart?</p>
           <div>
             <StyledCartUpdateWarnBtn
               type="button"
