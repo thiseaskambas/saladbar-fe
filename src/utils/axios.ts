@@ -43,7 +43,6 @@ axiosPrivate.interceptors.request.use(
 axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
-    console.log('here');
     const prevRequest = error.config;
     if (error.response && error.response.status === 500 && !prevRequest.sent) {
       prevRequest.sent = true;

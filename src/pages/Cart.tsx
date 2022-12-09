@@ -8,13 +8,13 @@ import {
 } from './styles/cart.styles';
 import CartItem from '../components/CartItem';
 import { createOneCart } from '../store/carts.slice';
-import { resetCart } from '../store/cart.slice';
+import { resetCart } from '../store/localCart.slice';
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useAppDispatch();
   const submitHandler = () => {
-    dispatch(createOneCart(cart.products));
+    dispatch(createOneCart(cart.items));
     dispatch(resetCart());
   };
   return (
@@ -31,7 +31,7 @@ const Cart = () => {
           <li>Quantity</li>
           <li>Price</li>
           <li>Sub-total</li>
-          {cart.products.map((el) =>
+          {cart.items.map((el) =>
             el.quantity > 0 ? (
               <CartItem key={el.product.id} cartItem={el} />
             ) : null
@@ -39,7 +39,7 @@ const Cart = () => {
           <StytledGridFooterItem>
             <span>Total Price : </span>
             <span style={{ marginLeft: '0.3rem' }}>
-              {cart.products.reduce(
+              {cart.items.reduce(
                 (prev, curr) => prev + curr.product.price * curr.quantity,
                 0
               )}

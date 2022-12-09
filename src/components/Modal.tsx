@@ -1,27 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  ModalBackgroundDiv,
-  ModalCenteredDiv,
+  StyledModalBackgroundDiv,
+  StyledModalCenteredDiv,
   StyledCloseBtn,
+  StyledModalHeader,
 } from './styles/modal.styles';
 
 interface Props {
   children?: React.ReactNode;
   open: boolean;
   onClose: () => void;
+  modalTitle?: string;
 }
 
-const Modal = ({ children, open, onClose }: Props) => {
+const Modal = ({ children, open, onClose, modalTitle }: Props) => {
   const portal = document.getElementById('portal');
   if (!open || !portal) return null;
   return ReactDOM.createPortal(
     <>
-      <ModalBackgroundDiv onClick={onClose} />
-      <ModalCenteredDiv>
-        <StyledCloseBtn onClick={onClose}>&#10005;</StyledCloseBtn>
+      <StyledModalBackgroundDiv onClick={onClose} />
+      <StyledModalCenteredDiv>
+        <StyledModalHeader>
+          <StyledCloseBtn onClick={onClose}>&#10005;</StyledCloseBtn>
+          <h1>{modalTitle}</h1>
+        </StyledModalHeader>
         <div>{children}</div>
-      </ModalCenteredDiv>
+      </StyledModalCenteredDiv>
     </>,
     portal
   );

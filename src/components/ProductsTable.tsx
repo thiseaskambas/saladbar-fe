@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { IProduct } from '../types/product.types';
 import ProductTr from './ProductTr';
 import Modal from './Modal';
-import { StyledTable } from './styles/productsTables.styles';
 
 import ProductUpdateForm from '../pages/ProductUpdateForm';
 import DeleteProduct from './DeleteProduct';
 import { useAppDispatch } from '../store/store';
 import { deleteProduct } from '../store/products.slice';
+import { StyledSharedTable } from '../pages/styles/shared.styles';
+import { StyledModalCtnDiv } from './styles/modal.styles';
 
 const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const dispatch = useAppDispatch();
@@ -46,7 +47,7 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
 
   return (
     <>
-      <StyledTable>
+      <StyledSharedTable>
         <thead>
           <tr>
             <th>Name</th>
@@ -58,23 +59,33 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
         <tbody>
           {products.map((el) => (
             <ProductTr
-              key={`${el.id}`}
+              key={el.id}
               product={el}
               onEdit={() => openEditHandler(el)}
               onDelete={() => openDeleteHandler(el)}
             />
           ))}
         </tbody>
-      </StyledTable>
-      <Modal onClose={closeModalHandler} open={isEditOpen}>
+      </StyledSharedTable>
+      <Modal
+        onClose={closeModalHandler}
+        open={isEditOpen}
+        modalTitle="Edit Product"
+      >
         {isSelectedProduct && (
-          <ProductUpdateForm
-            existingProduct={isSelectedProduct}
-            onEndSubmit={closeModalHandler}
-          />
+          <StyledModalCtnDiv>
+            <ProductUpdateForm
+              existingProduct={isSelectedProduct}
+              onEndSubmit={closeModalHandler}
+            />
+          </StyledModalCtnDiv>
         )}
       </Modal>
-      <Modal onClose={closeModalHandler} open={isDeleteOpen}>
+      <Modal
+        onClose={closeModalHandler}
+        open={isDeleteOpen}
+        modalTitle="Delete Product?"
+      >
         {isSelectedProduct && (
           <DeleteProduct
             productName={isSelectedProduct.name}

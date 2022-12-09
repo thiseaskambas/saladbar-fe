@@ -2,11 +2,11 @@ import {
   StyledCardQButton,
   StytledGridItem,
 } from '../pages/styles/cart.styles';
-import { addToCart, removeFromCart } from '../store/cart.slice';
+import { addToCart, removeFromCart } from '../store/localCart.slice';
 import { useAppDispatch } from '../store/store';
-import { ICartProduct } from '../types/cart.types';
+import { ILocalCartItem } from '../types/localCart.types';
 
-const CartItem = ({ cartItem }: { cartItem: ICartProduct }) => {
+const CartItem = ({ cartItem }: { cartItem: ILocalCartItem }) => {
   const dispatch = useAppDispatch();
   const decrHandler = () => {
     dispatch(removeFromCart(cartItem.product.id));

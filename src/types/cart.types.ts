@@ -1,30 +1,16 @@
+import { ILocalCartToBeSaved } from './localCart.types';
 import { IProduct } from './product.types';
 import { IUser } from './user.types';
 
-export interface ICart extends Omit<INewCartEntry, 'items'> {
+export interface ICart {
   items: ICartItem[];
-  createdBy: IUser['id'];
-  createdAt: Date;
+  createdBy: IUser;
+  createdAt: string;
   lastEdited?: ILastEdited;
   totalPriceBeforeDiscount: number;
   totalPrice: number;
   active: boolean;
-}
-
-export interface INewCartEntry {
-  items: ICartItemEntry[];
-  discount: number;
-}
-
-export interface ICartItem extends ICartItemEntry {
-  itemPrice: number;
-  itemPriceBeforeDiscount: number;
-  totalPriceBeforeDiscount: number;
-  totalPrice: number;
-}
-export interface ICartItemEntry {
-  product: IProduct['id'];
-  quantity: number;
+  id: string;
   discount?: number;
 }
 
@@ -33,19 +19,33 @@ export interface ILastEdited {
   editDate: Date;
 }
 
-export interface ICartProduct {
+export interface ICartItem {
   product: IProduct;
+  itemPrice: number;
+  itemPriceBeforeDiscount: number;
+  totalPriceBeforeDiscount: number;
+  totalPrice: number;
   quantity: number;
   discount?: number;
 }
 
-export interface ICartInitialState {
-  products: ICartProduct[];
-  discount: number;
-  totalItems: number;
-}
-
-export interface ICartsInitialState {
+export interface ICartsState {
   carts: ICart[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  totalCarts: number;
+}
+
+export interface IPaginationOptions {
+  page: number;
+  limit: number;
+}
+
+export interface IInitCartsResponse {
+  data: ICart[];
+  count: number;
+}
+
+export interface IUpdateCartDataToSend {
+  cart: ILocalCartToBeSaved;
+  id: ICart['id'];
 }

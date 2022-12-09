@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProductsTable from '../components/ProductsTable';
 import { initializeProducts } from '../store/products.slice';
 import { RootState, useAppDispatch } from '../store/store';
-import { StyledProductsMain } from './styles/productsPage.styles';
+import { StyledSharedMain } from './styles/shared.styles';
 
 const Products = () => {
   const dispatch = useAppDispatch();
@@ -31,11 +31,11 @@ const Products = () => {
   }, []);
 
   return (
-    <StyledProductsMain>
+    <StyledSharedMain>
       {productsState.status === 'succeeded' && (
         <ProductsTable products={productsState.products} />
       )}
-    </StyledProductsMain>
+    </StyledSharedMain>
   );
 };
 
