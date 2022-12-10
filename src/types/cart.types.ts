@@ -33,11 +33,16 @@ export interface ICartsState {
   carts: ICart[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   totalCarts: number;
+  tempCartsForStats: ICart[];
+  tempTotalCarts: number;
+  tempCartsStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
 
 export interface IPaginationOptions {
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
+  after?: string;
+  before?: string;
 }
 
 export interface IInitCartsResponse {

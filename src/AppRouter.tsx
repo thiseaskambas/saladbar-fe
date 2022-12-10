@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Cart from './pages/Cart';
 import CartsDash from './pages/CartsDash';
 import Product from './pages/Product';
-import Day from './pages/Day';
+import Today from './pages/Today';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import MainDashBoard from './pages/MainDashBoard';
@@ -25,7 +25,7 @@ const AppRouter = () => (
       <Route path="/logout" element={<LogOut />} />
       <Route path="/dashboard" element={<MainDashBoard />} />
       <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
-        <Route path="/day-view" element={<Day />} />
+        <Route path="/day-view" element={<Today />} />
         <Route path="/carts">
           <Route index element={<CartsDash />} />
           <Route path="current" element={<Cart />} />
