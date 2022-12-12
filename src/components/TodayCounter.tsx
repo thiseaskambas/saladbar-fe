@@ -18,8 +18,6 @@ const CounterDiv = ({
     } else return widthMeasured;
   })();
 
-  console.log({ widthCalc });
-
   const { width, number, opacity } = useSpring({
     from: { width: 0, opacity: 0, number: 0 },
     width: widthCalc,
