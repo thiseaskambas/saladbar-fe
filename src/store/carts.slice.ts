@@ -13,6 +13,9 @@ const initialState: ICartsState = {
   carts: [],
   totalCarts: 0,
   status: 'idle',
+  tempCartsForStats: [],
+  tempTotalCarts: 0,
+  tempCartsStatus: 'idle',
 };
 
 export const createOneCart = createAsyncThunk(
@@ -25,6 +28,14 @@ export const createOneCart = createAsyncThunk(
 
 export const initializeCarts = createAsyncThunk(
   'carts/initialize',
+  async (pageOptions: IPaginationOptions): Promise<IInitCartsResponse> => {
+    const response = await cartsServices.initializeCarts(pageOptions);
+    return response.data;
+  }
+);
+
+export const getCartsForStats = createAsyncThunk(
+  'carts/getTempCarts',
   async (pageOptions: IPaginationOptions): Promise<IInitCartsResponse> => {
     const response = await cartsServices.initializeCarts(pageOptions);
     return response.data;
@@ -62,6 +73,11 @@ const cartsSlice = createSlice({
         state.carts = action.payload.data;
         state.totalCarts = action.payload.count;
         state.status = 'succeeded';
+      })
+      .addCase(getCartsForStats.fulfilled, (state, action) => {
+        state.tempCartsForStats = action.payload.data;
+        state.tempTotalCarts = action.payload.count;
+        state.tempCartsStatus = 'succeeded';
       })
       .addCase(deleteCart.fulfilled, (state, action) => {
         const temp = state.carts.filter(

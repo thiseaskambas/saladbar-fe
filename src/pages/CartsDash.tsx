@@ -52,6 +52,8 @@ const CartsDash = () => {
     };
   }, [currentPage, pageSizeLimit, afterDate, beforeDate]);
 
+  console.log({ options });
+
   useInitializeData(initializeCarts, options, cartsState.status);
 
   const pages = usePagination({
@@ -70,7 +72,7 @@ const CartsDash = () => {
     setDisplay(() => false);
     setCurrentPage(1);
   };
-
+  console.log({ carts: cartsState.carts });
   return (
     <StyledSharedMain>
       <div>
