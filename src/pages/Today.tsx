@@ -15,16 +15,18 @@ import {
 import CounterDiv from '../components/TodayCounter';
 
 const Today = () => {
+  console.log('render');
   const cartsState = useSelector((state: RootState) => state.carts);
   // const userState = useSelector((state: RootState) => state.auth);
   const dispatch = useAppDispatch();
   const [ref, { width }] = useMeasure();
 
   useEffect(() => {
+    console.log('in effect');
     let isMounted = true;
     const initCarts = async () => {
-      const dayStart = helpers.convertToUTCStartDayString(new Date());
-      const dayEnd = helpers.convertToUTCEndDayString(new Date());
+      const dayStart = helpers.convertToLocalStartDayTime(new Date());
+      const dayEnd = helpers.convertToLocalEndDayTime(new Date());
       const lastWeekStart = helpers.convertToOneWeekAgo('start');
       const lastWeekEnd = helpers.convertToOneWeekAgo('end');
 
@@ -70,7 +72,15 @@ const Today = () => {
   );
 
   const weekday = helpers.getUTCDayName();
-
+  if (cartsState.tempCartsStatus === 'idle' || cartsState.status === 'idle') {
+    return null;
+  }
+  if (
+    cartsState.tempCartsStatus === 'loading' ||
+    cartsState.status === 'loading'
+  ) {
+    return null;
+  }
   return (
     <main>
       <StyledH1>
