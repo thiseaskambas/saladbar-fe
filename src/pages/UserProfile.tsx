@@ -1,9 +1,13 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import UserForm from '../components/UserForm';
+import { StyledMain } from './styles/form.styles';
 
 const UserProfile = () => {
-  const { id } = useParams();
-  return <main>UserProfile {id}</main>;
+  return (
+    <StyledMain>
+      <UserForm />
+    </StyledMain>
+  );
 };
 
 export default UserProfile;

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
 export const UsersTable = ({ users }: { users: IUser[] }) => {
-  const loggedUserId = useSelector((state: RootState) => state.auth.user.id);
+  const loggedUserId = useSelector((state: RootState) => state.auth?.user?.id);
   return (
     <StyledSharedTable>
       <thead>

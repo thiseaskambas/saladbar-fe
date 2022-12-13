@@ -17,7 +17,7 @@ export interface IUser {
 }
 
 export interface IAuthInitialState {
-  user: IUser;
+  user: IUser | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   accessToken: string;
   persist: boolean;
