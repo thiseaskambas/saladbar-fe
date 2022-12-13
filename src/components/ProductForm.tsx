@@ -1,8 +1,8 @@
 import { ErrorMessage, Field, Formik } from 'formik';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
-import { updateProduct } from '../store/products.slice';
+import { createProduct, updateProduct } from '../store/products.slice';
 import { useAppDispatch } from '../store/store';
 import { IProduct, ProductCourseType } from '../types/product.types';
 import {
@@ -19,11 +19,12 @@ interface IFormValues {
   price: string;
   productCourseType: string;
   image: File | null;
+  editing: boolean;
 }
 
 interface IProps {
-  existingProduct: IProduct;
-  onEndSubmit: () => void;
+  existingProduct?: IProduct;
+  onEndSubmit?: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -33,6 +34,15 @@ const validationSchema = Yup.object().shape({
     /(starter|main|desert|drink|side|other)/
   ),
   image: Yup.mixed()
+    .when('editing', {
+      is: false,
+      then: Yup.mixed().test('required', 'Please provide a file', (file) => {
+        if (file && file.size) {
+          return true;
+        }
+        return false;
+      }),
+    })
     .test(
       'fileSize',
       'The file is too large',
@@ -47,17 +57,16 @@ const validationSchema = Yup.object().shape({
     ),
 });
 
-const ProductUpdateForm = ({ existingProduct, onEndSubmit }: IProps) => {
+const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
   const [url, setUrl] = useState('');
   const dispatch = useAppDispatch();
-  //TODO: check if useRef is needed
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const initialValues: IFormValues = {
-    name: existingProduct.name || '',
-    price: existingProduct.price.toString() || '',
-    productCourseType: existingProduct.productCourseType || 'starter',
+    name: existingProduct?.name || '',
+    price: existingProduct?.price.toString() || '',
+    productCourseType: existingProduct?.productCourseType || 'starter',
     image: null,
+    editing: Boolean(existingProduct),
   };
 
   return (
@@ -72,17 +81,17 @@ const ProductUpdateForm = ({ existingProduct, onEndSubmit }: IProps) => {
         values.productCourseType &&
           input.append('productCourseType', values.productCourseType);
         try {
-          await dispatch(
-            updateProduct({ input, id: existingProduct.id })
-          ).unwrap();
+          existingProduct
+            ? await dispatch(
+                updateProduct({ input, id: existingProduct.id })
+              ).unwrap()
+            : await dispatch(createProduct(input)).unwrap();
           actions.resetForm({ values: { ...initialValues } });
           URL.revokeObjectURL(url);
           setUrl('');
           actions.setSubmitting(false);
-          if (inputRef.current) {
-            inputRef.current.value = '';
-          }
-          onEndSubmit();
+
+          onEndSubmit?.();
         } catch (err) {
           console.log(err);
         }
@@ -94,9 +103,9 @@ const ProductUpdateForm = ({ existingProduct, onEndSubmit }: IProps) => {
             <StyledPhotoContainer>
               <img id="photo" src={url} alt="" />
             </StyledPhotoContainer>
-          ) : existingProduct.image ? (
+          ) : existingProduct?.image ? (
             <StyledPhotoContainer>
-              <img id="photo" src={existingProduct.image.secure_url} alt="" />
+              <img id="photo" src={existingProduct?.image.secure_url} alt="" />
             </StyledPhotoContainer>
           ) : (
             <StyledImgCtn>
@@ -151,7 +160,9 @@ const ProductUpdateForm = ({ existingProduct, onEndSubmit }: IProps) => {
             </StyledMessageCtn>
           </StyledInnerDiv>
           <StyledInnerDiv>
-            <button type="submit">Update Product</button>
+            <button type="submit">
+              {existingProduct ? 'Update Product' : 'Create Product'}
+            </button>
           </StyledInnerDiv>
         </StyledForm>
       )}
@@ -159,4 +170,4 @@ const ProductUpdateForm = ({ existingProduct, onEndSubmit }: IProps) => {
   );
 };
 
-export default ProductUpdateForm;
+export default ProductForm;

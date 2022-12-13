@@ -3,7 +3,7 @@ import { IProduct } from '../types/product.types';
 import ProductTr from './ProductTr';
 import Modal from './Modal';
 
-import ProductUpdateForm from './ProductUpdateForm';
+import ProductForm from './ProductForm';
 import DeleteProduct from './DeleteProduct';
 import { useAppDispatch } from '../store/store';
 import { deleteProduct } from '../store/products.slice';
@@ -74,7 +74,7 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
       >
         {isSelectedProduct && (
           <StyledModalCtnDiv>
-            <ProductUpdateForm
+            <ProductForm
               existingProduct={isSelectedProduct}
               onEndSubmit={closeModalHandler}
             />
