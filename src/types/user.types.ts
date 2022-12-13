@@ -13,6 +13,7 @@ export interface IUser {
   username: string;
   fullName?: string;
   id: string;
+  email: string;
 }
 
 export interface IAuthInitialState {
@@ -39,4 +40,9 @@ export interface ILoginResponse {
   accessToken: string;
   loggedUser: IUser;
   persist?: boolean;
+}
+
+export interface IUsersState {
+  users: IUser[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }

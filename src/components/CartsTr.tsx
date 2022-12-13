@@ -24,7 +24,7 @@ const CartsTr = ({ cart, onClick }: IProps) => {
     0
   );
   return (
-    <StyledSharedTr onClick={onClick}>
+    <StyledSharedTr onClick={onClick} clickable={true}>
       <StyledSharedTd>{formatedDate.split(',').join(' - ')}</StyledSharedTd>
       <StyledSharedTd>
         <span className="italic">{cart.createdBy.username}</span>

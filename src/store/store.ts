@@ -6,6 +6,7 @@ import notifReducer from './notification.slice';
 import cartReducer from './localCart.slice';
 import cartsReducer from './carts.slice';
 import updateCartReducer from './cartUpdate.slice';
+import usersReducer from './users.slice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -14,6 +15,7 @@ export const store = configureStore({
     cart: cartReducer,
     carts: cartsReducer,
     updateCart: updateCartReducer,
+    users: usersReducer,
   },
 });
 
