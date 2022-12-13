@@ -89,7 +89,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
     if (cartDataToSend.length > 0) {
       await dispatch(
         updateCart({ cart: { items: cartDataToSend }, id: cart.id })
-      ).unwrap();
+      );
       setIsFormOpen(false);
     } else {
       setIsDeleteClicked(true);

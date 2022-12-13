@@ -30,7 +30,7 @@ export const UserTableCellRole = ({ user }: { user: IUser }) => {
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      await dispatch(updateOneUser({ id: user.id, role: isRole })).unwrap();
+      await dispatch(updateOneUser({ id: user.id, role: isRole }));
       setIsRoleChanged(() => false);
       setIsRole('');
     } catch (err) {

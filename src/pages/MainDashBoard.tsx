@@ -24,7 +24,7 @@ const MainDashBoard = () => {
     let isMounted = true;
     const initProducts = async () => {
       try {
-        await dispatch(initializeProducts()).unwrap();
+        await dispatch(initializeProducts());
       } catch (err) {
         console.log(err);
         //TODO: NOTIFICATION

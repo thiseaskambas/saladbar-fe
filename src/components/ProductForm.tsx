@@ -85,7 +85,7 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
             ? await dispatch(
                 updateProduct({ input, id: existingProduct.id })
               ).unwrap()
-            : await dispatch(createProduct(input)).unwrap();
+            : await dispatch(createProduct(input));
           actions.resetForm({ values: { ...initialValues } });
           URL.revokeObjectURL(url);
           setUrl('');

@@ -12,7 +12,6 @@ import Products from './pages/Products';
 import SignUp from './pages/SignUp';
 import RequireAuth from './wraperComponents/RequireAuth';
 import PersistLogin from './wraperComponents/PersistLogin';
-import LogOut from './pages/LogOut';
 
 const AppRouter = () => (
   <Routes>
@@ -20,7 +19,6 @@ const AppRouter = () => (
     <Route path="/signup" element={<SignUp />} />
     <Route element={<PersistLogin />}>
       <Route path="/" element={<Home />} />
-      <Route path="/logout" element={<LogOut />} />
       <Route path="/dashboard" element={<MainDashBoard />} />
       <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
         <Route path="/day-view" element={<Today />} />

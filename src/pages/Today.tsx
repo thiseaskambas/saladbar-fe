@@ -32,12 +32,10 @@ const Today = () => {
 
       try {
         await Promise.all([
-          dispatch(
-            initializeCarts({ after: dayStart, before: dayEnd })
-          ).unwrap(),
+          dispatch(initializeCarts({ after: dayStart, before: dayEnd })),
           dispatch(
             getCartsForStats({ after: lastWeekStart, before: lastWeekEnd })
-          ).unwrap(),
+          ),
         ]);
       } catch (err) {
         console.log(err);
