@@ -52,7 +52,7 @@ const CartsDash = () => {
     };
   }, [currentPage, pageSizeLimit, afterDate, beforeDate]);
 
-  console.log({ options });
+  // console.log({ options });
 
   useInitializeData(initializeCarts, options, cartsState.status);
 
@@ -63,16 +63,16 @@ const CartsDash = () => {
   });
 
   const dateRangeHandler = ({ startDate, endDate }: IDateRangeState) => {
-    setAfterDate(helpers.convertToUTCString(startDate));
-    if (startDate.toISOString() === endDate.toISOString()) {
-      setBeforeDate(helpers.convertToUTCEndDayString(endDate));
+    setAfterDate(() => new Date(startDate).toISOString());
+    if (new Date(startDate).toISOString() === new Date(endDate).toISOString()) {
+      setBeforeDate(helpers.convertToLocalEndDayTime(endDate));
     } else {
-      setBeforeDate(helpers.convertToUTCString(endDate));
+      setBeforeDate(() => new Date(endDate).toISOString());
     }
     setDisplay(() => false);
     setCurrentPage(1);
   };
-  console.log({ carts: cartsState.carts });
+
   return (
     <StyledSharedMain>
       <div>

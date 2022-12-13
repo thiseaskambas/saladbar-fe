@@ -15,7 +15,9 @@ const CounterDiv = ({
   const widthCalc = (() => {
     if (referenceElement < comparedElement) {
       return (widthMeasured / comparedElement) * referenceElement;
-    } else return widthMeasured;
+    }
+
+    return widthMeasured;
   })();
 
   const { width, number, opacity } = useSpring({
