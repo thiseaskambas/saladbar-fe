@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Cart from './pages/Cart';
 import CartsDash from './pages/CartsDash';
-import Product from './pages/Product';
 import Today from './pages/Today';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -10,7 +9,6 @@ import UserProfile from './pages/UserProfile';
 import Users from './pages/Users';
 import ProductCreateNew from './pages/ProductCreateNew';
 import Products from './pages/Products';
-import CartEditForm from './pages/CartEditForm';
 import SignUp from './pages/SignUp';
 import RequireAuth from './wraperComponents/RequireAuth';
 import PersistLogin from './wraperComponents/PersistLogin';
@@ -29,19 +27,14 @@ const AppRouter = () => (
         <Route path="/carts">
           <Route index element={<CartsDash />} />
           <Route path="current" element={<Cart />} />
-          <Route path=":id" element={<Cart />} />
-          <Route path=":id/edit" element={<CartEditForm />} />
         </Route>
         <Route path="/products">
           <Route index element={<Products />} />
           <Route path="create" element={<ProductCreateNew />} />
-          <Route path=":id" element={<Product />} />
-          <Route path=":id/edit" element={<ProductCreateNew />} />
         </Route>
         <Route path="/users">
           <Route index element={<Users />} />
           <Route path="me" element={<UserProfile />} />
-          <Route path=":id" element={<UserProfile />} />
         </Route>
       </Route>
     </Route>
