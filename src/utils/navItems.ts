@@ -33,5 +33,4 @@ export const navItems: Array<INavItem> = [
       },
     ],
   },
-  // { title: 'Logout', url: '/logout', mustBeLoggedIn: true },
 ];

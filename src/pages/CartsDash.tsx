@@ -52,8 +52,6 @@ const CartsDash = () => {
     };
   }, [currentPage, pageSizeLimit, afterDate, beforeDate]);
 
-  // console.log({ options });
-
   useInitializeData(initializeCarts, options, cartsState.status);
 
   const pages = usePagination({

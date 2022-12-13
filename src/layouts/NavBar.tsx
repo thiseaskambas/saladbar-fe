@@ -37,7 +37,6 @@ const NavBar = ({ user }: { user: IUser | null }) => {
 
   const logoutHandler = () => {
     dispatch(logUserOut())
-      .unwrap()
       .then(() => setIsLogoutModalOpen(false))
       .then(() => navigate('/', { replace: true }));
   };

@@ -17,7 +17,7 @@ import CounterDiv from '../components/TodayCounter';
 const Today = () => {
   console.log('render');
   const cartsState = useSelector((state: RootState) => state.carts);
-  // const userState = useSelector((state: RootState) => state.auth);
+
   const dispatch = useAppDispatch();
   const [ref, { width }] = useMeasure();
 
