@@ -3,21 +3,21 @@ import {
   IAuthInitialState,
   ILoginCredentials,
   ILoginResponse,
-  IUser,
 } from '../types/user.types';
 import authServices from '../services/auth.services';
 
-const initialState = {
-  user: {},
+const initialState: IAuthInitialState = {
+  user: null,
   status: 'idle',
   accessToken: '',
   persist: false,
-} as IAuthInitialState;
+};
 
 export const logUserIn = createAsyncThunk(
   'auth/login',
   async (credentials: ILoginCredentials): Promise<ILoginResponse> => {
     const response = await authServices.logIn(credentials);
+    console.log(response);
     return { ...response, persist: credentials.rememberMe };
   }
 );
@@ -58,17 +58,17 @@ const authSlice = createSlice({
       .addCase(refreshToken.rejected, (state) => {
         state.status = 'failed';
         state.accessToken = '';
-        state.user = {} as IUser;
+        state.user = null;
       })
       .addCase(logUserOut.fulfilled, (state) => {
         state.accessToken = '';
-        state.user = {} as IUser;
+        state.user = null;
         state.status = 'idle';
       })
       .addCase(logUserOut.rejected, (state) => {
-        state.status = 'idle';
         state.accessToken = '';
-        state.user = {} as IUser;
+        state.status = 'idle';
+        state.user = null;
       });
   },
 });

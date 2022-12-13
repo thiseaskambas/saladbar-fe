@@ -16,17 +16,23 @@ export const StyledSharedTable = styled.table`
   padding: 2rem;
 `;
 
-export const StyledSharedTr = styled.tr`
+export const StyledSharedTr = styled.tr<{ clickable?: boolean }>`
   transition: all 200ms;
   line-height: 1.2rem;
-  cursor: pointer;
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 
   :nth-child(odd) {
     background-color: ${({ theme }) => theme.colors.lightBrown};
   }
-  :hover {
-    background-color: ${({ theme }) => theme.colors.mediumBrown};
-  }
+
+  ${({ clickable, theme }) => {
+    if (clickable)
+      return `
+    :hover {
+      background-color: ${theme.colors.mediumBrown};
+    }
+    `;
+  }}
 `;
 
 export const StyledSharedTd = styled.td`
@@ -58,4 +64,12 @@ export const StyledSharedSelect = styled.select<{
   :focus {
     border: 1px solid ${({ theme }) => theme.colors.newBlue};
   }
+`;
+
+export const StyledSharedBtn = styled.button<{ isDisplayed: boolean }>`
+  display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
+  background-color: ${({ theme }) => theme.colors.newBlue};
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
 `;

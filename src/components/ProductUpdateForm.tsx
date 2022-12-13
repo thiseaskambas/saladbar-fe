@@ -10,9 +10,9 @@ import {
   StyledImgCtn,
   StyledInnerDiv,
   StyledMessageCtn,
-} from './styles/form.styles';
+} from '../pages/styles/form.styles';
 
-import { StyledPhotoContainer } from './styles/productForm.styles';
+import { StyledPhotoContainer } from '../pages/styles/productForm.styles';
 
 interface IFormValues {
   name: string;

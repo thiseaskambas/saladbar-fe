@@ -15,7 +15,7 @@ interface IProps {
 
 const ProductTr = ({ product, onEdit, onDelete }: IProps) => {
   return (
-    <StyledSharedTr>
+    <StyledSharedTr clickable={true}>
       <StyledSharedTd onClick={() => onEdit()}>{product.name}</StyledSharedTd>
       <StyledSharedPriceTd onClick={() => onEdit()}>
         {product.price}

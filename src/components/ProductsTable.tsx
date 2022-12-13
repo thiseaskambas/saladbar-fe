@@ -3,7 +3,7 @@ import { IProduct } from '../types/product.types';
 import ProductTr from './ProductTr';
 import Modal from './Modal';
 
-import ProductUpdateForm from '../pages/ProductUpdateForm';
+import ProductUpdateForm from './ProductUpdateForm';
 import DeleteProduct from './DeleteProduct';
 import { useAppDispatch } from '../store/store';
 import { deleteProduct } from '../store/products.slice';
