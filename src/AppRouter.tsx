@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import MainDashBoard from './pages/MainDashBoard';
 import UserProfile from './pages/UserProfile';
 import Users from './pages/Users';
-import ProductForm from './pages/ProductForm';
+import ProductCreateNew from './pages/ProductCreateNew';
 import Products from './pages/Products';
 import CartEditForm from './pages/CartEditForm';
 import SignUp from './pages/SignUp';
@@ -34,9 +34,9 @@ const AppRouter = () => (
         </Route>
         <Route path="/products">
           <Route index element={<Products />} />
-          <Route path="create" element={<ProductForm />} />
+          <Route path="create" element={<ProductCreateNew />} />
           <Route path=":id" element={<Product />} />
-          <Route path=":id/edit" element={<ProductForm />} />
+          <Route path=":id/edit" element={<ProductCreateNew />} />
         </Route>
         <Route path="/users">
           <Route index element={<Users />} />
