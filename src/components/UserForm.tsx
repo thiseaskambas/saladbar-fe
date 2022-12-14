@@ -1,5 +1,4 @@
 import { Formik, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import {
   StyledForm,
   StyledInnerDiv,
@@ -12,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store/store';
 import { updateOneUser } from '../store/users.slice';
 import { updateLoggedUser, updatePwd } from '../store/auth.slice';
+import { validationSchema } from './userForm.schema';
 
 interface IFormValues {
   email: string;
@@ -28,79 +28,6 @@ interface IUpdateValues {
   username?: string;
   fullName?: string;
 }
-
-const validationSchema = Yup.object().shape(
-  {
-    editing: Yup.boolean(),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Please fill in your email'),
-    username: Yup.string().required('Please fill in your username'),
-    fullName: Yup.string(),
-    oldPassword: Yup.lazy(() =>
-      Yup.string()
-        .notRequired()
-        .when(['password', 'editing'], {
-          is: (password: string, editing: boolean) =>
-            password?.length && editing,
-          then: Yup.string().required('Please enter your current password'),
-        })
-    ),
-    password: Yup.lazy(() =>
-      Yup.string()
-        .notRequired()
-
-        .when('passwordConfirmation', {
-          is: (value: string) => value?.length,
-          then: Yup.string()
-            .required('This field is required')
-            .matches(
-              /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-              'The password must contain letters and numbers and must be at least 5 characters long'
-            ),
-        })
-        .when('oldPassword', {
-          is: (value: string) => value?.length,
-          then: Yup.string()
-            .required('This field is required')
-            .matches(
-              /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-              'The password must contain letters and numbers and must be at least 5 characters long'
-            ),
-        })
-        .when('editing', {
-          is: false,
-          then: Yup.string()
-            .required('This field is required')
-            .matches(
-              /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-              'The password must contain letters and numbers and must be at least 5 characters long'
-            ),
-        })
-    ),
-
-    passwordConfirmation: Yup.lazy(() =>
-      Yup.string()
-        .when('password', {
-          is: (value: string) => value?.length,
-          then: Yup.string()
-            .required('Please validate your password')
-            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-        })
-        .when('editing', {
-          is: false,
-          then: Yup.string()
-            .required('Please validate your password')
-            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-        })
-    ),
-  },
-
-  [
-    ['passwordConfirmation', 'password'],
-    ['oldPassword', 'passwordConfirmation'],
-  ]
-);
 
 const UserForm = () => {
   const loggedUser = useSelector((state: RootState) => state.auth.user);
@@ -131,27 +58,35 @@ const UserForm = () => {
             newValues.fullName = values.fullName;
           }
           if (newValues.fullName || newValues.username) {
-            updated = await dispatch(
-              updateOneUser({
-                username: values.username,
-                fullName: values.fullName,
-                id: loggedUser.id,
-              })
-            ).unwrap();
-            dispatch(updateLoggedUser(updated));
+            try {
+              updated = await dispatch(
+                updateOneUser({
+                  username: values.username,
+                  fullName: values.fullName,
+                  id: loggedUser.id,
+                })
+              ).unwrap();
+              dispatch(updateLoggedUser(updated));
+            } catch (err) {
+              console.log(err);
+            }
           }
           if (
             values.password.length &&
             values.oldPassword.length &&
             values.passwordConfirmation.length
           ) {
-            await dispatch(
-              updatePwd({
-                password: values.password,
-                passwordConfirm: values.passwordConfirmation,
-                oldPassword: values.oldPassword,
-              })
-            );
+            try {
+              await dispatch(
+                updatePwd({
+                  password: values.password,
+                  passwordConfirm: values.passwordConfirmation,
+                  oldPassword: values.oldPassword,
+                })
+              );
+            } catch (err) {
+              console.log(err);
+            }
           }
           actions.resetForm({
             values: { ...initialValues, ...updated },
