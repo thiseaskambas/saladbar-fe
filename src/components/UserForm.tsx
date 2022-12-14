@@ -9,12 +9,14 @@ import {
 import images from '../assets';
 
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
+import { updateOneUser } from '../store/users.slice';
+import { updateLoggedUser } from '../store/auth.slice';
 
 interface IFormValues {
   email: string;
   username: string;
-  fullname: string;
+  fullName: string;
   password: string;
   passwordConfirmation: string;
   editing?: boolean;
@@ -23,13 +25,14 @@ interface IFormValues {
 
 const UserForm = () => {
   const loggedUser = useSelector((state: RootState) => state.auth.user);
+  const dispatch = useAppDispatch();
   console.log({ loggedUser });
   const initialValues: IFormValues = {
     email: loggedUser?.email || '',
     username: loggedUser?.username || '',
     password: '',
     passwordConfirmation: '',
-    fullname: loggedUser?.fullName || '',
+    fullName: loggedUser?.fullName || '',
     editing: Boolean(loggedUser),
     confrim: false,
   };
@@ -83,8 +86,25 @@ const UserForm = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, actions) => {
-        console.log(values, actions), actions.setSubmitting(false);
+      onSubmit={async (values, actions) => {
+        try {
+          if (loggedUser) {
+            const updated = await dispatch(
+              updateOneUser({
+                username: values.username,
+                fullName: values.fullName,
+                id: loggedUser.id,
+              })
+            ).unwrap();
+            dispatch(updateLoggedUser(updated));
+            actions.resetForm({
+              values: { ...initialValues, ...updated },
+            });
+          }
+          actions.setSubmitting(false);
+        } catch (err) {
+          console.log(err);
+        }
       }}
     >
       {(formik) => (
@@ -96,10 +116,10 @@ const UserForm = () => {
           )}
 
           <StyledInnerDiv>
-            <label htmlFor="fullname">Full Name</label>
-            <Field type="text" name="fullname" />
+            <label htmlFor="fullName">Full Name</label>
+            <Field type="text" name="fullName" />
             <StyledMessageCtn>
-              <ErrorMessage name="fullname" />
+              <ErrorMessage name="fullName" />
             </StyledMessageCtn>
           </StyledInnerDiv>
 

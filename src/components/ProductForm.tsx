@@ -82,9 +82,7 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
           input.append('productCourseType', values.productCourseType);
         try {
           existingProduct
-            ? await dispatch(
-                updateProduct({ input, id: existingProduct.id })
-              ).unwrap()
+            ? await dispatch(updateProduct({ input, id: existingProduct.id }))
             : await dispatch(createProduct(input));
           actions.resetForm({ values: { ...initialValues } });
           URL.revokeObjectURL(url);
