@@ -33,44 +33,51 @@ const UserForm = () => {
     editing: Boolean(loggedUser),
     confrim: false,
   };
-  const validationSchema = Yup.object({
-    editing: Yup.boolean(),
-    email: Yup.string()
-      .email('Invalid email address')
-      .required('Please fill in your email'),
-    username: Yup.string().required('Please fill in your username'),
-    fullName: Yup.string(),
-    password: Yup.string()
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-        'The password must contain letters and numbers and must be at least 5 characters long'
-      )
-      .when('editing', {
-        is: false,
-        then: Yup.string()
-          .required('Please fill in your password')
-          .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-            'The password must contain letters and numbers and must be at least 5 characters long'
-          ),
-      }),
+  const validationSchema = Yup.object().shape(
+    {
+      editing: Yup.boolean(),
+      email: Yup.string()
+        .email('Invalid email address')
+        .required('Please fill in your email'),
+      username: Yup.string().required('Please fill in your username'),
+      fullName: Yup.string(),
+      password: Yup.string()
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
+          'The password must contain letters and numbers and must be at least 5 characters long'
+        )
+        .when('passwordConfirmation', {
+          is: (value: string) => value?.length,
+          then: Yup.string().required('Required'),
+        })
+        .when('editing', {
+          is: false,
+          then: Yup.string()
+            .required('Please fill in your password')
+            .matches(
+              /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
+              'The password must contain letters and numbers and must be at least 5 characters long'
+            ),
+        }),
 
-    passwordConfirmation: Yup.string()
-      .notRequired()
-      .when('password', {
-        is: (value: string) => value?.length,
-        then: Yup.string()
-          .required('Please validate your password')
-          .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      })
+      passwordConfirmation: Yup.string()
+        .when('password', {
+          is: (value: string) => value?.length,
+          then: Yup.string()
+            .required('Please validate your password')
+            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+        })
 
-      .when('editing', {
-        is: false,
-        then: Yup.string()
-          .required('Please validate your password')
-          .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-      }),
-  });
+        .when('editing', {
+          is: false,
+          then: Yup.string()
+            .required('Please validate your password')
+            .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+        }),
+    },
+    // @ts-expect-error can't find docs
+    ['passwordConfirmation', 'password']
+  );
 
   return (
     <Formik
