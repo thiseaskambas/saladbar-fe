@@ -28,12 +28,16 @@ const localCartSlice = createSlice({
       return state;
     },
     removeFromCart(state, action) {
-      const temp = state.items.map((el) =>
-        el.product.id === action.payload && el.quantity > 0
-          ? { ...el, quantity: el.quantity - 1 }
-          : el
-      );
-      state.items = temp;
+      const tempArr = state.items.reduce((acc, curr) => {
+        if (curr.product.id !== action.payload) {
+          acc.push(curr);
+        } else if (curr.quantity > 1) {
+          acc.push({ ...curr, quantity: curr.quantity - 1 });
+        }
+        return acc;
+      }, [] as ILocalCart['items']);
+
+      state.items = tempArr;
       state.totalItems -= 1;
       return state;
     },
