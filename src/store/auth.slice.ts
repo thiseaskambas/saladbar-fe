@@ -31,11 +31,23 @@ export const logUserOut = createAsyncThunk('auth/logOut', async () => {
   const response = await authServices.logOut();
   return response.status;
 });
+export const updatePwd = createAsyncThunk(
+  'auth/updatePwd',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any) => {
+    const response = await authServices.updatePassword(inputObj);
+    return response.status;
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    updateLoggedUser(state, action) {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(logUserIn.pending, (state) => {
@@ -73,4 +85,5 @@ const authSlice = createSlice({
   },
 });
 
+export const { updateLoggedUser } = authSlice.actions;
 export default authSlice.reducer;

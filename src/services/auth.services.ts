@@ -21,5 +21,14 @@ const logOut = async () => {
   localStorage.removeItem('persist');
   return response;
 };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const updatePassword = async (inputObj: any) => {
+  const response = await axios.axiosPrivate.patch(
+    `/users/update-password/`,
+    inputObj
+  );
 
-export default { logIn, refreshToken, logOut };
+  return response;
+};
+
+export default { logIn, refreshToken, logOut, updatePassword };

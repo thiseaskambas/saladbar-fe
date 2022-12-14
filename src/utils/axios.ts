@@ -30,6 +30,7 @@ const axiosPrivate = axios.create({
 axiosPrivate.interceptors.request.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config: any | AxiosRequestConfig) => {
+    console.log('private');
     const state = store.getState();
     if (!config.headers['authorization'] && state.auth.accessToken) {
       config.headers['authorization'] = `Bearer ${state.auth.accessToken}`;

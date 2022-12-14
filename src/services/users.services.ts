@@ -12,8 +12,10 @@ const getOne = async (id: IUser['id']) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const updateOne = async (payloadObj: any) => {
   const { id } = payloadObj;
-  const { role } = payloadObj;
-  const response = await axios.axiosPrivate.patch(`/users/${id}`, { role });
+  const response = await axios.axiosPrivate.patch(`/users/${id}`, {
+    ...payloadObj,
+    id: null,
+  });
   return response.data.data;
 };
 
