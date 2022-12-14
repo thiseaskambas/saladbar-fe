@@ -83,13 +83,13 @@ const cartsSlice = createSlice({
         const temp = state.carts.filter(
           (crt) => crt.id !== action.payload.cartId
         );
-        state.carts = [...temp];
+        state.carts = temp;
       })
       .addCase(updateCart.fulfilled, (state, action) => {
         const temp = state.carts.map((cart) =>
           cart.id === action.payload.id ? action.payload : cart
         );
-        state.carts = [...temp];
+        state.carts = temp;
       });
   },
 });

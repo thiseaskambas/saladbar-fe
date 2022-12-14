@@ -55,20 +55,20 @@ const productsSlice = createSlice({
       })
       .addCase(initializeProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.products = [...action.payload];
+        state.products = action.payload;
       })
       .addCase(initializeProducts.rejected, (state) => {
         state.status = 'failed';
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         const temp = state.products.filter((pr) => pr.id !== action.payload.id);
-        state.products = [...temp];
+        state.products = temp;
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
         const temp = state.products.map((pr) =>
           pr.id === action.payload.id ? { ...action.payload } : pr
         );
-        state.products = [...temp];
+        state.products = temp;
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.products.push(action.payload);
