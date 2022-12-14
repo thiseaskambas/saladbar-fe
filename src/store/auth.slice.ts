@@ -31,6 +31,14 @@ export const logUserOut = createAsyncThunk('auth/logOut', async () => {
   const response = await authServices.logOut();
   return response.status;
 });
+export const updatePwd = createAsyncThunk(
+  'auth/updatePwd',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any) => {
+    const response = await authServices.updatePassword(inputObj);
+    return response.status;
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
