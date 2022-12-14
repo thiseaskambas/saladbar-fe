@@ -20,5 +20,3 @@ root.render(
     </ThemeProvider>
   </Provider>
 );
-
-// setupInterceptors(store);
