@@ -7,7 +7,8 @@ interface IProps {
   dropdown: boolean;
   depthLevel: number;
   moveLeft: boolean;
-  setDropdown: React.Dispatch<React.SetStateAction<any>>;
+  setDropdown: React.Dispatch<React.SetStateAction<boolean>>;
+  closeParent: () => void;
 }
 
 const NavDropDown = ({
@@ -16,6 +17,7 @@ const NavDropDown = ({
   depthLevel,
   moveLeft,
   setDropdown,
+  closeParent,
 }: IProps) => {
   depthLevel = depthLevel + 1;
 
@@ -31,7 +33,9 @@ const NavDropDown = ({
             key={item.title}
             item={item}
             depthLevel={depthLevel}
-            onClick={() => setDropdown(false)}
+            closeParent={() => {
+              setDropdown(false), closeParent();
+            }}
           />
         );
       })}

@@ -12,14 +12,14 @@ import images from '../assets';
 interface IProps {
   item: INavItem;
   depthLevel: number;
-  onClick?: () => void;
+  closeParent: () => void;
 }
 
-const NavItem = ({ item, depthLevel, onClick }: IProps) => {
-  const [btnMeasureRef, btnBounds] = useMeasure();
+const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
   const [dropdown, setDropdown] = useState(false);
   const [moveLeft, setMoveLeft] = useState(false);
-  const localRef = useRef<null | HTMLLIElement>(null);
+  const [btnMeasureRef, btnBounds] = useMeasure();
+  const liRef = useRef<null | HTMLLIElement>(null);
 
   const cartItemsQuantity = useSelector(
     (state: RootState) => state.cart.totalItems
@@ -29,8 +29,8 @@ const NavItem = ({ item, depthLevel, onClick }: IProps) => {
     const handler = (event: Event): void => {
       if (
         dropdown &&
-        localRef.current &&
-        !localRef.current.contains(event.target as Node)
+        liRef.current &&
+        !liRef.current.contains(event.target as Node)
       ) {
         setDropdown(false);
       }
@@ -42,10 +42,10 @@ const NavItem = ({ item, depthLevel, onClick }: IProps) => {
     };
   }, [dropdown]);
 
-  const clickHandler = (e: React.MouseEvent<Element>) => {
+  const clickHandler = () => {
     const viewportWidth = window.innerWidth;
-    const elWidth = btnBounds.width;
-    if (viewportWidth < e.clientX + 2 * elWidth) {
+
+    if (viewportWidth < btnBounds.x + btnBounds.width * 2) {
       setMoveLeft(true);
     } else {
       setMoveLeft(false);
@@ -54,7 +54,7 @@ const NavItem = ({ item, depthLevel, onClick }: IProps) => {
   };
 
   return (
-    <li ref={localRef}>
+    <li ref={liRef}>
       {item.submenu ? (
         <>
           <StyledNavButton
@@ -75,13 +75,16 @@ const NavItem = ({ item, depthLevel, onClick }: IProps) => {
             depthLevel={depthLevel}
             moveLeft={moveLeft}
             setDropdown={setDropdown}
+            closeParent={closeParent}
           />
         </>
       ) : (
         <StyledNavLink
           to={item.url}
           issubmenu={depthLevel > 0 ? 'submenu' : ''}
-          onClick={onClick}
+          onClick={() => {
+            closeParent && closeParent();
+          }}
         >
           {' '}
           {item.title.toUpperCase()}

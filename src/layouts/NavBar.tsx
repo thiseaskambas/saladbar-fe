@@ -53,7 +53,14 @@ const NavBar = ({ user }: { user: IUser | null }) => {
         {navItemsState.map((item: INavItem) => {
           const depthLevel = 0;
           return (
-            <NavItem key={item.title} item={item} depthLevel={depthLevel} />
+            <NavItem
+              key={item.title}
+              item={item}
+              depthLevel={depthLevel}
+              closeParent={() => {
+                null;
+              }}
+            />
           );
         })}
         {user && (
@@ -61,16 +68,16 @@ const NavBar = ({ user }: { user: IUser | null }) => {
             LOGOUT
           </StyledLogoutBtn>
         )}
-        <Modal
-          open={isLogoutModalOpen}
-          onClose={() => setIsLogoutModalOpen(false)}
-        >
-          <LogoutPrompt
-            onCancel={() => setIsLogoutModalOpen(false)}
-            onLogout={logoutHandler}
-          />
-        </Modal>
       </StyledMainUl>
+      <Modal
+        open={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+      >
+        <LogoutPrompt
+          onCancel={() => setIsLogoutModalOpen(false)}
+          onLogout={logoutHandler}
+        />
+      </Modal>
     </StyledNav>
   );
 };
