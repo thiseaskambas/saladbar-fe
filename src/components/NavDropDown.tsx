@@ -7,10 +7,18 @@ interface IProps {
   dropdown: boolean;
   depthLevel: number;
   moveLeft: boolean;
+  setDropdown: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const NavDropDown = ({ submenu, dropdown, depthLevel, moveLeft }: IProps) => {
+const NavDropDown = ({
+  submenu,
+  dropdown,
+  depthLevel,
+  moveLeft,
+  setDropdown,
+}: IProps) => {
   depthLevel = depthLevel + 1;
+
   return (
     <StyledDropUl
       dropdown={dropdown}
@@ -18,7 +26,14 @@ const NavDropDown = ({ submenu, dropdown, depthLevel, moveLeft }: IProps) => {
       moveLeft={moveLeft}
     >
       {submenu.map((item: INavItem) => {
-        return <NavItem key={item.title} item={item} depthLevel={depthLevel} />;
+        return (
+          <NavItem
+            key={item.title}
+            item={item}
+            depthLevel={depthLevel}
+            onClick={() => setDropdown(false)}
+          />
+        );
       })}
     </StyledDropUl>
   );

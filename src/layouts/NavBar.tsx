@@ -20,6 +20,7 @@ import { logUserOut } from '../store/auth.slice';
 const NavBar = ({ user }: { user: IUser | null }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  //TODO: probably don't need state here:
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
