@@ -18,6 +18,7 @@ export const StyledDropUl = styled.ul<{
   min-width: fit-content;
   white-space: nowrap;
   position: absolute;
+  background-color: pink;
   & button {
     border-radius: 0;
   }
@@ -32,6 +33,7 @@ export const StyledDropUl = styled.ul<{
       left: '100%',
       top: '50%',
     }}
+    
     ${({ depthLevel, moveLeft }) =>
     depthLevel > 1 &&
     moveLeft && {

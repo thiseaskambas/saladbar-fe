@@ -20,6 +20,7 @@ import { logUserOut } from '../store/auth.slice';
 const NavBar = ({ user }: { user: IUser | null }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  //TODO: probably don't need state here:
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
@@ -52,7 +53,14 @@ const NavBar = ({ user }: { user: IUser | null }) => {
         {navItemsState.map((item: INavItem) => {
           const depthLevel = 0;
           return (
-            <NavItem key={item.title} item={item} depthLevel={depthLevel} />
+            <NavItem
+              key={item.title}
+              item={item}
+              depthLevel={depthLevel}
+              closeParent={() => {
+                null;
+              }}
+            />
           );
         })}
         {user && (
@@ -60,16 +68,16 @@ const NavBar = ({ user }: { user: IUser | null }) => {
             LOGOUT
           </StyledLogoutBtn>
         )}
-        <Modal
-          open={isLogoutModalOpen}
-          onClose={() => setIsLogoutModalOpen(false)}
-        >
-          <LogoutPrompt
-            onCancel={() => setIsLogoutModalOpen(false)}
-            onLogout={logoutHandler}
-          />
-        </Modal>
       </StyledMainUl>
+      <Modal
+        open={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+      >
+        <LogoutPrompt
+          onCancel={() => setIsLogoutModalOpen(false)}
+          onLogout={logoutHandler}
+        />
+      </Modal>
     </StyledNav>
   );
 };
