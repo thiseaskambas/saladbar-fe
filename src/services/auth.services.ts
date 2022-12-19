@@ -27,8 +27,13 @@ const updatePassword = async (inputObj: any) => {
     `/users/update-password/`,
     inputObj
   );
-
   return response;
 };
 
-export default { logIn, refreshToken, logOut, updatePassword };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const signup = async (inputObj: any) => {
+  const response = await axios.axiosPublic.post(`/auth/signup`, inputObj);
+  return response.data;
+};
+
+export default { logIn, refreshToken, logOut, updatePassword, signup };

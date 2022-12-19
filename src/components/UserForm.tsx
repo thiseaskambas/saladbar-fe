@@ -10,7 +10,7 @@ import images from '../assets';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store/store';
 import { updateOneUser } from '../store/users.slice';
-import { updateLoggedUser, updatePwd } from '../store/auth.slice';
+import { signupUser, updateLoggedUser, updatePwd } from '../store/auth.slice';
 import { validationSchema } from './userForm.schema';
 
 interface IFormValues {
@@ -18,7 +18,7 @@ interface IFormValues {
   username: string;
   fullName: string;
   password: string;
-  passwordConfirmation: string;
+  passwordConfirm: string;
   editing: boolean;
   confrim: boolean;
   oldPassword: string;
@@ -37,7 +37,7 @@ const UserForm = () => {
     username: loggedUser?.username || '',
     oldPassword: '',
     password: '',
-    passwordConfirmation: '',
+    passwordConfirm: '',
     fullName: loggedUser?.fullName || '',
     editing: Boolean(loggedUser),
     confrim: false,
@@ -74,13 +74,13 @@ const UserForm = () => {
           if (
             values.password.length &&
             values.oldPassword.length &&
-            values.passwordConfirmation.length
+            values.passwordConfirm.length
           ) {
             try {
               await dispatch(
                 updatePwd({
                   password: values.password,
-                  passwordConfirm: values.passwordConfirmation,
+                  passwordConfirm: values.passwordConfirm,
                   oldPassword: values.oldPassword,
                 })
               );
@@ -91,6 +91,9 @@ const UserForm = () => {
           actions.resetForm({
             values: { ...initialValues, ...updated },
           });
+        } else {
+          console.log(values);
+          dispatch(signupUser(values));
         }
         actions.setSubmitting(false);
       }}
@@ -155,10 +158,10 @@ const UserForm = () => {
           </StyledInnerDiv>
 
           <StyledInnerDiv>
-            <label htmlFor="passwordConfirmation">password confirmation</label>
-            <Field name="passwordConfirmation" type="password" />
+            <label htmlFor="passwordConfirm">password confirmation</label>
+            <Field name="passwordConfirm" type="password" />
             <StyledMessageCtn>
-              <ErrorMessage name="passwordConfirmation" />
+              <ErrorMessage name="passwordConfirm" />
             </StyledMessageCtn>
           </StyledInnerDiv>
 

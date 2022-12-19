@@ -21,6 +21,11 @@ const axiosPublic = axios.create({
   withCredentials: true,
 });
 
+axiosPublic.interceptors.response.use(
+  (response) => response,
+  (error: ICustomAxiosError) => Promise.reject(error.response?.data)
+);
+
 const axiosPrivate = axios.create({
   baseURL,
   headers: { 'Content-Type': 'application/json' },
@@ -30,7 +35,6 @@ const axiosPrivate = axios.create({
 axiosPrivate.interceptors.request.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config: any | AxiosRequestConfig) => {
-    console.log('private');
     const state = store.getState();
     if (!config.headers['authorization'] && state.auth.accessToken) {
       config.headers['authorization'] = `Bearer ${state.auth.accessToken}`;
@@ -45,7 +49,7 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
     const prevRequest = error.config;
-    if (error.response && error.response.status === 500 && !prevRequest.sent) {
+    if (error.response && error.response.status === 401 && !prevRequest.sent) {
       prevRequest.sent = true;
       const res = await store.dispatch(refreshToken()).unwrap();
       return axiosPrivate({
@@ -53,7 +57,8 @@ axiosPrivate.interceptors.response.use(
         headers: { authorization: `Bearer ${res.accessToken}` },
       });
     }
-    return Promise.reject(error);
+    //NOTE: https://github.com/axios/axios/issues/960
+    return Promise.reject(error.response?.data);
   }
 );
 

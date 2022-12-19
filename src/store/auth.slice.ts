@@ -21,6 +21,15 @@ export const logUserIn = createAsyncThunk(
     return { ...response, persist: credentials.rememberMe };
   }
 );
+export const signupUser = createAsyncThunk(
+  'auth/signup',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any) => {
+    const response = await authServices.signup(inputObj);
+    console.log(response);
+    return response.data;
+  }
+);
 
 export const refreshToken = createAsyncThunk('auth/refreshToken', async () => {
   const response = await authServices.refreshToken();
@@ -57,6 +66,9 @@ const authSlice = createSlice({
         state.user = action.payload.loggedUser;
         state.accessToken = action.payload.accessToken;
         state.status = 'succeeded';
+      })
+      .addCase(signupUser.fulfilled, (_state, action) => {
+        console.log(action.payload);
       })
       .addCase(logUserIn.rejected, (state) => {
         state.status = 'failed';

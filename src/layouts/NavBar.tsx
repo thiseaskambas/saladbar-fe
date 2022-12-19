@@ -57,6 +57,7 @@ const NavBar = ({ user }: { user: IUser | null }) => {
               key={item.title}
               item={item}
               depthLevel={depthLevel}
+              //TODO: find a way to make closeParent optional
               closeParent={() => {
                 null;
               }}

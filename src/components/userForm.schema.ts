@@ -21,7 +21,7 @@ export const validationSchema = Yup.object().shape(
       Yup.string()
         .notRequired()
 
-        .when('passwordConfirmation', {
+        .when('passwordConfirm', {
           is: (value: string) => value?.length,
           then: Yup.string()
             .required('This field is required')
@@ -50,7 +50,7 @@ export const validationSchema = Yup.object().shape(
         })
     ),
 
-    passwordConfirmation: Yup.lazy(() =>
+    passwordConfirm: Yup.lazy(() =>
       Yup.string()
         .when('password', {
           is: (value: string) => value?.length,
@@ -68,7 +68,7 @@ export const validationSchema = Yup.object().shape(
   },
 
   [
-    ['passwordConfirmation', 'password'],
-    ['oldPassword', 'passwordConfirmation'],
+    ['passwordConfirm', 'password'],
+    ['oldPassword', 'passwordConfirm'],
   ]
 );
