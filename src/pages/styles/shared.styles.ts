@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledSharedMain = styled.main`
+  padding-top: 2rem;
   background-color: ${({ theme }) => theme.colors.lightGray};
   display: flex;
   flex-direction: column;
@@ -12,7 +13,6 @@ export const StyledSharedTable = styled.table`
   background-color: ${({ theme }) => theme.colors.white};
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2rem;
   padding: 2rem;
 `;
 

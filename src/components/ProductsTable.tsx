@@ -12,11 +12,23 @@ import { StyledModalCtnDiv } from './styles/modal.styles';
 
 const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const dispatch = useAppDispatch();
+  const [sortedProducts, setSortedProducts] = useState(products);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isSelectedProduct, setIsSelectedProduct] = useState<null | IProduct>(
     null
   );
+  const [ascending, setAscending] = useState(true);
+
+  const handleSorting = (sortBy: 'name' | 'price' | 'productCourseType') => {
+    setAscending((prev) => !prev);
+    const temp = [...sortedProducts];
+    ascending
+      ? setSortedProducts(temp.sort((a, b) => (a[sortBy] > b[sortBy] ? 1 : -1)))
+      : setSortedProducts(
+          temp.sort((a, b) => (a[sortBy] < b[sortBy] ? 1 : -1))
+        );
+  };
 
   const closeModalHandler = () => {
     setIsEditOpen(false);
@@ -50,14 +62,14 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
       <StyledSharedTable>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Price</th>
+            <th onClick={() => handleSorting('name')}>Name</th>
+            <th onClick={() => handleSorting('price')}>Price</th>
             <th>Image</th>
-            <th>Type</th>
+            <th onClick={() => handleSorting('productCourseType')}>Type</th>
           </tr>
         </thead>
         <tbody>
-          {products.map((el) => (
+          {sortedProducts.map((el) => (
             <ProductTr
               key={el.id}
               product={el}
