@@ -5,7 +5,8 @@ import { useAppDispatch } from '../store/store';
 export const useInitializeData = (
   action: any,
   optionsObj: any,
-  status: any
+  status: any,
+  resetAction?: any
 ) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -22,6 +23,7 @@ export const useInitializeData = (
       initData();
     }
     return () => {
+      resetAction && dispatch(resetAction());
       isMounted = false;
     };
   }, [optionsObj]);
