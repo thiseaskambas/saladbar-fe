@@ -15,14 +15,12 @@ import {
 import CounterDiv from '../components/TodayCounter';
 
 const Today = () => {
-  console.log('render');
   const cartsState = useSelector((state: RootState) => state.carts);
 
   const dispatch = useAppDispatch();
   const [ref, { width }] = useMeasure();
 
   useEffect(() => {
-    console.log('in effect');
     let isMounted = true;
     const initCarts = async () => {
       const dayStart = helpers.convertToLocalStartDayTime(new Date());
