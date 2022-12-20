@@ -12,7 +12,34 @@ export const initializeProducts = createAsyncThunk(
   'products/initializeProducts',
   async (): Promise<IProduct[]> => {
     const response = await productServices.getAll();
+    console.log('init products');
     return response.data;
+  }
+);
+
+export const createProduct = createAsyncThunk(
+  'products/createOne',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (input: any): Promise<IProduct> => {
+    const response = await productServices.createOne(input);
+    return response.data;
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  'products/updateOne',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any): Promise<IProduct> => {
+    const response = await productServices.updateOne(inputObj);
+    return response.data;
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  'products/deleteOne',
+  async (id: IProduct['id']) => {
+    const response = await productServices.deleteOne(id);
+    return { data: response.data, id };
   }
 );
 
@@ -28,10 +55,23 @@ const productsSlice = createSlice({
       })
       .addCase(initializeProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.products = [...action.payload];
+        state.products = action.payload;
       })
       .addCase(initializeProducts.rejected, (state) => {
         state.status = 'failed';
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        const temp = state.products.filter((pr) => pr.id !== action.payload.id);
+        state.products = temp;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        const temp = state.products.map((pr) =>
+          pr.id === action.payload.id ? { ...action.payload } : pr
+        );
+        state.products = temp;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.products.push(action.payload);
       });
   },
 });

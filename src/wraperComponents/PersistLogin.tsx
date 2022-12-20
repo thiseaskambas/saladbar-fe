@@ -14,12 +14,12 @@ const PersistLogin = () => {
   );
   useEffect(() => {
     let isMounted = true;
-    console.log({ persist });
+
     const verifyRefreshToken = async () => {
       try {
-        await dispatch(refreshToken()).unwrap();
+        await dispatch(refreshToken());
       } catch (err) {
-        // console.log(err);
+        console.log(err);
       } finally {
         isMounted && setIsLoading(false);
       }
@@ -31,7 +31,8 @@ const PersistLogin = () => {
   }, []);
 
   return (
-    <>{!persist ? <Outlet /> : isLoading ? <main>loading</main> : <Outlet />}</>
+    // <>{!persist ? <Outlet /> : isLoading ? <main>loading</main> : <Outlet />}</>
+    <>{!persist ? <Outlet /> : isLoading ? null : <Outlet />}</>
   );
 };
 

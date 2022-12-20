@@ -8,7 +8,7 @@ const RequireAuth = ({ allowedRoles }: { allowedRoles?: IRole[] }) => {
   const location = useLocation();
   const authState = useSelector((state: RootState) => state.auth);
 
-  return allowedRoles?.includes(authState.user.role) ? (
+  return authState.user && allowedRoles?.includes(authState.user.role) ? (
     <Outlet />
   ) : authState.accessToken ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />

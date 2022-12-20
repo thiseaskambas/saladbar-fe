@@ -3,12 +3,19 @@ import { useDispatch } from 'react-redux';
 import productsReducer from './products.slice';
 import authReducer from './auth.slice';
 import notifReducer from './notification.slice';
-
+import cartReducer from './localCart.slice';
+import cartsReducer from './carts.slice';
+import updateCartReducer from './cartUpdate.slice';
+import usersReducer from './users.slice';
 export const store = configureStore({
   reducer: {
-    products: productsReducer,
     auth: authReducer,
+    products: productsReducer,
     notification: notifReducer,
+    cart: cartReducer,
+    carts: cartsReducer,
+    updateCart: updateCartReducer,
+    users: usersReducer,
   },
 });
 

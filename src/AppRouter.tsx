@@ -1,47 +1,38 @@
 import { Routes, Route } from 'react-router-dom';
 import Cart from './pages/Cart';
 import CartsDash from './pages/CartsDash';
-import Product from './pages/Product';
-import Day from './pages/Day';
+import Today from './pages/Today';
 import Home from './pages/Home';
-import LogInForm from './pages/LogInForm';
+import Login from './pages/Login';
 import MainDashBoard from './pages/MainDashBoard';
 import UserProfile from './pages/UserProfile';
 import Users from './pages/Users';
-import ProductForm from './pages/ProductForm';
+import ProductCreateNew from './pages/ProductCreateNew';
 import Products from './pages/Products';
-import CartEditForm from './pages/CartEditForm';
 import SignUp from './pages/SignUp';
 import RequireAuth from './wraperComponents/RequireAuth';
 import PersistLogin from './wraperComponents/PersistLogin';
-import LogOut from './pages/LogOut';
 
 const AppRouter = () => (
   <Routes>
-    <Route path="/login" element={<LogInForm />} />
+    <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
     <Route element={<PersistLogin />}>
       <Route path="/" element={<Home />} />
-      <Route path="/logout" element={<LogOut />} />
       <Route path="/dashboard" element={<MainDashBoard />} />
       <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
-        <Route path="/day-view" element={<Day />} />
+        <Route path="/day-view" element={<Today />} />
         <Route path="/carts">
           <Route index element={<CartsDash />} />
           <Route path="current" element={<Cart />} />
-          <Route path=":id" element={<Cart />} />
-          <Route path=":id/edit" element={<CartEditForm />} />
         </Route>
         <Route path="/products">
           <Route index element={<Products />} />
-          <Route path="create" element={<ProductForm />} />
-          <Route path=":id" element={<Product />} />
-          <Route path=":id/edit" element={<ProductForm />} />
+          <Route path="create" element={<ProductCreateNew />} />
         </Route>
         <Route path="/users">
           <Route index element={<Users />} />
           <Route path="me" element={<UserProfile />} />
-          <Route path=":id" element={<UserProfile />} />
         </Route>
       </Route>
     </Route>

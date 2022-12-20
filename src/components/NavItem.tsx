@@ -1,100 +1,99 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+import { RootState } from '../store/store';
+import useMeasure from 'react-use-measure';
+import { useSelector } from 'react-redux';
 import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
-
-import { StyledNavLink } from './styles/navLInk.styled';
+import { StyledNavButton } from './styles/navButton.styles';
+import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styles';
+import images from '../assets';
 
 interface IProps {
   item: INavItem;
   depthLevel: number;
+  closeParent: () => void;
 }
 
-const NavItem = ({ item, depthLevel }: IProps) => {
+const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
   const [dropdown, setDropdown] = useState(false);
   const [moveLeft, setMoveLeft] = useState(false);
-  const ref = useRef<null | HTMLLIElement>(null);
+  const [btnMeasureRef, btnBounds] = useMeasure();
+  const liRef = useRef<null | HTMLLIElement>(null);
+
+  const cartItemsQuantity = useSelector(
+    (state: RootState) => state.cart.totalItems
+  );
 
   useEffect(() => {
     const handler = (event: Event): void => {
-      //prevent other listeners of the same event from being called.
-      event.stopImmediatePropagation();
-
       if (
         dropdown &&
-        ref.current &&
-        !ref.current.contains(event.target as Node) //type assertion
+        liRef.current &&
+        !liRef.current.contains(event.target as Node)
       ) {
         setDropdown(false);
       }
     };
     document.addEventListener('pointerdown', handler);
-    //cleanup on unmount:
+
     return () => {
       document.removeEventListener('pointerdown', handler);
     };
   }, [dropdown]);
 
-  const onMouseEnter = (e: React.MouseEvent<Element>) => {
+  const clickHandler = () => {
     const viewportWidth = window.innerWidth;
 
-    let elWidth = 0;
-    if (e.target instanceof Element && e.target.tagName === 'SPAN') {
-      if (
-        e.target.parentNode instanceof Element &&
-        e.target.parentNode.nodeName === 'BUTTON'
-      ) {
-        elWidth = Number(e.target.parentNode.clientWidth);
-      }
-    } else if (e.target instanceof Element && e.target.tagName === 'BUTTON') {
-      elWidth = Number(e.target.clientWidth);
-    }
-    if (viewportWidth < e.clientX + 2 * elWidth) {
+    if (viewportWidth < btnBounds.x + btnBounds.width * 2) {
       setMoveLeft(true);
     } else {
       setMoveLeft(false);
     }
-    setDropdown(true);
+    setDropdown((prev) => !prev);
   };
 
-  const onMouseLeave = () => setDropdown(false);
-
-  const closeDropdown = () => dropdown && setDropdown(false);
-
   return (
-    <li
-      ref={ref}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={closeDropdown}
-    >
+    <li ref={liRef}>
       {item.submenu ? (
         <>
-          <button
-            onClick={() => setDropdown((prev) => !prev)}
+          <StyledNavButton
+            ref={btnMeasureRef}
+            onClick={clickHandler}
             aria-expanded={dropdown ? 'true' : 'false'}
           >
-            {item.title}
+            {item.title.toUpperCase()}
             {depthLevel && depthLevel > 0 ? (
-              <span> right </span>
+              <img src={images['right.XS.png']} />
             ) : (
-              <span> down </span>
+              <img src={images['drop.XS.png']} />
             )}
-          </button>
+          </StyledNavButton>
           <NavDropDown
             submenu={item.submenu}
             dropdown={dropdown}
             depthLevel={depthLevel}
             moveLeft={moveLeft}
+            setDropdown={setDropdown}
+            closeParent={closeParent}
           />
         </>
       ) : (
         <StyledNavLink
           to={item.url}
           issubmenu={depthLevel > 0 ? 'submenu' : ''}
+          onClick={() => {
+            closeParent && closeParent();
+          }}
         >
           {' '}
-          {item.title}{' '}
+          {item.title.toUpperCase()}
+          {item.isCart && (
+            <StyledOuterSpan>
+              {'  '}
+              {cartItemsQuantity}
+            </StyledOuterSpan>
+          )}
         </StyledNavLink>
       )}
     </li>

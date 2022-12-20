@@ -1,9 +1,9 @@
 export enum ProductCourseType {
   Starter = 'starter',
   Main = 'main',
+  Side = 'side',
   Desert = 'desert',
   Drink = 'drink',
-  Side = 'side',
   Other = 'other',
 }
 
@@ -15,6 +15,7 @@ export interface INewProductEntry {
 }
 export interface IProduct extends INewProductEntry {
   active: boolean;
+  id: string;
 }
 
 export interface IUpdateProductEntry {
@@ -36,3 +37,8 @@ export interface IProductsInitialState {
   products: IProduct[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isProductCourseType = (param: any): param is ProductCourseType => {
+  return Object.values(ProductCourseType).includes(param);
+};

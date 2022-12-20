@@ -1,10 +1,9 @@
 import axios, {
-  AxiosRequestConfig,
   AxiosError,
+  AxiosRequestConfig,
   AxiosRequestHeaders,
 } from 'axios';
 import { refreshToken } from '../store/auth.slice';
-
 import store from '../store/store';
 
 interface ICustomAxiosReqConfig extends AxiosRequestConfig {
@@ -21,6 +20,11 @@ const axiosPublic = axios.create({
   baseURL,
   withCredentials: true,
 });
+
+axiosPublic.interceptors.response.use(
+  (response) => response,
+  (error: ICustomAxiosError) => Promise.reject(error.response?.data)
+);
 
 const axiosPrivate = axios.create({
   baseURL,
@@ -45,7 +49,7 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
     const prevRequest = error.config;
-    if (error.response && error.response.status === 500 && !prevRequest.sent) {
+    if (error.response && error.response.status === 401 && !prevRequest.sent) {
       prevRequest.sent = true;
       const res = await store.dispatch(refreshToken()).unwrap();
       return axiosPrivate({
@@ -53,7 +57,8 @@ axiosPrivate.interceptors.response.use(
         headers: { authorization: `Bearer ${res.accessToken}` },
       });
     }
-    return Promise.reject(error);
+    //NOTE: https://github.com/axios/axios/issues/960
+    return Promise.reject(error.response?.data);
   }
 );
 

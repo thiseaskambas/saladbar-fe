@@ -3,23 +3,31 @@ import {
   IAuthInitialState,
   ILoginCredentials,
   ILoginResponse,
-  IUser,
 } from '../types/user.types';
 import authServices from '../services/auth.services';
 
-const initialState = {
-  user: {},
+const initialState: IAuthInitialState = {
+  user: null,
   status: 'idle',
   accessToken: '',
   persist: false,
-} as IAuthInitialState;
+};
 
 export const logUserIn = createAsyncThunk(
   'auth/login',
   async (credentials: ILoginCredentials): Promise<ILoginResponse> => {
     const response = await authServices.logIn(credentials);
-
+    console.log(response);
     return { ...response, persist: credentials.rememberMe };
+  }
+);
+export const signupUser = createAsyncThunk(
+  'auth/signup',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any) => {
+    const response = await authServices.signup(inputObj);
+    console.log(response);
+    return response.data;
   }
 );
 
@@ -32,11 +40,23 @@ export const logUserOut = createAsyncThunk('auth/logOut', async () => {
   const response = await authServices.logOut();
   return response.status;
 });
+export const updatePwd = createAsyncThunk(
+  'auth/updatePwd',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async (inputObj: any) => {
+    const response = await authServices.updatePassword(inputObj);
+    return response.status;
+  }
+);
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    updateLoggedUser(state, action) {
+      state.user = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(logUserIn.pending, (state) => {
@@ -46,6 +66,9 @@ const authSlice = createSlice({
         state.user = action.payload.loggedUser;
         state.accessToken = action.payload.accessToken;
         state.status = 'succeeded';
+      })
+      .addCase(signupUser.fulfilled, (_state, action) => {
+        console.log(action.payload);
       })
       .addCase(logUserIn.rejected, (state) => {
         state.status = 'failed';
@@ -59,19 +82,20 @@ const authSlice = createSlice({
       .addCase(refreshToken.rejected, (state) => {
         state.status = 'failed';
         state.accessToken = '';
-        state.user = {} as IUser;
+        state.user = null;
       })
       .addCase(logUserOut.fulfilled, (state) => {
         state.accessToken = '';
-        state.user = {} as IUser;
+        state.user = null;
         state.status = 'idle';
       })
       .addCase(logUserOut.rejected, (state) => {
-        state.status = 'idle';
         state.accessToken = '';
-        state.user = {} as IUser;
+        state.status = 'idle';
+        state.user = null;
       });
   },
 });
 
+export const { updateLoggedUser } = authSlice.actions;
 export default authSlice.reducer;

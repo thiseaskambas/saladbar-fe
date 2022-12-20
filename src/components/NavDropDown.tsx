@@ -7,10 +7,20 @@ interface IProps {
   dropdown: boolean;
   depthLevel: number;
   moveLeft: boolean;
+  setDropdown: React.Dispatch<React.SetStateAction<boolean>>;
+  closeParent: () => void;
 }
 
-const NavDropDown = ({ submenu, dropdown, depthLevel, moveLeft }: IProps) => {
+const NavDropDown = ({
+  submenu,
+  dropdown,
+  depthLevel,
+  moveLeft,
+  setDropdown,
+  closeParent,
+}: IProps) => {
   depthLevel = depthLevel + 1;
+
   return (
     <StyledDropUl
       dropdown={dropdown}
@@ -18,13 +28,19 @@ const NavDropDown = ({ submenu, dropdown, depthLevel, moveLeft }: IProps) => {
       moveLeft={moveLeft}
     >
       {submenu.map((item: INavItem) => {
-        return <NavItem key={item.title} item={item} depthLevel={depthLevel} />;
+        return (
+          <NavItem
+            key={item.title}
+            item={item}
+            depthLevel={depthLevel}
+            closeParent={() => {
+              setDropdown(false), closeParent();
+            }}
+          />
+        );
       })}
     </StyledDropUl>
   );
 };
-
-// NOTE: for components which are part of UI that can be opened and closed multiple times by user (e.g. dropdown-menu, tooltips, popovers etc): use CSS hiding/ displaying, possibly with conditionally adding class in react.
-// for components rendered and hidden only once (e.g. delete an item from a list, close a one-time modal popup etc): use conditional rendering.
 
 export default NavDropDown;
