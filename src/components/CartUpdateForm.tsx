@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { StyledSharedSelect } from '../pages/styles/shared.styles';
 import { deleteCart, updateCart } from '../store/carts.slice';
 import { addNewItem, initCartUpdate } from '../store/cartUpdate.slice';
-import { initializeProducts } from '../store/products.slice';
+
 import { RootState, useAppDispatch } from '../store/store';
 import { ICart, ICartItem } from '../types/cart.types';
 import { ILocalCartItemFormated } from '../types/localCart.types';
@@ -40,33 +40,13 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
   const { existingItems, newItems } = useSelector(
     (state: RootState) => state.updateCart
   );
-  const { products, status } = useSelector(
-    (state: RootState) => state.products
-  );
+  const { products } = useSelector((state: RootState) => state.products);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
   );
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
-
-  //TODO:initialize/fetch users /refactor useEffect hook
-  useEffect(() => {
-    let isMounted = true;
-    const initProducts = async () => {
-      try {
-        await dispatch(initializeProducts()).unwrap();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    if (status === 'idle' && isMounted) {
-      initProducts();
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     let isMounted = true;
