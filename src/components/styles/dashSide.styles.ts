@@ -5,7 +5,7 @@ export const StyledDashSideBar = styled.nav<{ show?: boolean }>`
   transition: 0.1s ease-out;
   transition-property: width, padding;
   padding: 1rem;
-  width: 100%;
+  /* width: 100%; */
 
   & .sideItem {
     transition: 0.1s ease-out;

@@ -11,7 +11,7 @@ export const useInitializeData = (
   const dispatch = useAppDispatch();
   useEffect(() => {
     let isMounted = true;
-
+    console.log('inizializing');
     const initData = async () => {
       try {
         await dispatch(action(optionsObj)).unwrap();
