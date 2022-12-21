@@ -16,13 +16,19 @@ export const StyledSharedTable = styled.table`
   padding: 2rem;
 `;
 
-export const StyledSharedTr = styled.tr<{ clickable?: boolean }>`
+export const StyledSharedTr = styled.tr<{
+  clickable?: boolean;
+}>`
   transition: all 200ms;
   line-height: 1.2rem;
   cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 
   :nth-child(odd) {
     background-color: ${({ theme }) => theme.colors.lightBrown};
+  }
+
+  &.loggedUser {
+    background-color: ${({ theme }) => theme.colors.darkBrown};
   }
 
   ${({ clickable, theme }) => {
@@ -36,7 +42,8 @@ export const StyledSharedTr = styled.tr<{ clickable?: boolean }>`
 `;
 
 export const StyledSharedTd = styled.td`
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
+
   & .italic {
     font-style: italic;
   }
