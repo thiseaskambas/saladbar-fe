@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IProduct } from '../types/product.types';
 import ProductTr from './ProductTr';
 import Modal from './Modal';
@@ -10,6 +10,8 @@ import { deleteProduct } from '../store/products.slice';
 import { StyledSharedTable } from '../pages/styles/shared.styles';
 import { StyledModalCtnDiv } from './styles/modal.styles';
 
+type SortKey = 'name' | 'price' | 'productCourseType';
+
 const ProductsTable = ({ products }: { products: IProduct[] }) => {
   const dispatch = useAppDispatch();
   const [sortedProducts, setSortedProducts] = useState(products);
@@ -20,7 +22,11 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
   );
   const [ascending, setAscending] = useState(true);
 
-  const handleSorting = (sortBy: 'name' | 'price' | 'productCourseType') => {
+  useEffect(() => {
+    setSortedProducts(products);
+  }, [products]);
+
+  const handleSorting = (sortBy: SortKey) => {
     setAscending((prev) => !prev);
     const temp = [...sortedProducts];
     ascending
