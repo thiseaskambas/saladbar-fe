@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
 import { createProduct, updateProduct } from '../store/products.slice';
-import { useAppDispatch } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 import { IProduct, ProductCourseType } from '../types/product.types';
 import {
   StyledForm,
@@ -13,6 +13,12 @@ import {
 } from '../pages/styles/form.styles';
 
 import { StyledPhotoContainer } from '../pages/styles/productForm.styles';
+import { useSelector } from 'react-redux';
+import {
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
+import Notification from './Notification';
 
 interface IFormValues {
   name: string;
@@ -59,6 +65,8 @@ const validationSchema = Yup.object().shape({
 
 const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
   const [url, setUrl] = useState('');
+  // const productsState = useSelector((state: RootState) => state.products);
+  const notification = useSelector((state: RootState) => state.notification);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
 
@@ -82,9 +90,21 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
         values.productCourseType &&
           input.append('productCourseType', values.productCourseType);
         try {
-          existingProduct
-            ? await dispatch(updateProduct({ input, id: existingProduct.id }))
-            : await dispatch(createProduct(input));
+          dispatch(setNotification({ type: 'loading', text: 'Loading' }));
+          if (existingProduct) {
+            await dispatch(
+              updateProduct({ input, id: existingProduct.id })
+            ).unwrap();
+          } else {
+            await dispatch(createProduct(input)).unwrap();
+          }
+          dispatch(
+            setAsyncNotification({
+              type: 'success',
+              text: 'Product saved!',
+              time: 5,
+            })
+          );
           actions.resetForm({ values: { ...initialValues } });
           inputRef.current?.form && inputRef.current.form.reset();
           URL.revokeObjectURL(url);
@@ -92,13 +112,17 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
           actions.setSubmitting(false);
           console.log({ initialValues });
           onEndSubmit?.();
-        } catch (err) {
-          console.log(err);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          dispatch(
+            setAsyncNotification({ type: 'error', text: err?.message, time: 6 })
+          );
         }
       }}
     >
       {(formik) => (
         <StyledForm onSubmit={formik.handleSubmit}>
+          <Notification notification={notification} />
           {url ? (
             <StyledPhotoContainer>
               <img id="photo" src={url} alt="" />

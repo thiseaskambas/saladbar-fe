@@ -1,4 +1,4 @@
-export interface INotifInitialState {
-  notificationText: string;
-  notificationType: 'none' | 'success' | 'error';
+export interface INotification {
+  text: string;
+  type: 'none' | 'loading' | 'success' | 'error';
 }

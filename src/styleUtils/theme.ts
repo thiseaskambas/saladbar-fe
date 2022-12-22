@@ -16,6 +16,7 @@ const theme: DefaultTheme = {
     lightGray: '#ebeded',
     gray: '#7d888d',
     newBlue: '#3d91ff',
+    lightGreen: '#90EE90',
   },
   error: {
     color: 'darkGray',

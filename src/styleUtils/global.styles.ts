@@ -8,10 +8,7 @@ const GlobalStyles = createGlobalStyle`
    flex-direction: column;
    font-family: 'Inter', sans-serif;
   }
-  footer{
-    margin-top: auto;
-    background-color: #DCC7AA
-  }
+
   main {
     flex-grow: 1;
     padding: 1rem;

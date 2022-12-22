@@ -73,6 +73,9 @@ const cartsSlice = createSlice({
         state.carts.push(action.payload);
         state.totalCarts += 1;
       })
+      .addCase(initializeCarts.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(initializeCarts.fulfilled, (state, action) => {
         state.carts = action.payload.data;
         state.totalCarts = action.payload.count;

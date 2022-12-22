@@ -12,6 +12,11 @@ import { RootState, useAppDispatch } from '../store/store';
 import { updateOneUser } from '../store/users.slice';
 import { signupUser, updateLoggedUser, updatePwd } from '../store/auth.slice';
 import { validationSchema } from './userForm.schema';
+import {
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
+import Notification from './Notification';
 
 interface IFormValues {
   email: string;
@@ -31,6 +36,7 @@ interface IUpdateValues {
 
 const UserForm = () => {
   const loggedUser = useSelector((state: RootState) => state.auth.user);
+  const notification = useSelector((state: RootState) => state.notification);
   const dispatch = useAppDispatch();
   const initialValues: IFormValues = {
     email: loggedUser?.email || '',
@@ -58,6 +64,7 @@ const UserForm = () => {
             newValues.fullName = values.fullName;
           }
           if (newValues.fullName || newValues.username) {
+            dispatch(setNotification({ type: 'loading', text: 'Saving...' }));
             try {
               updated = await dispatch(
                 updateOneUser({
@@ -67,8 +74,22 @@ const UserForm = () => {
                 })
               ).unwrap();
               dispatch(updateLoggedUser(updated));
-            } catch (err) {
-              console.log(err);
+              dispatch(
+                setAsyncNotification({
+                  type: 'success',
+                  text: 'Profile updated!',
+                  time: 5,
+                })
+              );
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (err: any) {
+              dispatch(
+                setAsyncNotification({
+                  type: 'error',
+                  text: err?.message,
+                  time: 6,
+                })
+              );
             }
           }
           if (
@@ -76,6 +97,7 @@ const UserForm = () => {
             values.oldPassword.length &&
             values.passwordConfirm.length
           ) {
+            dispatch(setNotification({ type: 'loading', text: 'Saving...' }));
             try {
               await dispatch(
                 updatePwd({
@@ -83,23 +105,42 @@ const UserForm = () => {
                   passwordConfirm: values.passwordConfirm,
                   oldPassword: values.oldPassword,
                 })
+              ).unwrap();
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (err: any) {
+              dispatch(
+                setAsyncNotification({
+                  type: 'error',
+                  text: err?.message,
+                  time: 6,
+                })
               );
-            } catch (err) {
-              console.log(err);
             }
           }
           actions.resetForm({
             values: { ...initialValues, ...updated },
           });
         } else {
-          console.log(values);
-          dispatch(signupUser(values));
+          dispatch(setNotification({ type: 'loading', text: 'Saving...' }));
+          try {
+            await dispatch(signupUser(values)).unwrap();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (err: any) {
+            dispatch(
+              setAsyncNotification({
+                type: 'error',
+                text: err?.message,
+                time: 6,
+              })
+            );
+          }
         }
         actions.setSubmitting(false);
       }}
     >
       {(formik) => (
         <StyledForm onSubmit={formik.handleSubmit}>
+          <Notification notification={notification} />
           {!loggedUser && (
             <StyledImgCtn>
               <img src={images['logo.blue.XS.png']} alt="" />
