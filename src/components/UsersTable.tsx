@@ -11,6 +11,17 @@ import { RootState } from '../store/store';
 
 export const UsersTable = ({ users }: { users: IUser[] }) => {
   const loggedUserId = useSelector((state: RootState) => state.auth?.user?.id);
+
+  // Sort the users array so that the logged user is displayed first
+  const sortedUsers = [...users].sort((a, b) => {
+    if (a.id === loggedUserId) {
+      return -1;
+    } else if (b.id === loggedUserId) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
   return (
     <StyledSharedTable>
       <thead>
@@ -22,15 +33,21 @@ export const UsersTable = ({ users }: { users: IUser[] }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((usr) => (
-          <StyledSharedTr key={usr.id} clickable={false}>
+        {sortedUsers.map((usr) => (
+          <StyledSharedTr
+            key={usr.id}
+            clickable={false}
+            className={usr.id === loggedUserId ? 'loggedUser' : ''}
+          >
             <StyledSharedTd>{usr.username}</StyledSharedTd>
             <StyledSharedTd>{usr?.fullName}</StyledSharedTd>
             <StyledSharedTd>{usr.email}</StyledSharedTd>
             {usr.id !== loggedUserId ? (
               <UserTableCellRole user={usr} />
             ) : (
-              <StyledSharedTd>{usr.role}</StyledSharedTd>
+              <StyledSharedTd style={{ textAlign: 'center' }}>
+                {usr.role}
+              </StyledSharedTd>
             )}
           </StyledSharedTr>
         ))}

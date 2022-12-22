@@ -12,7 +12,7 @@ export const initializeProducts = createAsyncThunk(
   'products/initializeProducts',
   async (): Promise<IProduct[]> => {
     const response = await productServices.getAll();
-    console.log('init products');
+
     return response.data;
   }
 );
@@ -64,14 +64,28 @@ const productsSlice = createSlice({
         const temp = state.products.filter((pr) => pr.id !== action.payload.id);
         state.products = temp;
       })
+      .addCase(updateProduct.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateProduct.rejected, (state) => {
+        state.status = 'failed';
+      })
       .addCase(updateProduct.fulfilled, (state, action) => {
         const temp = state.products.map((pr) =>
           pr.id === action.payload.id ? { ...action.payload } : pr
         );
         state.products = temp;
+        state.status = 'succeeded';
+      })
+      .addCase(createProduct.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createProduct.rejected, (state) => {
+        state.status = 'failed';
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.products.push(action.payload);
+        state.status = 'succeeded';
       });
   },
 });

@@ -1,9 +1,9 @@
 import { ErrorMessage, Field, Formik } from 'formik';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import images from '../assets';
 import { createProduct, updateProduct } from '../store/products.slice';
-import { useAppDispatch } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 import { IProduct, ProductCourseType } from '../types/product.types';
 import {
   StyledForm,
@@ -13,11 +13,17 @@ import {
 } from '../pages/styles/form.styles';
 
 import { StyledPhotoContainer } from '../pages/styles/productForm.styles';
+import { useSelector } from 'react-redux';
+import {
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
+import Notification from './Notification';
 
 interface IFormValues {
   name: string;
   price: string;
-  productCourseType: string;
+  productCourseType: ProductCourseType | 'starter';
   image: File | null;
   editing: boolean;
 }
@@ -30,9 +36,9 @@ interface IProps {
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
   price: Yup.number().required('Please enter a price'),
-  productCourseType: Yup.string().matches(
-    /(starter|main|desert|drink|side|other)/
-  ),
+  productCourseType: Yup.string()
+    .oneOf(['starter', 'main', 'desert', 'drink', 'side', 'other'])
+    .required('Please select a product course type'),
   image: Yup.mixed()
     .when('editing', {
       is: false,
@@ -59,6 +65,9 @@ const validationSchema = Yup.object().shape({
 
 const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
   const [url, setUrl] = useState('');
+  // const productsState = useSelector((state: RootState) => state.products);
+  const notification = useSelector((state: RootState) => state.notification);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
 
   const initialValues: IFormValues = {
@@ -81,22 +90,39 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
         values.productCourseType &&
           input.append('productCourseType', values.productCourseType);
         try {
-          existingProduct
-            ? await dispatch(updateProduct({ input, id: existingProduct.id }))
-            : await dispatch(createProduct(input));
+          dispatch(setNotification({ type: 'loading', text: 'Loading' }));
+          if (existingProduct) {
+            await dispatch(
+              updateProduct({ input, id: existingProduct.id })
+            ).unwrap();
+          } else {
+            await dispatch(createProduct(input)).unwrap();
+          }
+          dispatch(
+            setAsyncNotification({
+              type: 'success',
+              text: 'Product saved!',
+              time: 5,
+            })
+          );
           actions.resetForm({ values: { ...initialValues } });
+          inputRef.current?.form && inputRef.current.form.reset();
           URL.revokeObjectURL(url);
           setUrl('');
           actions.setSubmitting(false);
-
+          console.log({ initialValues });
           onEndSubmit?.();
-        } catch (err) {
-          console.log(err);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          dispatch(
+            setAsyncNotification({ type: 'error', text: err?.message, time: 6 })
+          );
         }
       }}
     >
       {(formik) => (
         <StyledForm onSubmit={formik.handleSubmit}>
+          <Notification notification={notification} />
           {url ? (
             <StyledPhotoContainer>
               <img id="photo" src={url} alt="" />
@@ -140,6 +166,8 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
             <input
               type="file"
               name="image"
+              id="file"
+              ref={inputRef}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 URL.revokeObjectURL(url);

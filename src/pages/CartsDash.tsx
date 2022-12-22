@@ -9,7 +9,7 @@ import helpers from '../utils/functionHelpers';
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
-import { initializeCarts } from '../store/carts.slice';
+import { initializeCarts, resetCarts } from '../store/carts.slice';
 import { RootState } from '../store/store';
 import { Pagination } from './Pagination';
 import { StyledSharedMain, StyledSharedSelect } from './styles/shared.styles';
@@ -52,7 +52,7 @@ const CartsDash = () => {
     };
   }, [currentPage, pageSizeLimit, afterDate, beforeDate]);
 
-  useInitializeData(initializeCarts, options, cartsState.status);
+  useInitializeData(initializeCarts, options, cartsState.status, resetCarts);
 
   const pages = usePagination({
     currentPage,
@@ -125,8 +125,9 @@ const CartsDash = () => {
           </StyledDatePickerCtnDiv>
         )}
       </div>
-
-      {cartsState.status === 'succeeded' && cartsState.carts.length > 0 ? (
+      {cartsState.status === 'loading' ? (
+        <div>Loading....</div>
+      ) : cartsState.status === 'succeeded' && cartsState.carts.length > 0 ? (
         <CartsTable carts={cartsState.carts} />
       ) : (
         <div>no carts to show for the selected dates</div>

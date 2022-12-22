@@ -3,6 +3,11 @@ import { useSelector } from 'react-redux';
 import { StyledSharedSelect } from '../pages/styles/shared.styles';
 import { deleteCart, updateCart } from '../store/carts.slice';
 import { addNewItem, initCartUpdate } from '../store/cartUpdate.slice';
+import {
+  resetNotification,
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
 
 import { RootState, useAppDispatch } from '../store/store';
 import { ICart, ICartItem } from '../types/cart.types';
@@ -10,6 +15,7 @@ import { ILocalCartItemFormated } from '../types/localCart.types';
 
 import { CartAddedProductTRow } from './CartAddedProductTRow';
 import { CartUpdateTRow } from './CartUpdateTRow';
+import Notification from './Notification';
 import {
   StyledCartUpdateBtn,
   StyledCartUpdateWarnBtn,
@@ -37,14 +43,16 @@ const toCartEntries = (cartItems: ICartItem[]): ILocalCartItemFormated[] => {
 
 const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
   const dispatch = useAppDispatch();
+  const notification = useSelector((state: RootState) => state.notification);
+  const { products } = useSelector((state: RootState) => state.products);
   const { existingItems, newItems } = useSelector(
     (state: RootState) => state.updateCart
   );
-  const { products } = useSelector((state: RootState) => state.products);
+
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
   );
-  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
 
   const selectRef = useRef<HTMLSelectElement | null>(null);
 
@@ -77,11 +85,20 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
   };
 
   const deleteHandler = async () => {
+    dispatch(setNotification({ type: 'loading', text: 'Deleting...' }));
     try {
       await dispatch(deleteCart(cart.id)).unwrap();
       setIsFormOpen(false);
-    } catch (err) {
-      console.log(err);
+      dispatch(resetNotification());
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      dispatch(
+        setAsyncNotification({
+          type: 'error',
+          text: err?.message,
+          time: 6,
+        })
+      );
     }
   };
 
@@ -190,6 +207,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
       {isDeleteClicked && (
         <div className="delete-confirm">
           <p>Are you sure you want to delete the cart?</p>
+          <Notification notification={notification} />
           <div>
             <StyledCartUpdateWarnBtn
               type="button"

@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 import { IProduct } from '../types/product.types';
+import Notification from './Notification';
 
 import {
   StyledBtnCtnDiv,
@@ -14,11 +17,14 @@ interface IProps {
 }
 
 const DeleteProduct = ({ productName, onCancel, onDelete }: IProps) => {
+  const notification = useSelector((state: RootState) => state.notification);
   return (
     <StyledModalCtnDiv>
       <div>
         Are you sure you want to delete <b>{productName} ?</b>
+        <Notification notification={notification} />
       </div>
+
       <StyledBtnCtnDiv>
         <StyledConfirmBtn onClick={onDelete}>Delete</StyledConfirmBtn>
         <StyledCancelBtn onClick={onCancel}>Cancel</StyledCancelBtn>

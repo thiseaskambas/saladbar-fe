@@ -15,6 +15,12 @@ import {
 import { Link } from 'react-router-dom';
 
 import images from '../assets';
+import {
+  resetNotification,
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
+import Notification from '../components/Notification';
 
 interface IFormValues {
   email: string;
@@ -23,10 +29,10 @@ interface IFormValues {
 }
 
 const LogInForm = () => {
+  const notification = useSelector((state: RootState) => state.notification);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const authState = useSelector((state: RootState) => state.auth);
 
   const initialValues: IFormValues = {
     email: '',
@@ -38,10 +44,6 @@ const LogInForm = () => {
       .email('Invalid email address')
       .required('Please fill in your email'),
     password: Yup.string().required('Please fill in your password'),
-    // .matches(
-    //   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/,
-    //   'Remember: your password contains letters and numbers and is at least 5 characters long'
-    // ),
   });
 
   const fromUrl = location.state?.from?.pathname || '/dashboard';
@@ -52,21 +54,30 @@ const LogInForm = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, actions) => {
+          dispatch(setNotification({ type: 'loading', text: 'Hold on...' }));
           try {
             await dispatch(logUserIn(values)).unwrap();
-            actions.resetForm({
-              values: { email: '', password: '', rememberMe: false },
-            });
+            // actions.resetForm({
+            //   values: { email: '', password: '', rememberMe: false },
+            // });
             navigate(fromUrl, { replace: true });
             actions.setSubmitting(false);
-          } catch (err) {
-            console.log(err);
+            dispatch(resetNotification());
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (err: any) {
+            dispatch(
+              setAsyncNotification({
+                type: 'error',
+                text: err?.message,
+                time: 6,
+              })
+            );
           }
         }}
       >
         {(formik) => (
           <StyledForm onSubmit={formik.handleSubmit}>
-            {authState.status === 'failed' && <div>Error</div>}
+            <Notification notification={notification} />
             <StyledImgCtn>
               <img src={images['logo.blue.XS.png']} alt="" />
             </StyledImgCtn>
