@@ -89,6 +89,9 @@ const authSlice = createSlice({
         state.user = null;
         state.status = 'idle';
       })
+      .addCase(logUserOut.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(logUserOut.rejected, (state) => {
         state.accessToken = '';
         state.status = 'idle';

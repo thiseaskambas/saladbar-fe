@@ -9,6 +9,11 @@ import { useAppDispatch } from '../store/store';
 import { deleteProduct } from '../store/products.slice';
 import { StyledSharedTable } from '../pages/styles/shared.styles';
 import { StyledModalCtnDiv } from './styles/modal.styles';
+import {
+  resetNotification,
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
 
 type SortKey = 'name' | 'price' | 'productCourseType';
 
@@ -54,11 +59,20 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
 
   const deleteHandler = async () => {
     if (isSelectedProduct) {
+      dispatch(setNotification({ type: 'loading', text: 'Deleting...' }));
       try {
         await dispatch(deleteProduct(isSelectedProduct.id)).unwrap();
+        dispatch(resetNotification());
         closeModalHandler();
-      } catch (err) {
-        console.log(err);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        dispatch(
+          setAsyncNotification({
+            type: 'error',
+            text: err?.message,
+            time: 6,
+          })
+        );
       }
     }
   };

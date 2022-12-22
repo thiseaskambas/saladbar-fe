@@ -11,7 +11,7 @@ import { RootState } from '../store/store';
 
 export const UsersTable = ({ users }: { users: IUser[] }) => {
   const loggedUserId = useSelector((state: RootState) => state.auth?.user?.id);
-  console.log({ users, loggedUserId });
+
   // Sort the users array so that the logged user is displayed first
   const sortedUsers = [...users].sort((a, b) => {
     if (a.id === loggedUserId) {

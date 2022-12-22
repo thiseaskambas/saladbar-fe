@@ -29,7 +29,6 @@ interface IDateRangeState {
 const PAGE_LIMITS = [10, 20, 30];
 
 const CartsDash = () => {
-  console.log('rendering carts');
   const cartsState = useSelector((state: RootState) => state.carts);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, setLimit] = useState(10);
@@ -126,8 +125,9 @@ const CartsDash = () => {
           </StyledDatePickerCtnDiv>
         )}
       </div>
-
-      {cartsState.status === 'succeeded' && cartsState.carts.length > 0 ? (
+      {cartsState.status === 'loading' ? (
+        <div>Loading....</div>
+      ) : cartsState.status === 'succeeded' && cartsState.carts.length > 0 ? (
         <CartsTable carts={cartsState.carts} />
       ) : (
         <div>no carts to show for the selected dates</div>

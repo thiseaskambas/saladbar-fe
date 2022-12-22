@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 function App() {
   const user = useSelector((state: RootState) => state.auth.user);
-  const userStatus = useSelector((state: RootState) => state.auth.status);
+  const authStatus = useSelector((state: RootState) => state.auth.status);
   const productsState = useSelector((state: RootState) => state.products);
 
   const dispatch = useAppDispatch();
@@ -39,7 +39,10 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <NavBar user={userStatus === 'succeeded' ? user : null} />
+      <NavBar
+        user={authStatus === 'succeeded' ? user : null}
+        authStatus={authStatus}
+      />
       <AppRouter />
       <Footer />
     </>

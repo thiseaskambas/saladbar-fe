@@ -9,18 +9,25 @@ import {
   StyledMainUl,
   StyledNav,
 } from './styles/navBar.styles';
-import { IUser } from '../types/user.types';
+import { IAuthInitialState, IUser } from '../types/user.types';
 import images from '../assets/index';
 import { StyledLogoutBtn } from '../components/styles/navLInk.styles';
 import Modal from '../components/Modal';
 import LogoutPrompt from '../components/LogoutPrompt';
 import { useAppDispatch } from '../store/store';
 import { logUserOut } from '../store/auth.slice';
+import { StyledModalCtnDiv } from '../components/styles/modal.styles';
 
-const NavBar = ({ user }: { user: IUser | null }) => {
+const NavBar = ({
+  user,
+  authStatus,
+}: {
+  user: IUser | null;
+  authStatus: IAuthInitialState['status'];
+}) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  //TODO: probably don't need state here:
+
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
@@ -74,10 +81,14 @@ const NavBar = ({ user }: { user: IUser | null }) => {
         open={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
       >
-        <LogoutPrompt
-          onCancel={() => setIsLogoutModalOpen(false)}
-          onLogout={logoutHandler}
-        />
+        {authStatus === 'loading' ? (
+          <StyledModalCtnDiv>Hang on...</StyledModalCtnDiv>
+        ) : (
+          <LogoutPrompt
+            onCancel={() => setIsLogoutModalOpen(false)}
+            onLogout={logoutHandler}
+          />
+        )}
       </Modal>
     </StyledNav>
   );

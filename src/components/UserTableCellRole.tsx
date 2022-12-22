@@ -7,6 +7,10 @@ import {
 } from '../pages/styles/shared.styles';
 import { useAppDispatch } from '../store/store';
 import { updateOneUser } from '../store/users.slice';
+import {
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
 
 export const UserTableCellRole = ({ user }: { user: IUser }) => {
   const dispatch = useAppDispatch();
@@ -29,12 +33,27 @@ export const UserTableCellRole = ({ user }: { user: IUser }) => {
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    dispatch(setNotification({ type: 'loading', text: 'Updating...' }));
     try {
       await dispatch(updateOneUser({ id: user.id, role: isRole }));
       setIsRoleChanged(() => false);
       setIsRole('');
-    } catch (err) {
-      console.log(err);
+      dispatch(
+        setAsyncNotification({
+          type: 'success',
+          text: 'Successfully updated!',
+          time: 5,
+        })
+      );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      dispatch(
+        setAsyncNotification({
+          type: 'error',
+          text: err?.message,
+          time: 6,
+        })
+      );
     }
   };
   return (
