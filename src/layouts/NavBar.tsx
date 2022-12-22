@@ -73,7 +73,7 @@ const NavBar = ({
         })}
         {user && (
           <StyledLogoutBtn onClick={() => setIsLogoutModalOpen(true)}>
-            LOGOUT
+            Logout
           </StyledLogoutBtn>
         )}
       </StyledMainUl>

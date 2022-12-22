@@ -1,5 +1,22 @@
 import { DefaultTheme } from 'styled-components';
 
+enum colors {
+  PINK = '#F1C2CC',
+  PURPLE = '#C9BFFE',
+  ORANGE = '#FEE2C7',
+  DARKGRAY = '#232227',
+  WHITE = '#FFFFFF',
+}
+enum neobrutalColors {
+  ORANGE = '#F4714E',
+  GREEN = '#1FA95B',
+  MINT = '#B1EBD3',
+  PURPLE = '#A49EF8',
+  YELLOW = '#FDC62E',
+  RED = '#FF2F01',
+  DARKGRAY = '#01416',
+  WHITE = '#FFFFFF',
+}
 const theme: DefaultTheme = {
   colors: {
     blue: '#3D5A80',

@@ -62,7 +62,7 @@ const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
             onClick={clickHandler}
             aria-expanded={dropdown ? 'true' : 'false'}
           >
-            {item.title.toUpperCase()}
+            {item.title}
             {depthLevel && depthLevel > 0 ? (
               <img src={images['right.XS.png']} />
             ) : (
@@ -87,7 +87,7 @@ const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
           }}
         >
           {' '}
-          {item.title.toUpperCase()}
+          {item.title}
           {item.isCart && (
             <StyledOuterSpan>
               {'  '}

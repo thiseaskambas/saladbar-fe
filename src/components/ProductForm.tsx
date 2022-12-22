@@ -65,7 +65,6 @@ const validationSchema = Yup.object().shape({
 
 const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
   const [url, setUrl] = useState('');
-  // const productsState = useSelector((state: RootState) => state.products);
   const notification = useSelector((state: RootState) => state.notification);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
