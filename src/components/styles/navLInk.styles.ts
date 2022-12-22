@@ -4,19 +4,19 @@ import { NavLink } from 'react-router-dom';
 export const StyledNavLink = styled(NavLink)<{
   issubmenu?: string;
 }>`
-  border-radius: 0.5rem;
-  padding: 0.4rem 1rem;
-  font-weight: 300;
+  border-radius: ${({ theme }) => theme.navLink.borderRadius};
+  padding: ${({ theme }) => theme.navLink.padding};
+  font-weight: ${({ theme }) => theme.navLink.fontWeight};
   white-space: nowrap;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.mediumBrown};
+    background-color: ${({ theme }) => theme.navLinkBgColor.hover};
   }
   &:visited {
     color: black;
   }
   &.active {
-    background-color: ${({ theme }) => theme.colors.darkBrown};
+    background-color: ${({ theme }) => theme.navLinkBgColor.active};
   }
 
   ${({ issubmenu, theme }) =>
@@ -26,25 +26,28 @@ export const StyledNavLink = styled(NavLink)<{
       borderRadius: '0',
       width: '100%',
       ':hover': {
-        backgroundColor: theme.colors.lightBrown,
+        backgroundColor: theme.neobrutalColors.MINT,
       },
       '&.active': {
         backgroundColor: 'inherit',
       },
       '&.active:hover': {
-        backgroundColor: theme.colors.lightBrown,
+        backgroundColor: theme.neobrutalColors.MINT,
       },
     }}
 `;
 
 export const StyledLogoutBtn = styled.button`
-  border-radius: 0.5rem;
-  padding: 0.4rem 1rem;
-  font-weight: 300;
+  border-radius: ${({ theme }) => theme.navLink.borderRadius};
+  padding: ${({ theme }) => theme.navLink.padding};
+  font-weight: ${({ theme }) => theme.navLink.fontWeight};
   white-space: nowrap;
-
+  margin-left: auto;
+  margin-right: 2rem;
+  background-color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
+  color: ${({ theme }) => theme.neobrutalColors.WHITE};
   &:hover {
-    background-color: ${({ theme }) => theme.colors.mediumBrown};
+    background-color: ${({ theme }) => theme.navLinkBgColor.hover};
   }
 `;
 

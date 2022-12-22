@@ -41,7 +41,7 @@ export const StyledInnerDiv = styled.div`
 `;
 
 export const StyledMessageCtn = styled.div`
-  color: ${(props) => props.theme.error.color};
+  color: ${(props) => props.theme.colors.gray};
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-end;
