@@ -56,7 +56,7 @@ export const StyledNav = styled.nav`
   flex-direction: row;
   justify-content: flex-start;
   background-color: ${({ theme }) => theme.styledNav.backgroundColor};
-  border-bottom: 3px solid black;
+  border-bottom: ${({ theme }) => theme.borders.standard};
 `;
 
 export const StyledLogoContainer = styled.div`

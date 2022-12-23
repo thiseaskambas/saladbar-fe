@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledDashSideBar = styled.nav<{ show?: boolean }>`
   background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
-  border-right: 2px solid ${({ theme }) => theme.neobrutalColors.DARKGRAY};
+  border-right: 3px solid ${({ theme }) => theme.neobrutalColors.DARKGRAY};
   transition: 0.1s ease-in-out;
   transition-property: width, padding, transform;
   padding: 1rem 0;

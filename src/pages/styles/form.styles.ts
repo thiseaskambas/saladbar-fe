@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 
 export const StyledForm = styled.form`
-  border-radius: 1rem;
   max-width: 380px;
   padding: 1rem 3rem;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${(props) => props.theme.colors.white};
+  border: ${({ theme }) => theme.borders.standard};
+  background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
+  box-shadow: ${({ theme }) =>
+    theme.createShadow(10, 10, 0, 0, theme.neobrutalColors.DARKGRAY)};
   & a {
     text-decoration: underline;
+  }
+  & .email-noedit {
+    padding: 0.2rem;
+    background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
+    font-weight: 200;
   }
 `;
 
@@ -52,9 +59,18 @@ export const StyledMessageCtn = styled.div`
 `;
 
 export const StyledMain = styled.main`
-  background-color: ${(props) => props.theme.colors.lightBlue};
-  display: grid;
-  place-items: center;
+  background-color: ${({ theme }) => theme.paleBrutalColors.ORANGE};
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 3rem;
+  gap: 3rem;
+  & h1 {
+    border: ${({ theme }) => theme.borders.standard};
+    padding: ${({ theme }) => theme.paddings.standard};
+    background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
+    font-size: 1.5rem;
+  }
 `;
 
 export const StyledImgCtn = styled.div`

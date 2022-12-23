@@ -12,6 +12,8 @@ declare module 'styled-components' {
     navLinkBgColor: typeof navLinkBgColor;
     productCard: typeof productCard;
     fontFamimies: typeof fontFamimies;
+    borders: typeof borders;
+    paddings: typeof paddings;
     createShadow: (
       x: number,
       y: number,
@@ -117,6 +119,14 @@ enum fontFamimies {
   ROBOTO = "'Roboto Slab', monospace",
 }
 
+enum borders {
+  standard = '3px solid black',
+}
+
+enum paddings {
+  standard = '0.5rem 1rem',
+}
+
 const theme: DefaultTheme = {
   neobrutalColors,
   colors,
@@ -129,6 +139,8 @@ const theme: DefaultTheme = {
   createShadow,
   customColor,
   fontFamimies,
+  borders,
+  paddings,
 };
 
 export default theme;
