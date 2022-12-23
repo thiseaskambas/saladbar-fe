@@ -79,6 +79,7 @@ const CartsDash = () => {
           onChange={(e) => {
             setLimit(Number(e.target.value)), setCurrentPage(1);
           }}
+          bgColor
         >
           {PAGE_LIMITS.map((el) => (
             <option key={el} value={el}>

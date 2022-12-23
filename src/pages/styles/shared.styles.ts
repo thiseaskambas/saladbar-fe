@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledSharedMain = styled.main`
   padding-top: 2rem;
-  background-color: ${({ theme }) => theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.neobrutalColors.MINT};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,10 +10,13 @@ export const StyledSharedMain = styled.main`
 `;
 
 export const StyledSharedTable = styled.table`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
   margin-left: auto;
   margin-right: auto;
   padding: 2rem;
+  border: ${({ theme }) => theme.borders.standard};
+  box-shadow: ${({ theme }) =>
+    theme.createShadow(10, 10, 0, 0, theme.neobrutalColors.DARKGRAY)};
 `;
 
 export const StyledSharedTr = styled.tr<{
@@ -24,18 +27,18 @@ export const StyledSharedTr = styled.tr<{
   cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 
   :nth-child(odd) {
-    background-color: ${({ theme }) => theme.colors.lightBrown};
+    background-color: ${({ theme }) => theme.paleBrutalColors.ORANGE};
   }
 
   &.loggedUser {
-    background-color: ${({ theme }) => theme.colors.darkBrown};
+    background-color: ${({ theme }) => theme.paleBrutalColors.PURPLE};
   }
 
   ${({ clickable, theme }) => {
     if (clickable)
       return `
     :hover {
-      background-color: ${theme.colors.mediumBrown};
+      background-color: ${theme.neobrutalColors.ORANGE};
     }
     `;
   }}
@@ -55,28 +58,27 @@ export const StyledSharedPriceTd = styled.td`
 
 export const StyledSharedSelect = styled.select<{
   isDisplayed: boolean;
-  bgColor?: 'white' | 'blue';
+  bgColor?: boolean;
 }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
   background-color: ${({ theme, bgColor }) =>
-    bgColor === 'white' ? theme.colors.white : theme.colors.newBlue};
-  color: ${({ bgColor }) => (bgColor === 'white' ? 'black' : 'white')};
-  border: 1px solid ${({ theme }) => theme.colors.gray};
+    bgColor ? theme.neobrutalColors.PURPLE : theme.neobrutalColors.WHITE};
+  color: ${({ bgColor }) => (bgColor ? 'black' : 'white')};
+  border: ${({ theme }) => theme.borders.medium};
   border-radius: 0.25rem;
   padding: 0.3rem 0.5rem;
   margin: 0 1rem;
   cursor: pointer;
   outline: none;
-
   :focus {
-    border: 1px solid ${({ theme }) => theme.colors.newBlue};
+    border: 2px solid ${({ theme }) => theme.neobrutalColors.GREEN};
   }
 `;
 
 export const StyledSharedBtn = styled.button<{ isDisplayed: boolean }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
-  background-color: ${({ theme }) => theme.colors.newBlue};
+  background-color: ${({ theme }) => theme.neobrutalColors.GREEN};
   color: white;
-  padding: 0.5rem 1rem;
+  padding: ${({ theme }) => theme.paddings.standard};
   border-radius: 0.25rem;
 `;

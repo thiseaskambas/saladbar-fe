@@ -6,7 +6,7 @@ export const StyledDeleteSymbolBtn = styled.button`
   padding: 0 0;
   transition: all ease-in-out 200ms;
   :hover {
-    color: red;
+    color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
     transform: scale(1.3);
   }
 `;

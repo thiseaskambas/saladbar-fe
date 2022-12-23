@@ -9,12 +9,14 @@ export const StatsCtnDiv = styled.div`
 `;
 
 export const StyledCtnDiv = styled.div`
-  border: 3px solid black;
+  border: ${({ theme }) => theme.borders.standard};
   background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
+  box-shadow: ${({ theme }) =>
+    theme.createShadow(10, 10, 0, 0, theme.neobrutalColors.DARKGRAY)};
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1rem;
+  margin-top: 3rem;
   padding: 1rem;
 `;
 

@@ -9,6 +9,9 @@ export const StyledNavButton = styled.button`
   &:hover {
     background-color: ${({ theme }) => theme.navLinkBgColor.hover};
     color: ${({ theme }) => theme.neobrutalColors.WHITE};
+    & img {
+      filter: invert(100%);
+    }
   }
   &:active {
     /* background-color: ${({ theme }) => theme.navLinkBgColor.active}; */

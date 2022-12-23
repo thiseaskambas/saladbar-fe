@@ -121,6 +121,8 @@ enum fontFamimies {
 
 enum borders {
   standard = '3px solid black',
+  medium = '2px solid black',
+  thin = '1px solid black',
 }
 
 enum paddings {

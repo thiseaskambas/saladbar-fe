@@ -12,8 +12,9 @@ export const StyledModalBackgroundDiv = styled.div`
 `;
 
 export const StyledModalCenteredDiv = styled.div`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
   position: fixed;
+  overflow: hidden;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -24,9 +25,10 @@ export const StyledModalCenteredDiv = styled.div`
 `;
 
 export const StyledModalCtnDiv = styled.div`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
   border-radius: 0 0 1rem 1rem;
   padding: 0 1rem 1rem 1rem;
+  background-color: red;
   z-index: 10;
   & b {
     font-weight: 800;
@@ -34,7 +36,7 @@ export const StyledModalCtnDiv = styled.div`
 `;
 
 export const StyledModalHeader = styled.div`
-  background-color: ${({ theme }) => theme.colors.blue};
+  background-color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
   border-radius: 1rem 1rem 0 0;
   color: white;
   display: flex;
@@ -50,7 +52,7 @@ export const StyledModalHeader = styled.div`
 `;
 
 export const StyledCloseBtn = styled.button`
-  background-color: ${({ theme }) => theme.colors.orange};
+  background-color: ${({ theme }) => theme.neobrutalColors.ORANGE};
   color: white;
   height: 1.25rem;
   width: 1.25rem;

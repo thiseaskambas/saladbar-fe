@@ -11,7 +11,7 @@ import { StyledMainDash } from './styles/mainDash.styles';
 
 const MainDashBoard = () => {
   const productsState = useSelector((state: RootState) => state.products);
-  const [sideBarDisplay, setSideBarDisp] = useState(true);
+  const [sideBarDisplay, setSideBarDisp] = useState(false);
   const [isSelected, setIsSelected] = useState<ProductCourseType | 'all'>(
     'all'
   );

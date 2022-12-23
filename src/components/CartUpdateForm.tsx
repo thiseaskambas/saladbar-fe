@@ -110,7 +110,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
           name="creator"
           id="creator"
           isDisplayed={true}
-          bgColor="white"
+          bgColor
         >
           <option>{cart.createdBy.username}</option>
         </StyledSharedSelect>
@@ -144,7 +144,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
         <div className="select-ctn">
           <StyledSharedSelect
             isDisplayed={true}
-            bgColor="white"
+            bgColor
             name="products"
             id="products"
             onChange={(e) => setSelectedProductId(e.target.value)}
