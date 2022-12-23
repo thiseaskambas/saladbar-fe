@@ -8,8 +8,9 @@ export const StyledNavButton = styled.button`
   align-items: center;
   &:hover {
     background-color: ${({ theme }) => theme.navLinkBgColor.hover};
+    color: ${({ theme }) => theme.neobrutalColors.WHITE};
   }
   &:active {
-    background-color: ${({ theme }) => theme.navLinkBgColor.active};
+    /* background-color: ${({ theme }) => theme.navLinkBgColor.active}; */
   }
 `;

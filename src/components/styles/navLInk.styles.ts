@@ -6,10 +6,11 @@ export const StyledLogoutBtn = styled.button`
   padding: ${({ theme }) => theme.navLink.padding};
   font-weight: ${({ theme }) => theme.navLink.fontWeight};
   white-space: nowrap;
-
   background-color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
   color: ${({ theme }) => theme.neobrutalColors.WHITE};
   &:hover {
+    transition: 100ms ease-in;
+    font-weight: 900;
     background-color: ${({ theme }) => theme.navLinkBgColor.hover};
   }
 `;
@@ -17,7 +18,7 @@ export const StyledLogoutBtn = styled.button`
 export const StyledOuterSpan = styled.span`
   background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
   border: 2px solid black;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.neobrutalColors.WHITE};
   display: inline-block;
   position: relative;
   font-weight: 600;
@@ -44,14 +45,19 @@ export const StyledNavLink = styled(NavLink)<{
   }
   &:hover {
     background-color: ${({ theme }) => theme.navLinkBgColor.hover};
+    color: ${({ theme }) => theme.neobrutalColors.WHITE};
     transition: background-color 0.1s ease-in;
   }
   &:visited {
     color: black;
   }
+  &:visited:hover {
+    color: black;
+    color: ${({ theme }) => theme.neobrutalColors.WHITE};
+  }
   &:active {
-    background-color: ${({ theme }) => theme.navLinkBgColor.active};
-    transition: background-color 0.1s ease-in;
+    font-weight: 500;
+    transition: font-weight 0.1s ease-in-out;
   }
 
   ${({ issubmenu, theme }) =>
@@ -61,13 +67,15 @@ export const StyledNavLink = styled(NavLink)<{
       borderRadius: '0',
       width: '100%',
       ':hover': {
-        backgroundColor: theme.neobrutalColors.MINT,
+        backgroundColor: theme.neobrutalColors.DARKGRAY,
+        color: theme.neobrutalColors.WHITE,
       },
       '&.active': {
         backgroundColor: 'inherit',
       },
       '&.active:hover': {
-        backgroundColor: theme.neobrutalColors.MINT,
+        backgroundColor: theme.neobrutalColors.DARKGRAY,
+        color: theme.neobrutalColors.WHITE,
       },
     }}
 `;

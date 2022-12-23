@@ -101,7 +101,7 @@ enum productCard {
 
 enum navLinkBgColor {
   base = neobrutalColors.WHITE,
-  hover = neobrutalColors.MINT,
+  hover = neobrutalColors.DARKGRAY,
   active = neobrutalColors.GREEN,
 }
 
