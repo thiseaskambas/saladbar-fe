@@ -29,7 +29,7 @@ export const StyledCardHeadDiv = styled.div`
     font-size: 1.1rem;
   }
   & span {
-    font-family: 'Roboto Slab', monospace;
+    font-family: ${({ theme }) => theme.fontFamimies.ROBOTO};
   }
 `;
 

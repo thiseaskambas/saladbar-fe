@@ -33,7 +33,7 @@ export const StyledDashSideBar = styled.nav<{ show?: boolean }>`
 export const StyledSideBarCtn = styled.div`
   display: flex;
   margin-right: 1rem;
-  font-family: 'Roboto Slab', monospace;
+  font-family: ${({ theme }) => theme.fontFamimies.ROBOTO};
 `;
 
 export const StyledSideLiItem = styled.li<{

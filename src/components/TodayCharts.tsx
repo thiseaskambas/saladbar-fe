@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import {
   StatsCtnDiv,
   StyledBarCtnDiv,
+  StyledCtnDiv,
   StyledH1,
   StyledH2,
 } from './styles/today.styles';
@@ -31,12 +32,13 @@ const TodayCharts = ({ cartsState }: { cartsState: RootState['carts'] }) => {
 
   const weekday = helpers.getUTCDayName();
   return (
-    <>
+    <StyledCtnDiv>
       <StyledH1>
         <span className="today">Today </span>
-        <span className="vs">VS </span>
-        <span className="last">Last {weekday}</span>
+        <span className="vs"> VS </span>
+        <span className="last"> Last {weekday}</span>
       </StyledH1>
+
       <StatsCtnDiv ref={ref}>
         <StyledH2>Products sold </StyledH2>
         <StyledBarCtnDiv>
@@ -88,7 +90,7 @@ const TodayCharts = ({ cartsState }: { cartsState: RootState['carts'] }) => {
           />
         </StyledBarCtnDiv>
       </StatsCtnDiv>
-    </>
+    </StyledCtnDiv>
   );
 };
 
