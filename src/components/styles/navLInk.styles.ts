@@ -15,15 +15,15 @@ export const StyledLogoutBtn = styled.button`
 `;
 
 export const StyledOuterSpan = styled.span`
-  background-color: ${({ theme }) => theme.colors.orange};
+  background-color: ${({ theme }) => theme.neobrutalColors.GREEN};
+  border: 2px solid black;
   color: ${({ theme }) => theme.colors.white};
   display: inline-block;
   position: relative;
   font-weight: 600;
   text-align: center;
-  border-radius: 0.2rem;
   padding: 0.2rem 0.5rem;
-  margin-left: 0.8rem;
+  margin-left: 0.5rem;
 `;
 
 export const StyledNavLi = styled.li`

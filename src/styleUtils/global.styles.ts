@@ -7,13 +7,16 @@ const GlobalStyles = createGlobalStyle`
    display: flex;
    flex-direction: column;
    font-family: 'Inter', sans-serif;
+   
   }
+
 
   main {
     flex-grow: 1;
     padding: 1rem;
     z-index: 0;
   }
+
   #portal{
     font-family: 'Inter', sans-serif;
   }

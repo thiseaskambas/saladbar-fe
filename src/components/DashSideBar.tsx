@@ -37,7 +37,7 @@ const DashSideBar = ({
 
   return (
     <>
-      <StyledSideBarCtn show={show}>
+      <StyledSideBarCtn>
         <StyledDashSideBar show={show}>
           <StyledSideBarHeading className="sideItem">
             Categories:

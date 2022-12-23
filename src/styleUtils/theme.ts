@@ -10,6 +10,13 @@ declare module 'styled-components' {
     styledNav: typeof styledNav;
     navLink: typeof navLink;
     navLinkBgColor: typeof navLinkBgColor;
+    createShadow: (
+      right: number,
+      bottom: number,
+      left: number,
+      top: number,
+      color: neobrutalColors
+    ) => string;
   }
 }
 
@@ -36,6 +43,15 @@ enum backDropShadow {
   mozzilaboxShadow = '0px 3px 8px 0px rgba(66, 66, 66, 0.64)',
   boxShadow = '0px 3px 8px 0px rgba(66, 66, 66, 0.64)',
 }
+
+const createShadow = (
+  right: number,
+  bottom: number,
+  left: number,
+  top: number,
+  color: neobrutalColors
+) => `${right}px ${bottom}px ${left}px ${top}px ${color}`;
+
 enum paleBrutalColors {
   PINK = '#F1C2CC',
   PURPLE = '#C9BFFE',
@@ -43,6 +59,7 @@ enum paleBrutalColors {
   DARKGRAY = '#232227',
   WHITE = '#FFFFFF',
 }
+
 enum neobrutalColors {
   ORANGE = '#F4714E',
   GREEN = '#1FA95B',
@@ -79,6 +96,7 @@ const theme: DefaultTheme = {
   styledNav,
   navLink,
   navLinkBgColor,
+  createShadow,
 };
 
 export default theme;
