@@ -67,7 +67,7 @@ enum navLinkBgColor {
 
 enum navLink {
   borderRadius = '0',
-  padding = '0',
+  padding = '0 2rem',
   fontWeight = 300,
 }
 

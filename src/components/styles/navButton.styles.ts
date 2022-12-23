@@ -6,4 +6,10 @@ export const StyledNavButton = styled.button`
   font-weight: ${({ theme }) => theme.navLink.fontWeight};
   display: flex;
   align-items: center;
+  &:hover {
+    background-color: ${({ theme }) => theme.navLinkBgColor.hover};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.navLinkBgColor.active};
+  }
 `;

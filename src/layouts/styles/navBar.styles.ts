@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 export const StyledMainUl = styled.ul`
   display: flex;
-  gap: 2rem;
+
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: center;
+  align-items: stretch;
   flex-grow: 1;
 `;
 
@@ -12,11 +13,13 @@ export const StyledDropUl = styled.ul<{
   dropdown: boolean;
   depthLevel: number;
   moveLeft?: boolean;
+  moveFromTop?: number;
 }>`
   display: none;
   min-width: fit-content;
   white-space: nowrap;
   position: absolute;
+  top: ${({ moveFromTop }) => moveFromTop}px;
 
   & button {
     border-radius: 0;

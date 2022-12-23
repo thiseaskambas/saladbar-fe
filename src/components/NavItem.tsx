@@ -6,16 +6,21 @@ import { useSelector } from 'react-redux';
 import { INavItem } from '../types/components.types';
 import NavDropDown from './NavDropDown';
 import { StyledNavButton } from './styles/navButton.styles';
-import { StyledNavLink, StyledOuterSpan } from './styles/navLInk.styles';
+import {
+  StyledNavLi,
+  StyledNavLink,
+  StyledOuterSpan,
+} from './styles/navLInk.styles';
 import images from '../assets';
 
 interface IProps {
   item: INavItem;
   depthLevel: number;
   closeParent: () => void;
+  navHeight?: number;
 }
 
-const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
+const NavItem = ({ item, depthLevel, closeParent, navHeight }: IProps) => {
   const [dropdown, setDropdown] = useState(false);
   const [moveLeft, setMoveLeft] = useState(false);
   const [btnMeasureRef, btnBounds] = useMeasure();
@@ -54,7 +59,7 @@ const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
   };
 
   return (
-    <li ref={liRef}>
+    <StyledNavLi ref={liRef}>
       {item.submenu ? (
         <>
           <StyledNavButton
@@ -76,6 +81,7 @@ const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
             moveLeft={moveLeft}
             setDropdown={setDropdown}
             closeParent={closeParent}
+            moveFromTop={navHeight}
           />
         </>
       ) : (
@@ -96,7 +102,7 @@ const NavItem = ({ item, depthLevel, closeParent }: IProps) => {
           )}
         </StyledNavLink>
       )}
-    </li>
+    </StyledNavLi>
   );
 };
 
