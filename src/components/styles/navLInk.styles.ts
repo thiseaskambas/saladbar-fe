@@ -15,7 +15,7 @@ export const StyledLogoutBtn = styled.button`
 `;
 
 export const StyledOuterSpan = styled.span`
-  background-color: ${({ theme }) => theme.neobrutalColors.GREEN};
+  background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
   border: 2px solid black;
   color: ${({ theme }) => theme.colors.white};
   display: inline-block;
@@ -39,17 +39,19 @@ export const StyledNavLink = styled(NavLink)<{
   white-space: nowrap;
   display: flex;
   align-items: center;
+  &.active {
+    background-color: ${({ theme }) => theme.navLinkBgColor.base};
+  }
   &:hover {
     background-color: ${({ theme }) => theme.navLinkBgColor.hover};
+    transition: background-color 0.1s ease-in;
   }
   &:visited {
     color: black;
   }
   &:active {
     background-color: ${({ theme }) => theme.navLinkBgColor.active};
-  }
-  &.active {
-    background-color: ${({ theme }) => theme.navLinkBgColor.base};
+    transition: background-color 0.1s ease-in;
   }
 
   ${({ issubmenu, theme }) =>

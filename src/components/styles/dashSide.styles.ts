@@ -57,7 +57,7 @@ export const StyledSideLiItem = styled.li<{
     transition: background-color 0.1s ease-in;
   }
   :active {
-    background-color: ${({ theme }) => theme.neobrutalColors.RED};
+    background-color: ${({ theme }) => theme.neobrutalColors.ORANGE};
     transition: background-color 0.1s ease-in;
   }
   & h2 {

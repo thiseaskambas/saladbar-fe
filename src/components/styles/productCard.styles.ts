@@ -1,44 +1,61 @@
 import styled from 'styled-components';
 
 export const StyledCardDiv = styled.div<{ img?: string }>`
-  border-radius: 1rem;
+  border-radius: ${({ theme }) => theme.productCard.borderRadius};
   min-width: fit-content;
   max-width: fit-content;
   height: fit-content;
-  /* background-image: ${(props) => props.img}; */
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.productCard.backgroundColor};
   white-space: nowrap;
-  padding: 1rem;
+  padding: ${({ theme }) => theme.productCard.padding};
+  border: ${({ theme }) => theme.productCard.border};
   cursor: default;
   display: flex;
   flex-direction: column;
   align-items: center;
-  -webkit-box-shadow: ${({ theme }) => theme.backDropShadow.webkitboxShadow};
-  -moz-box-shadow: ${({ theme }) => theme.backDropShadow.mozzilaboxShadow};
-  box-shadow: ${({ theme }) => theme.backDropShadow.boxShadow};
+  box-shadow: ${({ theme }) =>
+      theme.createShadow(8, 8, 0, 0, theme.neobrutalColors.PURPLE)},
+    ${({ theme }) =>
+      theme.createShadow(8, 8, 0, 3, theme.neobrutalColors.DARKGRAY)};
+  /* box-shadow: -5px 5px red, -5px 5px 0px 3px black; */
+`;
+
+export const StyledCardHeadDiv = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  & h3 {
+    font-size: 1.1rem;
+  }
+  & span {
+    font-family: 'Roboto Slab', monospace;
+  }
 `;
 
 export const StyledImgCtn = styled.div`
   width: 200px;
   height: 100px;
-  margin: 1rem 0;
-  border: 5px solid ${({ theme }) => theme.colors.lightBrown};
-  /* display: flex; */
-  /* align-items: center; */
+  border-top: ${({ theme }) => theme.productCard.border};
+  border-bottom: ${({ theme }) => theme.productCard.border};
   overflow: hidden;
-
-  & img {
-    /* flex-shrink: 0; */
-    /* min-width: 100%; */
-    /* min-height: 100%; */
-  }
+  margin-bottom: 1rem;
 `;
 
-export const StyledProductBtn = styled.button`
-  background-color: ${({ theme }) => theme.colors.lightBrown};
-  padding: 0.2rem 1rem;
-  font-size: 1.5rem;
-  border-radius: 0.5rem;
+export const StyledBtnCtn = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const StyledProductBtn = styled.button<{ decrease?: boolean }>`
+  border-left: 1rem solid transparent;
+  border-right: 1rem solid transparent;
+  border-bottom: 1rem solid
+    ${({ theme, decrease }) =>
+      decrease ? theme.neobrutalColors.YELLOW : theme.neobrutalColors.GREEN};
+  border-top: 1rem solid transparent;
+  display: inline-block;
+  transform: rotate(${({ decrease }) => (decrease ? '-90deg' : '90deg')});
 `;
 
 export const StyledProductQ = styled.span`
@@ -56,18 +73,16 @@ export const StyledAddToCartBtn = styled.button`
   width: 100%;
   padding: 0.2rem 1rem;
   font-size: 1.1rem;
-  border-radius: 0.5rem;
   margin-top: 1rem;
-  background-color: ${({ theme }) => theme.colors.lightBrown};
+  background-color: ${({ theme }) => theme.neobrutalColors.MINT};
+
   transition: 200ms;
   :hover {
-    background-color: ${({ theme }) => theme.colors.mediumBrown};
+    background-color: ${({ theme }) => theme.neobrutalColors.GREEN};
   }
   :disabled {
-    /* color: ${({ theme }) => theme.colors.gray}; */
-    color: gray;
   }
   :disabled:hover {
-    background-color: ${({ theme }) => theme.colors.lightBrown};
+    background-color: ${({ theme }) => theme.neobrutalColors.YELLOW};
   }
 `;

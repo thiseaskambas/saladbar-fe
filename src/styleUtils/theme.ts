@@ -10,13 +10,15 @@ declare module 'styled-components' {
     styledNav: typeof styledNav;
     navLink: typeof navLink;
     navLinkBgColor: typeof navLinkBgColor;
+    productCard: typeof productCard;
     createShadow: (
-      right: number,
-      bottom: number,
-      left: number,
-      top: number,
+      x: number,
+      y: number,
+      blur: number,
+      spread: number,
       color: neobrutalColors
     ) => string;
+    customColor: () => neobrutalColors;
   }
 }
 
@@ -45,12 +47,26 @@ enum backDropShadow {
 }
 
 const createShadow = (
-  right: number,
-  bottom: number,
-  left: number,
-  top: number,
+  x: number,
+  y: number,
+  blur: number,
+  spread: number,
   color: neobrutalColors
-) => `${right}px ${bottom}px ${left}px ${top}px ${color}`;
+) => `${x}px ${y}px ${blur}px ${spread}px ${color}`;
+
+const customColor = (): neobrutalColors => {
+  const values = Object.values(neobrutalColors);
+  const max = values.length;
+  const random = Math.floor(Math.random() * max);
+  if (
+    values[random] !== neobrutalColors.WHITE &&
+    values[random] !== neobrutalColors.DARKGRAY
+  ) {
+    return values[random];
+  } else {
+    return customColor();
+  }
+};
 
 enum paleBrutalColors {
   PINK = '#F1C2CC',
@@ -76,6 +92,13 @@ enum styledNav {
   backgroundColor = neobrutalColors.WHITE,
 }
 
+enum productCard {
+  borderRadius = '0rem',
+  backgroundColor = '#FFFFFF',
+  padding = '0',
+  border = '3px solid #0C1416',
+}
+
 enum navLinkBgColor {
   base = neobrutalColors.WHITE,
   hover = neobrutalColors.MINT,
@@ -96,7 +119,9 @@ const theme: DefaultTheme = {
   styledNav,
   navLink,
   navLinkBgColor,
+  productCard,
   createShadow,
+  customColor,
 };
 
 export default theme;
