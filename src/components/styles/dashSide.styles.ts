@@ -39,6 +39,8 @@ export const StyledSideBarCtn = styled.div`
 export const StyledSideLiItem = styled.li<{
   selected: boolean;
 }>`
+  transition: background-color 0.1s ease-in;
+
   ${({ selected, theme }) =>
     selected && {
       backgroundColor: theme.neobrutalColors.ORANGE,
@@ -52,9 +54,11 @@ export const StyledSideLiItem = styled.li<{
   }
   :hover {
     background-color: ${({ theme }) => theme.neobrutalColors.YELLOW};
+    transition: background-color 0.1s ease-in;
   }
   :active {
     background-color: ${({ theme }) => theme.neobrutalColors.RED};
+    transition: background-color 0.1s ease-in;
   }
   & h2 {
     font-weight: 500;

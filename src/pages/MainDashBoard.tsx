@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import DashSideBar from '../components/DashSideBar';
 import ProductCard from '../components/ProductCard';
-import { StyledDashContent } from '../components/styles/dashboard.styles';
+import { StyledDashContentDiv } from '../components/styles/dashboard.styles';
 
 import { RootState } from '../store/store';
 import { isProductCourseType, ProductCourseType } from '../types/product.types';
@@ -34,7 +34,7 @@ const MainDashBoard = () => {
         selected={isSelected}
         setIsSelected={handleSelect}
       />
-      <StyledDashContent selected={isSelected}>
+      <StyledDashContentDiv selected={isSelected}>
         {productsState.products.map((el) =>
           isSelected === 'all' ? (
             <ProductCard key={el.id} product={el} />
@@ -42,7 +42,7 @@ const MainDashBoard = () => {
             <ProductCard key={el.id} product={el} />
           ) : null
         )}
-      </StyledDashContent>
+      </StyledDashContentDiv>
     </StyledMainDash>
   );
 };
