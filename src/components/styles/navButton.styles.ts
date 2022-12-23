@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledNavButton = styled.button`
   border-radius: ${({ theme }) => theme.navLink.borderRadius};
-  padding: ${({ theme }) => theme.navLink.padding};
+  padding: 0.5rem 1rem;
   font-weight: ${({ theme }) => theme.navLink.fontWeight};
   display: flex;
   align-items: center;
