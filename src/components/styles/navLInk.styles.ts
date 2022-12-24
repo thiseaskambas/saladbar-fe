@@ -13,6 +13,9 @@ export const StyledLogoutBtn = styled.button`
     font-weight: 900;
     background-color: ${({ theme }) => theme.navLinkBgColor.hover};
   }
+  &:active {
+    filter: brightness(100%);
+  }
 `;
 
 export const StyledOuterSpan = styled.span`

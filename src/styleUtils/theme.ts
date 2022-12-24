@@ -90,6 +90,8 @@ enum neobrutalColors {
   WHITE = '#FFFFFF',
 }
 
+export type KeyofNeoBrColors = keyof typeof neobrutalColors;
+
 enum styledNav {
   padding = 0,
   backgroundColor = neobrutalColors.WHITE,

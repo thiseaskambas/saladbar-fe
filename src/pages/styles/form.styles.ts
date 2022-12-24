@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const StyledForm = styled.form`
   max-width: 380px;
   padding: 1rem 3rem;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 2rem;
+
   border: ${({ theme }) => theme.borders.standard};
   background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
   box-shadow: ${({ theme }) =>

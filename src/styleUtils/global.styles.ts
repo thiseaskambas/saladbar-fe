@@ -29,6 +29,18 @@ h6 {
   font-size: 1rem;
   font-weight: normal;
 }
+
+
+button {
+  transition: all 200ms;
+  :hover{
+    filter: brightness(110%);
+  }
+  :active {
+    transform: scale(97%);
+    filter: brightness(90%);
+  }
+}
 `;
 
 export default GlobalStyles;

@@ -19,16 +19,12 @@ export const StyledModalCenteredDiv = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  border-radius: 1rem;
   width: fit-content;
   height: fit-content;
 `;
 
 export const StyledModalCtnDiv = styled.div`
   background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
-  border-radius: 0 0 1rem 1rem;
-  padding: 0 1rem 1rem 1rem;
-  background-color: red;
   z-index: 10;
   & b {
     font-weight: 800;
@@ -36,13 +32,12 @@ export const StyledModalCtnDiv = styled.div`
 `;
 
 export const StyledModalHeader = styled.div`
-  background-color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
-  border-radius: 1rem 1rem 0 0;
+  background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+
   & h1 {
     font-weight: 800;
     margin: auto;
@@ -52,28 +47,28 @@ export const StyledModalHeader = styled.div`
 `;
 
 export const StyledCloseBtn = styled.button`
-  background-color: ${({ theme }) => theme.neobrutalColors.ORANGE};
+  background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
   color: white;
-  height: 1.25rem;
-  width: 1.25rem;
+  height: 1.5rem;
+  width: 1.5rem;
   margin: 0.5rem;
-  border-radius: 50%;
+  border: 2px solid white;
 `;
 
 export const StyledCancelBtn = styled.button`
-  padding: 0.2rem 1rem;
-  background-color: ${({ theme }) => theme.colors.skyBlue};
-  color: black;
-  border-radius: 0.3rem;
-  margin-left: 1rem;
+  background-color: ${({ theme }) => theme.paleBrutalColors.PURPLE};
+  padding: 0.5rem;
+  flex-grow: 1;
+  justify-content: center;
 `;
 export const StyledConfirmBtn = styled.button`
-  padding: 0.2rem 1rem;
-  background-color: ${({ theme }) => theme.colors.blue};
-  color: white;
-  border-radius: 0.3rem;
+  background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
+  padding: 0.5rem;
+  flex-grow: 1;
+  justify-content: center;
 `;
 
 export const StyledBtnCtnDiv = styled.div`
   margin-top: 1rem;
+  display: flex;
 `;

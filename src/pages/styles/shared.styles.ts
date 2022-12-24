@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { KeyofNeoBrColors } from '../../styleUtils/theme';
 
 export const StyledSharedMain = styled.main`
   padding-top: 2rem;
@@ -64,14 +65,14 @@ export const StyledSharedSelect = styled.select<{
   background-color: ${({ theme, bgColor }) =>
     bgColor ? theme.neobrutalColors.PURPLE : theme.neobrutalColors.WHITE};
   color: ${({ bgColor }) => (bgColor ? 'black' : 'white')};
-  border: ${({ theme }) => theme.borders.medium};
+  border: ${({ theme }) => theme.borders.thin};
   border-radius: 0.25rem;
   padding: 0.3rem 0.5rem;
   margin: 0 1rem;
   cursor: pointer;
   outline: none;
   :focus {
-    border: 2px solid ${({ theme }) => theme.neobrutalColors.GREEN};
+    border: 3px solid ${({ theme }) => theme.neobrutalColors.DARKGRAY};
   }
 `;
 
@@ -81,4 +82,18 @@ export const StyledSharedBtn = styled.button<{ isDisplayed: boolean }>`
   color: white;
   padding: ${({ theme }) => theme.paddings.standard};
   border-radius: 0.25rem;
+`;
+
+export const StyledSharedColoredBtn = styled.button<{
+  bgColor: KeyofNeoBrColors;
+  txtColor?: KeyofNeoBrColors;
+  borderSquare?: boolean;
+}>`
+  background-color: ${({ theme, bgColor }) => theme.neobrutalColors[bgColor]};
+  color: ${({ theme, txtColor }) =>
+    txtColor
+      ? theme.neobrutalColors[txtColor]
+      : theme.neobrutalColors.DARKGRAY};
+  padding: ${({ theme }) => theme.paddings.standard};
+  border-radius: ${({ borderSquare }) => (borderSquare ? '0rem' : '0.25rem')};
 `;

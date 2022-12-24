@@ -19,6 +19,7 @@ import {
   StyledCartDashDateBtn,
   StyledCartDateBtnCtnDiv,
 } from './styles/cartsDash.styles';
+import Modal from '../components/Modal';
 
 interface IDateRangeState {
   startDate: Date;
@@ -93,7 +94,11 @@ const CartsDash = () => {
         >
           Select dates
         </StyledCartDashBtn>
-        {display && (
+        <Modal
+          open={display}
+          onClose={() => setDisplay(false)}
+          modalTitle="Select date range"
+        >
           <StyledDatePickerCtnDiv>
             <DateRangePicker
               // @ts-expect-error can't find docs
@@ -107,7 +112,6 @@ const CartsDash = () => {
               weekStartsOn={1}
               maxDate={new Date()}
             />
-
             <StyledCartDateBtnCtnDiv>
               <StyledCartDashDateBtn
                 onClick={() => setDisplay(false)}
@@ -124,7 +128,7 @@ const CartsDash = () => {
               </StyledCartDashDateBtn>
             </StyledCartDateBtnCtnDiv>
           </StyledDatePickerCtnDiv>
-        )}
+        </Modal>
       </div>
       {cartsState.status === 'loading' ? (
         <div>Loading....</div>

@@ -83,6 +83,7 @@ const NavBar = ({
       <Modal
         open={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
+        modalTitle="Logout"
       >
         {authStatus === 'loading' ? (
           <StyledModalCtnDiv>Hang on...</StyledModalCtnDiv>

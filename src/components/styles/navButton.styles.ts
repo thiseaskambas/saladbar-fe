@@ -14,6 +14,7 @@ export const StyledNavButton = styled.button`
     }
   }
   &:active {
-    /* background-color: ${({ theme }) => theme.navLinkBgColor.active}; */
+    transform: scale(100%);
+    filter: brightness(100%);
   }
 `;

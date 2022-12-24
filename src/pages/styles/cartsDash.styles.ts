@@ -9,7 +9,7 @@ export const StyledCartDashBtn = styled.button<{ isDisplayed: boolean }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
   background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
   padding: ${({ theme }) => theme.paddings.standard};
-  border: ${({ theme }) => theme.borders.medium};
+  border: ${({ theme }) => theme.borders.thin};
   border-radius: 0.25rem;
 `;
 
@@ -29,6 +29,4 @@ export const StyledCartDashDateBtn = styled.button<{
       : theme.neobrutalColors.GREEN};
   color: white;
   padding: 0.5rem 1rem;
-  border-radius: ${({ btnType }) =>
-    btnType === 'cancel' ? '0 0 0 0.25rem' : '0 0 0.25rem 0'};
 `;

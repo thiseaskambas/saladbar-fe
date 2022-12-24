@@ -56,6 +56,11 @@ export const StyledProductBtn = styled.button<{ decrease?: boolean }>`
   border-top: 1rem solid transparent;
   display: inline-block;
   transform: rotate(${({ decrease }) => (decrease ? '-90deg' : '90deg')});
+
+  &:active {
+    transform: rotate(${({ decrease }) => (decrease ? '-90deg' : '90deg')})
+      scale(95%);
+  }
 `;
 
 export const StyledProductQ = styled.span`
