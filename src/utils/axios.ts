@@ -35,6 +35,7 @@ const axiosPrivate = axios.create({
 axiosPrivate.interceptors.request.use(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (config: any | AxiosRequestConfig) => {
+    console.log({ config });
     const state = store.getState();
     if (!config.headers['authorization'] && state.auth.accessToken) {
       config.headers['authorization'] = `Bearer ${state.auth.accessToken}`;
@@ -49,12 +50,16 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
     const prevRequest = error.config;
+    console.log({ prevRequest });
     if (error.response && error.response.status === 401 && !prevRequest.sent) {
       prevRequest.sent = true;
       const res = await store.dispatch(refreshToken()).unwrap();
       return axiosPrivate({
         ...prevRequest,
-        headers: { authorization: `Bearer ${res.accessToken}` },
+        headers: {
+          authorization: `Bearer ${res.accessToken}`,
+          'Content-Type': prevRequest.headers.getContentType(),
+        },
       });
     }
     //NOTE: https://github.com/axios/axios/issues/960
