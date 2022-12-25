@@ -108,7 +108,7 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
           <StyledModalCtnDiv>
             <ProductForm
               existingProduct={isSelectedProduct}
-              onEndSubmit={closeModalHandler}
+              // onEndSubmit={closeModalHandler}
             />
           </StyledModalCtnDiv>
         )}

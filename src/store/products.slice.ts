@@ -64,16 +64,17 @@ const productsSlice = createSlice({
         const temp = state.products.filter((pr) => pr.id !== action.payload.id);
         state.products = temp;
       })
-      .addCase(updateProduct.pending, (state) => {
-        state.status = 'loading';
+      .addCase(updateProduct.pending, () => {
+        // state.status = 'loading';
       })
-      .addCase(updateProduct.rejected, (state) => {
-        state.status = 'failed';
+      .addCase(updateProduct.rejected, () => {
+        // state.status = 'failed';
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
         const temp = state.products.map((pr) =>
           pr.id === action.payload.id ? { ...action.payload } : pr
         );
+        console.log('setting new products state');
         state.products = temp;
         state.status = 'succeeded';
       })
