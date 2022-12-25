@@ -8,6 +8,7 @@ import { StyledFilterCtnDiv } from './styles/products.styles';
 import { StyledSharedMain } from './styles/shared.styles';
 
 const Products = () => {
+  console.log('rendering products');
   const productsState = useSelector((state: RootState) => state.products);
   const [query, setQuery] = useState('');
 

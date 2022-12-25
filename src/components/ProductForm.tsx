@@ -64,7 +64,7 @@ const validationSchema = Yup.object().shape({
     ),
 });
 
-const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
+const ProductForm = ({ existingProduct }: IProps) => {
   const [url, setUrl] = useState('');
   const notification = useSelector((state: RootState) => state.notification);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -89,35 +89,58 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
         values.price && input.append('price', values.price);
         values.productCourseType &&
           input.append('productCourseType', values.productCourseType);
-        try {
-          dispatch(setNotification({ type: 'loading', text: 'Loading' }));
-          if (existingProduct) {
+
+        dispatch(setNotification({ type: 'loading', text: 'Loading' }));
+        if (existingProduct) {
+          try {
             await dispatch(
               updateProduct({ input, id: existingProduct.id })
             ).unwrap();
-          } else {
-            await dispatch(createProduct(input)).unwrap();
+            dispatch(
+              setAsyncNotification({
+                type: 'success',
+                text: 'Product saved!',
+                time: 5,
+              })
+            );
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (err: any) {
+            dispatch(
+              setAsyncNotification({
+                type: 'error',
+                text: err?.message,
+                time: 6,
+              })
+            );
           }
-          dispatch(
-            setAsyncNotification({
-              type: 'success',
-              text: 'Product saved!',
-              time: 5,
-            })
-          );
-          actions.resetForm({ values: { ...initialValues } });
-          inputRef.current?.form && inputRef.current.form.reset();
-          URL.revokeObjectURL(url);
-          setUrl('');
-          actions.setSubmitting(false);
-          console.log({ initialValues });
-          onEndSubmit?.();
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-          dispatch(
-            setAsyncNotification({ type: 'error', text: err?.message, time: 6 })
-          );
+        } else {
+          try {
+            await dispatch(createProduct(input)).unwrap();
+            dispatch(
+              setAsyncNotification({
+                type: 'success',
+                text: 'Product saved!',
+                time: 5,
+              })
+            );
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (err: any) {
+            dispatch(
+              setAsyncNotification({
+                type: 'error',
+                text: err?.message,
+                time: 6,
+              })
+            );
+          }
         }
+
+        actions.resetForm({ values: { ...initialValues } });
+        inputRef.current?.form && inputRef.current.form.reset();
+        URL.revokeObjectURL(url);
+        setUrl('');
+        actions.setSubmitting(false);
+        // onEndSubmit?.();
       }}
     >
       {(formik) => (
