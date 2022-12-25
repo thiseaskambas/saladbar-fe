@@ -45,7 +45,7 @@ export const StyledSideLiItem = styled.li<{
     selected && {
       backgroundColor: theme.neobrutalColors.ORANGE,
     }}
-  color:  ${({ theme }) => theme.neobrutalColors.WHITE};
+  color:  ${({ theme }) => theme.neobrutalColors.DARKGRAY};
 
   cursor: pointer;
   padding: 1rem 0.5rem;

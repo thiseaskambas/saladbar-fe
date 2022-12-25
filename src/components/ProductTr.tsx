@@ -29,7 +29,7 @@ const ProductTr = ({ product, onEdit, onDelete }: IProps) => {
         {product.productCourseType}
       </StyledSharedTd>
       <StyledSharedTd onClick={() => onDelete()}>
-        <StyledDeleteSymbolBtn>&#10008;</StyledDeleteSymbolBtn>
+        <StyledDeleteSymbolBtn></StyledDeleteSymbolBtn>
       </StyledSharedTd>
     </StyledSharedTr>
   );
