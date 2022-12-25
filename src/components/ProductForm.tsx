@@ -91,48 +91,30 @@ const ProductForm = ({ existingProduct }: IProps) => {
           input.append('productCourseType', values.productCourseType);
 
         dispatch(setNotification({ type: 'loading', text: 'Loading' }));
-        if (existingProduct) {
-          try {
+        try {
+          if (existingProduct) {
             await dispatch(
               updateProduct({ input, id: existingProduct.id })
             ).unwrap();
-            dispatch(
-              setAsyncNotification({
-                type: 'success',
-                text: 'Product saved!',
-                time: 5,
-              })
-            );
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } catch (err: any) {
-            dispatch(
-              setAsyncNotification({
-                type: 'error',
-                text: err?.message,
-                time: 6,
-              })
-            );
-          }
-        } else {
-          try {
+          } else {
             await dispatch(createProduct(input)).unwrap();
-            dispatch(
-              setAsyncNotification({
-                type: 'success',
-                text: 'Product saved!',
-                time: 5,
-              })
-            );
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } catch (err: any) {
-            dispatch(
-              setAsyncNotification({
-                type: 'error',
-                text: err?.message,
-                time: 6,
-              })
-            );
           }
+          dispatch(
+            setAsyncNotification({
+              type: 'success',
+              text: 'Product saved!',
+              time: 5,
+            })
+          );
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          dispatch(
+            setAsyncNotification({
+              type: 'error',
+              text: err?.message,
+              time: 6,
+            })
+          );
         }
 
         actions.resetForm({ values: { ...initialValues } });
