@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledModalBackgroundDiv = styled.div`
+  background: rgb(0, 0, 0); //fallbacks
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   top: 0;
@@ -19,8 +20,7 @@ export const StyledModalCenteredDiv = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  width: fit-content;
-  height: fit-content;
+  min-width: 300px;
 `;
 
 export const StyledModalCtnDiv = styled.div`

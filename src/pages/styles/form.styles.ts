@@ -25,23 +25,6 @@ export const StyledInnerDiv = styled.div`
   flex-direction: column;
   flex-wrap: nowrap;
 
-  & button {
-    margin-left: auto;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    font-weight: 300;
-    background-color: ${(props) => props.theme.colors.white};
-    :enabled {
-      background-color: ${(props) => props.theme.colors.blue};
-      color: white;
-    }
-    :disabled {
-      cursor: not-allowed;
-      background-color: white;
-      font-weight: 100;
-    }
-  }
-
   & label {
     font-weight: 200;
   }

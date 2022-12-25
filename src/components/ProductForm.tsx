@@ -19,6 +19,7 @@ import {
   setNotification,
 } from '../store/notification.slice';
 import Notification from './Notification';
+import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
 
 interface IFormValues {
   name: string;
@@ -185,9 +186,9 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
             </StyledMessageCtn>
           </StyledInnerDiv>
           <StyledInnerDiv>
-            <button type="submit">
+            <StyledSharedColoredBtn bgColor="GREEN" type="submit">
               {existingProduct ? 'Update Product' : 'Create Product'}
-            </button>
+            </StyledSharedColoredBtn>
           </StyledInnerDiv>
         </StyledForm>
       )}
