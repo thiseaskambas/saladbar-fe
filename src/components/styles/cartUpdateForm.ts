@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import images from '../../assets';
+import { KeyofNeoBrColors } from '../../styleUtils/theme';
 
 export const StyledUpdateCartForm = styled.form`
   display: flex;
@@ -55,5 +57,34 @@ export const StyledUpdateCartForm = styled.form`
 
   & .main-ctn {
     margin: 2rem;
+  }
+`;
+
+export const StyledDeleteCartBtn = styled.button<{
+  bgColor?: KeyofNeoBrColors;
+  borderSquare?: boolean;
+}>`
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  border-radius: ${({ borderSquare }) => (borderSquare ? '0rem' : '0.25rem')};
+  background: ${({ theme, bgColor }) =>
+      bgColor && theme.neobrutalColors[bgColor]}
+    url(${images['delete_closed.png']});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  transition: all ease-in-out 200ms;
+  :hover {
+    background: ${({ theme, bgColor }) =>
+        bgColor && theme.neobrutalColors[bgColor]}
+      url(${images['delete_open.png']});
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    /* transform: scale(1.3); */
   }
 `;

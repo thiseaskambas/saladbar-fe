@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledMainUl = styled.ul`
   display: flex;
-
   flex-wrap: wrap;
   justify-content: center;
   align-items: stretch;
@@ -63,7 +62,6 @@ export const StyledLogoContainer = styled.div`
   height: 50px;
   min-width: 50px;
   max-width: 50px;
-  margin-right: 2rem;
   & img {
     width: 100%;
   }

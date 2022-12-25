@@ -1,11 +1,10 @@
 import {
+  StyledSharedDeleteBtn,
   StyledSharedPriceTd,
   StyledSharedTd,
   StyledSharedTr,
 } from '../pages/styles/shared.styles';
 import { IProduct } from '../types/product.types';
-
-import { StyledDeleteSymbolBtn } from './styles/productsTables.styles';
 
 interface IProps {
   product: IProduct;
@@ -29,7 +28,7 @@ const ProductTr = ({ product, onEdit, onDelete }: IProps) => {
         {product.productCourseType}
       </StyledSharedTd>
       <StyledSharedTd onClick={() => onDelete()}>
-        <StyledDeleteSymbolBtn></StyledDeleteSymbolBtn>
+        <StyledSharedDeleteBtn />
       </StyledSharedTd>
     </StyledSharedTr>
   );

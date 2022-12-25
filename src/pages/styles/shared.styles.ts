@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { KeyofNeoBrColors } from '../../styleUtils/theme';
+import images from '../../assets';
 
 export const StyledSharedMain = styled.main`
   padding-top: 2rem;
@@ -96,4 +97,28 @@ export const StyledSharedColoredBtn = styled.button<{
       : theme.neobrutalColors.DARKGRAY};
   padding: ${({ theme }) => theme.paddings.standard};
   border-radius: ${({ borderSquare }) => (borderSquare ? '0rem' : '0.25rem')};
+`;
+
+export const StyledSharedDeleteBtn = styled.button<{
+  bgColor?: KeyofNeoBrColors;
+  borderSquare?: boolean;
+}>`
+  border-radius: ${({ borderSquare }) => (borderSquare ? '0rem' : '0.25rem')};
+  background: ${({ theme, bgColor }) =>
+      bgColor && theme.neobrutalColors[bgColor]}
+    url(${images['delete_a.png']});
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 1.5rem;
+  width: 1.5rem;
+  transition: all ease-in-out 200ms;
+  :hover {
+    background: ${({ theme, bgColor }) =>
+        bgColor && theme.neobrutalColors[bgColor]}
+      url(${images['delete_b.png']});
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: scale(1.3);
+  }
 `;

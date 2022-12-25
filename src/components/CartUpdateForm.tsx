@@ -19,7 +19,10 @@ import { ILocalCartItemFormated } from '../types/localCart.types';
 import { CartAddedProductTRow } from './CartAddedProductTRow';
 import { CartUpdateTRow } from './CartUpdateTRow';
 import Notification from './Notification';
-import { StyledUpdateCartForm } from './styles/cartUpdateForm';
+import {
+  StyledDeleteCartBtn,
+  StyledUpdateCartForm,
+} from './styles/cartUpdateForm';
 
 interface IProps {
   cart: ICart;
@@ -188,14 +191,12 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
       </div>
       {!isDeleteClicked && (
         <div className="btn-ctn">
-          <StyledSharedColoredBtn
+          <StyledDeleteCartBtn
             borderSquare
             bgColor="ORANGE"
             type="button"
             onClick={() => setIsDeleteClicked((prev) => !prev)}
-          >
-            Delete cart
-          </StyledSharedColoredBtn>
+          ></StyledDeleteCartBtn>
           <StyledSharedColoredBtn
             borderSquare
             bgColor="YELLOW"
