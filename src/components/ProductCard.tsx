@@ -3,7 +3,9 @@ import { IProduct } from '../types/product.types';
 import { addToCart } from '../store/localCart.slice';
 import {
   StyledAddToCartBtn,
+  StyledBtnCtn,
   StyledCardDiv,
+  StyledCardHeadDiv,
   StyledImgCtn,
   StyledProductBtn,
   StyledProductName,
@@ -51,22 +53,23 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
   return (
     <StyledCardDiv img={product.image.url}>
-      <StyledProductName>
-        {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-      </StyledProductName>
-      <div>€ {product.price}</div>
+      <StyledCardHeadDiv>
+        <StyledProductName>
+          {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+        </StyledProductName>
+        <span>€ {product.price}</span>
+      </StyledCardHeadDiv>
       <StyledImgCtn>
         <img src={product.image.url} />
       </StyledImgCtn>
-      <div>
-        <StyledProductBtn onClick={() => localDispatch({ type: 'DECR' })}>
-          -
-        </StyledProductBtn>
+      <StyledBtnCtn>
+        <StyledProductBtn
+          decrease
+          onClick={() => localDispatch({ type: 'DECR' })}
+        />
         <StyledProductQ>{localState.quantity}</StyledProductQ>
-        <StyledProductBtn onClick={() => localDispatch({ type: 'INCR' })}>
-          +
-        </StyledProductBtn>
-      </div>
+        <StyledProductBtn onClick={() => localDispatch({ type: 'INCR' })} />
+      </StyledBtnCtn>
       <StyledAddToCartBtn
         disabled={localState.quantity < 1}
         onClick={clickHandler}

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+import { KeyofNeoBrColors } from '../../styleUtils/theme';
+import images from '../../assets';
 
 export const StyledSharedMain = styled.main`
   padding-top: 2rem;
-  background-color: ${({ theme }) => theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.neobrutalColors.MINT};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,10 +12,13 @@ export const StyledSharedMain = styled.main`
 `;
 
 export const StyledSharedTable = styled.table`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
   margin-left: auto;
   margin-right: auto;
   padding: 2rem;
+  border: ${({ theme }) => theme.borders.standard};
+  box-shadow: ${({ theme }) =>
+    theme.createShadow(10, 10, 0, 0, theme.neobrutalColors.DARKGRAY)};
 `;
 
 export const StyledSharedTr = styled.tr<{
@@ -24,18 +29,18 @@ export const StyledSharedTr = styled.tr<{
   cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
 
   :nth-child(odd) {
-    background-color: ${({ theme }) => theme.colors.lightBrown};
+    background-color: ${({ theme }) => theme.paleBrutalColors.ORANGE};
   }
 
   &.loggedUser {
-    background-color: ${({ theme }) => theme.colors.darkBrown};
+    background-color: ${({ theme }) => theme.paleBrutalColors.PURPLE};
   }
 
   ${({ clickable, theme }) => {
     if (clickable)
       return `
     :hover {
-      background-color: ${theme.colors.mediumBrown};
+      background-color: ${theme.neobrutalColors.ORANGE};
     }
     `;
   }}
@@ -55,28 +60,65 @@ export const StyledSharedPriceTd = styled.td`
 
 export const StyledSharedSelect = styled.select<{
   isDisplayed: boolean;
-  bgColor?: 'white' | 'blue';
+  bgColor?: boolean;
 }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
   background-color: ${({ theme, bgColor }) =>
-    bgColor === 'white' ? theme.colors.white : theme.colors.newBlue};
-  color: ${({ bgColor }) => (bgColor === 'white' ? 'black' : 'white')};
-  border: 1px solid ${({ theme }) => theme.colors.gray};
+    bgColor ? theme.neobrutalColors.PURPLE : theme.neobrutalColors.WHITE};
+  color: ${({ bgColor }) => (bgColor ? 'black' : 'white')};
+  border: ${({ theme }) => theme.borders.thin};
   border-radius: 0.25rem;
   padding: 0.3rem 0.5rem;
   margin: 0 1rem;
   cursor: pointer;
   outline: none;
-
   :focus {
-    border: 1px solid ${({ theme }) => theme.colors.newBlue};
+    border: 3px solid ${({ theme }) => theme.neobrutalColors.DARKGRAY};
   }
 `;
 
 export const StyledSharedBtn = styled.button<{ isDisplayed: boolean }>`
   display: ${({ isDisplayed }) => (isDisplayed ? 'inline-block' : 'none')};
-  background-color: ${({ theme }) => theme.colors.newBlue};
+  background-color: ${({ theme }) => theme.neobrutalColors.GREEN};
   color: white;
-  padding: 0.5rem 1rem;
+  padding: ${({ theme }) => theme.paddings.standard};
   border-radius: 0.25rem;
+`;
+
+export const StyledSharedColoredBtn = styled.button<{
+  bgColor: KeyofNeoBrColors;
+  txtColor?: KeyofNeoBrColors;
+  borderSquare?: boolean;
+}>`
+  background-color: ${({ theme, bgColor }) => theme.neobrutalColors[bgColor]};
+  color: ${({ theme, txtColor }) =>
+    txtColor
+      ? theme.neobrutalColors[txtColor]
+      : theme.neobrutalColors.DARKGRAY};
+  padding: ${({ theme }) => theme.paddings.standard};
+  border-radius: ${({ borderSquare }) => (borderSquare ? '0rem' : '0.25rem')};
+`;
+
+export const StyledSharedDeleteBtn = styled.button<{
+  bgColor?: KeyofNeoBrColors;
+  borderSquare?: boolean;
+}>`
+  border-radius: ${({ borderSquare }) => (borderSquare ? '0rem' : '0.25rem')};
+  background: ${({ theme, bgColor }) =>
+      bgColor && theme.neobrutalColors[bgColor]}
+    url(${images['delete_a.png']});
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 1.5rem;
+  width: 1.5rem;
+  transition: all ease-in-out 200ms;
+  :hover {
+    background: ${({ theme, bgColor }) =>
+        bgColor && theme.neobrutalColors[bgColor]}
+      url(${images['delete_b.png']});
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: scale(1.3);
+  }
 `;

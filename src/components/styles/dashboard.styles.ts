@@ -6,7 +6,7 @@ interface Props {
   setIsSelected?: (string: ProductCourseType | 'all') => void;
 }
 
-export const StyledDashContent = styled.div<Props>`
+export const StyledDashContentDiv = styled.div<Props>`
   padding-top: 42px;
   display: grid;
   height: fit-content;

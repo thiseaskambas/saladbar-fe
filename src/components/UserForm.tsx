@@ -141,10 +141,14 @@ const UserForm = () => {
       {(formik) => (
         <StyledForm onSubmit={formik.handleSubmit}>
           <Notification notification={notification} />
-          {!loggedUser && (
+          {!loggedUser ? (
             <StyledImgCtn>
               <img src={images['logo.blue.XS.png']} alt="" />
             </StyledImgCtn>
+          ) : (
+            <StyledInnerDiv>
+              <div className="email-noedit">{loggedUser.email}</div>
+            </StyledInnerDiv>
           )}
 
           <StyledInnerDiv>
@@ -163,11 +167,7 @@ const UserForm = () => {
             </StyledMessageCtn>
           </StyledInnerDiv>
 
-          {loggedUser ? (
-            <StyledInnerDiv>
-              <div>{loggedUser.email}</div>
-            </StyledInnerDiv>
-          ) : (
+          {!loggedUser && (
             <StyledInnerDiv>
               <label htmlFor="email">email</label>
               <Field type="email" name="email" />

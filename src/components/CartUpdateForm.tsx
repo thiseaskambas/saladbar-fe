@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { StyledSharedSelect } from '../pages/styles/shared.styles';
+import {
+  StyledSharedColoredBtn,
+  StyledSharedSelect,
+} from '../pages/styles/shared.styles';
 import { deleteCart, updateCart } from '../store/carts.slice';
 import { addNewItem, initCartUpdate } from '../store/cartUpdate.slice';
 import {
@@ -17,8 +20,7 @@ import { CartAddedProductTRow } from './CartAddedProductTRow';
 import { CartUpdateTRow } from './CartUpdateTRow';
 import Notification from './Notification';
 import {
-  StyledCartUpdateBtn,
-  StyledCartUpdateWarnBtn,
+  StyledDeleteCartBtn,
   StyledUpdateCartForm,
 } from './styles/cartUpdateForm';
 
@@ -104,121 +106,130 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
 
   return (
     <StyledUpdateCartForm onSubmit={(e) => submitHandler(e)}>
-      <div>
-        <label htmlFor="creator">Created by </label>
-        <StyledSharedSelect
-          name="creator"
-          id="creator"
-          isDisplayed={true}
-          bgColor="white"
-        >
-          <option>{cart.createdBy.username}</option>
-        </StyledSharedSelect>
-      </div>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {existingItems.map((el) => (
-              <CartUpdateTRow
-                key={el.product?.id || Math.random()}
-                cartItem={el}
-              />
-            ))}
-            {newItems.map((el) => (
-              <CartAddedProductTRow
-                key={el.product}
-                cartItem={el}
-                product={products.find((pr) => pr.id === el.product)}
-              />
-            ))}
-          </tbody>
-        </table>
-        <div className="select-ctn">
+      <div className="main-ctn">
+        <div>
+          <label htmlFor="creator">Created by </label>
           <StyledSharedSelect
+            name="creator"
+            id="creator"
             isDisplayed={true}
-            bgColor="white"
-            name="products"
-            id="products"
-            onChange={(e) => setSelectedProductId(e.target.value)}
-            defaultValue="disabled"
-            ref={selectRef}
+            bgColor
           >
-            <option disabled value="disabled">
-              --select--
-            </option>
-            {products.map((el) => (
-              <option
-                key={el.id}
-                value={el.id}
-                disabled={
-                  existingItems.findIndex(
-                    (itm) => itm.product?.id === el.id
-                  ) !== -1 ||
-                  newItems.findIndex((itm) => itm.product === el.id) !== -1
-                }
-              >
-                {el.name} | €{el.price}
-              </option>
-            ))}
+            <option>{cart.createdBy.username}</option>
           </StyledSharedSelect>
-          <StyledCartUpdateBtn
-            type="button"
-            onClick={() => {
-              if (selectedProductId) {
-                console.log('adding ', selectedProductId);
-                dispatch(addNewItem(selectedProductId));
-              }
-              if (selectRef.current) {
-                selectRef.current.value = 'disabled';
-              }
-            }}
-          >
-            add
-          </StyledCartUpdateBtn>
         </div>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {existingItems.map((el) => (
+                <CartUpdateTRow
+                  key={el.product?.id || Math.random()}
+                  cartItem={el}
+                />
+              ))}
+              {newItems.map((el) => (
+                <CartAddedProductTRow
+                  key={el.product}
+                  cartItem={el}
+                  product={products.find((pr) => pr.id === el.product)}
+                />
+              ))}
+            </tbody>
+          </table>
+          <div className="select-ctn">
+            <StyledSharedSelect
+              isDisplayed={true}
+              bgColor
+              name="products"
+              id="products"
+              onChange={(e) => setSelectedProductId(e.target.value)}
+              defaultValue="disabled"
+              ref={selectRef}
+            >
+              <option disabled value="disabled">
+                --select--
+              </option>
+              {products.map((el) => (
+                <option
+                  key={el.id}
+                  value={el.id}
+                  disabled={
+                    existingItems.findIndex(
+                      (itm) => itm.product?.id === el.id
+                    ) !== -1 ||
+                    newItems.findIndex((itm) => itm.product === el.id) !== -1
+                  }
+                >
+                  {el.name} | €{el.price}
+                </option>
+              ))}
+            </StyledSharedSelect>
+            <StyledSharedColoredBtn
+              bgColor="PURPLE"
+              type="button"
+              onClick={() => {
+                if (selectedProductId) {
+                  dispatch(addNewItem(selectedProductId));
+                }
+                if (selectRef.current) {
+                  selectRef.current.value = 'disabled';
+                }
+              }}
+            >
+              add
+            </StyledSharedColoredBtn>
+          </div>
+        </div>
+      </div>
+      {!isDeleteClicked && (
         <div className="btn-ctn">
-          <StyledCartUpdateBtn
+          <StyledDeleteCartBtn
+            borderSquare
+            bgColor="ORANGE"
+            type="button"
+            onClick={() => setIsDeleteClicked((prev) => !prev)}
+          ></StyledDeleteCartBtn>
+          <StyledSharedColoredBtn
+            borderSquare
+            bgColor="YELLOW"
             type="button"
             onClick={() => setIsFormOpen(false)}
           >
             Cancel
-          </StyledCartUpdateBtn>
-
-          <StyledCartUpdateBtn type="submit">Submit</StyledCartUpdateBtn>
+          </StyledSharedColoredBtn>
+          <StyledSharedColoredBtn bgColor="PURPLE" type="submit" borderSquare>
+            Submit
+          </StyledSharedColoredBtn>
         </div>
-      </div>
-      {!isDeleteClicked && (
-        <StyledCartUpdateWarnBtn
-          bgColor="orange"
-          type="button"
-          onClick={() => setIsDeleteClicked((prev) => !prev)}
-        >
-          Delete cart
-        </StyledCartUpdateWarnBtn>
       )}
+
       {isDeleteClicked && (
         <div className="delete-confirm">
           <p>Are you sure you want to delete the cart?</p>
           <Notification notification={notification} />
           <div>
-            <StyledCartUpdateWarnBtn
+            <StyledSharedColoredBtn
               type="button"
               onClick={() => setIsDeleteClicked(false)}
-              bgColor="orange"
+              bgColor="ORANGE"
             >
               No
-            </StyledCartUpdateWarnBtn>
-            <StyledCartUpdateWarnBtn type="button" onClick={deleteHandler}>
+            </StyledSharedColoredBtn>
+            <StyledSharedColoredBtn
+              bgColor="GREEN"
+              type="button"
+              onClick={deleteHandler}
+            >
               Yes
-            </StyledCartUpdateWarnBtn>
+            </StyledSharedColoredBtn>
           </div>
         </div>
       )}

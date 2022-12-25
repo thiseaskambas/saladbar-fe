@@ -8,6 +8,7 @@ import {
 } from '../store/carts.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import TodayCharts from '../components/TodayCharts';
+import { StyledTodayMain } from './styles/today.styles';
 
 const Today = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
@@ -49,7 +50,11 @@ const Today = () => {
     cartsState.tempCartsStatus === 'succeeded' &&
     cartsState.status === 'succeeded';
 
-  return <main>{ready && <TodayCharts cartsState={cartsState} />}</main>;
+  return (
+    <StyledTodayMain>
+      {ready && <TodayCharts cartsState={cartsState} />}
+    </StyledTodayMain>
+  );
 };
 
 export default Today;

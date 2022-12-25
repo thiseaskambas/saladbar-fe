@@ -22,9 +22,9 @@ const CartItem = ({ cartItem }: { cartItem: ILocalCartItem }) => {
         {cartItem.quantity}
         <StyledCardQButton onClick={incrHandler}>+</StyledCardQButton>
       </StytledGridItem>
-      <StytledGridItem>{cartItem.product.price}</StytledGridItem>
+      <StytledGridItem>{cartItem.product.price}€</StytledGridItem>
       <StytledGridItem>
-        {cartItem.product.price * cartItem.quantity}
+        {cartItem.product.price * cartItem.quantity}€
       </StytledGridItem>
     </>
   );

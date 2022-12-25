@@ -1,7 +1,7 @@
+import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
 import { addExistingItem, removeExistingItem } from '../store/cartUpdate.slice';
 import { useAppDispatch } from '../store/store';
 import { ICartItem } from '../types/cart.types';
-import { StyledCartUpdateBtn } from './styles/cartUpdateForm';
 
 interface IProps {
   cartItem: ICartItem;
@@ -16,18 +16,20 @@ export const CartUpdateTRow = ({ cartItem }: IProps) => {
       <td>{cartItem.quantity}</td>
       <td>€ {cartItem.itemPrice.toFixed(0)}</td>
       <td>
-        <StyledCartUpdateBtn
+        <StyledSharedColoredBtn
+          bgColor="MINT"
           type="button"
           onClick={() => dispatch(removeExistingItem(cartItem.product.id))}
         >
           -
-        </StyledCartUpdateBtn>{' '}
-        <StyledCartUpdateBtn
+        </StyledSharedColoredBtn>{' '}
+        <StyledSharedColoredBtn
+          bgColor="MINT"
           type="button"
           onClick={() => dispatch(addExistingItem(cartItem.product.id))}
         >
           +
-        </StyledCartUpdateBtn>
+        </StyledSharedColoredBtn>
       </td>
     </tr>
   );

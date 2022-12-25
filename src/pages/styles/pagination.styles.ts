@@ -4,10 +4,11 @@ export const StyledPagesUl = styled.ul`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
-
+  align-items: center;
   & .active {
-    color: ${({ theme }) => theme.colors.newBlue};
-    text-decoration: underline;
+    background-color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
+    color: ${({ theme }) => theme.neobrutalColors.WHITE};
+    padding: 0.2rem;
   }
 
   & button:disabled {

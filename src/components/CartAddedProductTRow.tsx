@@ -1,9 +1,9 @@
+import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
 import { addNewItem, removeNewItem } from '../store/cartUpdate.slice';
 import { useAppDispatch } from '../store/store';
 import { ILocalCartItemFormated } from '../types/localCart.types';
 
 import { IProduct } from '../types/product.types';
-import { StyledCartUpdateBtn } from './styles/cartUpdateForm';
 
 interface IProps {
   cartItem: ILocalCartItemFormated;
@@ -18,18 +18,20 @@ export const CartAddedProductTRow = ({ cartItem, product }: IProps) => {
       <td>{cartItem.quantity}</td>
       <td>€ {product?.price}</td>
       <td>
-        <StyledCartUpdateBtn
+        <StyledSharedColoredBtn
+          bgColor="MINT"
           type="button"
           onClick={() => dispatch(removeNewItem(cartItem.product))}
         >
           -
-        </StyledCartUpdateBtn>{' '}
-        <StyledCartUpdateBtn
+        </StyledSharedColoredBtn>{' '}
+        <StyledSharedColoredBtn
+          bgColor="MINT"
           type="button"
           onClick={() => dispatch(addNewItem(cartItem.product))}
         >
           +
-        </StyledCartUpdateBtn>
+        </StyledSharedColoredBtn>
       </td>
     </tr>
   );

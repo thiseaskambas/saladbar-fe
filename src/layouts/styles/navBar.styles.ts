@@ -2,30 +2,31 @@ import styled from 'styled-components';
 
 export const StyledMainUl = styled.ul`
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 2rem;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: center;
+  align-items: stretch;
+  flex-grow: 1;
 `;
 
 export const StyledDropUl = styled.ul<{
   dropdown: boolean;
   depthLevel: number;
   moveLeft?: boolean;
+  moveFromTop?: number;
 }>`
   display: none;
   min-width: fit-content;
   white-space: nowrap;
   position: absolute;
-  background-color: pink;
+  top: ${({ moveFromTop }) => moveFromTop}px;
+
   & button {
     border-radius: 0;
   }
   ${({ dropdown, theme }) =>
     dropdown && {
       display: 'block',
-      backgroundColor: theme.colors.mediumBrown,
+      backgroundColor: theme.neobrutalColors.WHITE,
     }}
   ${({ depthLevel, moveLeft }) =>
     depthLevel > 1 &&
@@ -48,22 +49,19 @@ export const StyledDropUl = styled.ul<{
 export const StyledNav = styled.nav`
   position: sticky;
   top: 0;
-  padding: 1rem;
+  padding: ${({ theme }) => theme.styledNav.padding};
   z-index: 1;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  background-color: ${({ theme }) => theme.colors.lightBrown};
-  -webkit-box-shadow: ${({ theme }) => theme.backDropShadow.webkitboxShadow};
-  -moz-box-shadow: ${({ theme }) => theme.backDropShadow.mozzilaboxShadow};
-  box-shadow: ${({ theme }) => theme.backDropShadow.boxShadow};
+  background-color: ${({ theme }) => theme.styledNav.backgroundColor};
+  border-bottom: ${({ theme }) => theme.borders.standard};
 `;
 
 export const StyledLogoContainer = styled.div`
   height: 50px;
   min-width: 50px;
   max-width: 50px;
-  margin-right: 2rem;
   & img {
     width: 100%;
   }

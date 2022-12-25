@@ -27,10 +27,10 @@ const Cart = () => {
       )}
       {cart.totalItems > 0 && (
         <StytledGridCtn>
-          <li>Product</li>
-          <li>Quantity</li>
-          <li>Price</li>
-          <li>Sub-total</li>
+          <div className="title">Product</div>
+          <div className="title">Quantity</div>
+          <div className="title">Price</div>
+          <div className="title">Sub-total</div>
           {cart.items.map((el) =>
             el.quantity > 0 ? (
               <CartItem key={el.product.id} cartItem={el} />
