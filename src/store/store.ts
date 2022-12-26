@@ -7,6 +7,7 @@ import cartReducer from './localCart.slice';
 import cartsReducer from './carts.slice';
 import updateCartReducer from './cartUpdate.slice';
 import usersReducer from './users.slice';
+import messageReducer from './message.slice';
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -16,6 +17,7 @@ export const store = configureStore({
     carts: cartsReducer,
     updateCart: updateCartReducer,
     users: usersReducer,
+    messages: messageReducer,
   },
 });
 
