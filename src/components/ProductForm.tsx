@@ -31,7 +31,6 @@ interface IFormValues {
 
 interface IProps {
   existingProduct?: IProduct;
-  onEndSubmit?: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -91,48 +90,30 @@ const ProductForm = ({ existingProduct }: IProps) => {
           input.append('productCourseType', values.productCourseType);
 
         dispatch(setNotification({ type: 'loading', text: 'Loading' }));
-        if (existingProduct) {
-          try {
+        try {
+          if (existingProduct) {
             await dispatch(
               updateProduct({ input, id: existingProduct.id })
             ).unwrap();
-            dispatch(
-              setAsyncNotification({
-                type: 'success',
-                text: 'Product saved!',
-                time: 5,
-              })
-            );
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } catch (err: any) {
-            dispatch(
-              setAsyncNotification({
-                type: 'error',
-                text: err?.message,
-                time: 6,
-              })
-            );
-          }
-        } else {
-          try {
+          } else {
             await dispatch(createProduct(input)).unwrap();
-            dispatch(
-              setAsyncNotification({
-                type: 'success',
-                text: 'Product saved!',
-                time: 5,
-              })
-            );
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } catch (err: any) {
-            dispatch(
-              setAsyncNotification({
-                type: 'error',
-                text: err?.message,
-                time: 6,
-              })
-            );
           }
+          dispatch(
+            setAsyncNotification({
+              type: 'success',
+              text: 'Product saved!',
+              time: 5,
+            })
+          );
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          dispatch(
+            setAsyncNotification({
+              type: 'error',
+              text: err?.message,
+              time: 6,
+            })
+          );
         }
 
         actions.resetForm({ values: { ...initialValues } });
@@ -140,7 +121,6 @@ const ProductForm = ({ existingProduct }: IProps) => {
         URL.revokeObjectURL(url);
         setUrl('');
         actions.setSubmitting(false);
-        // onEndSubmit?.();
       }}
     >
       {(formik) => (
@@ -156,7 +136,7 @@ const ProductForm = ({ existingProduct }: IProps) => {
             </StyledPhotoContainer>
           ) : (
             <StyledImgCtn>
-              <img src={images['logo.blue.XS.png']} alt="" />
+              <img src={images['logo.png']} alt="" />
             </StyledImgCtn>
           )}
           <StyledInnerDiv>
@@ -209,7 +189,7 @@ const ProductForm = ({ existingProduct }: IProps) => {
             </StyledMessageCtn>
           </StyledInnerDiv>
           <StyledInnerDiv>
-            <StyledSharedColoredBtn bgColor="GREEN" type="submit">
+            <StyledSharedColoredBtn bgColor="MINT" type="submit">
               {existingProduct ? 'Update Product' : 'Create Product'}
             </StyledSharedColoredBtn>
           </StyledInnerDiv>

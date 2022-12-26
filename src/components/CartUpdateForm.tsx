@@ -75,12 +75,14 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
       ...toCartEntries(existingItems),
       ...newItems,
     ];
-    console.log({ cartDataToSend });
     if (cartDataToSend.length > 0) {
+      dispatch(setNotification({ text: 'Hold on...', type: 'loading' }));
       await dispatch(
         updateCart({ cart: { items: cartDataToSend }, id: cart.id })
       );
-      setIsFormOpen(false);
+      dispatch(
+        setAsyncNotification({ type: 'success', text: 'Cart saved!', time: 5 })
+      );
     } else {
       setIsDeleteClicked(true);
     }
@@ -106,6 +108,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
 
   return (
     <StyledUpdateCartForm onSubmit={(e) => submitHandler(e)}>
+      <Notification notification={notification} />
       <div className="main-ctn">
         <div>
           <label htmlFor="creator">Created by </label>

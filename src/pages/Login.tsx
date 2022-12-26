@@ -16,11 +16,11 @@ import { Link } from 'react-router-dom';
 
 import images from '../assets';
 import {
-  resetNotification,
   setAsyncNotification,
   setNotification,
 } from '../store/notification.slice';
 import Notification from '../components/Notification';
+import { StyledSharedColoredBtn } from './styles/shared.styles';
 
 interface IFormValues {
   email: string;
@@ -56,13 +56,17 @@ const LogInForm = () => {
         onSubmit={async (values, actions) => {
           dispatch(setNotification({ type: 'loading', text: 'Hold on...' }));
           try {
-            await dispatch(logUserIn(values)).unwrap();
-            // actions.resetForm({
-            //   values: { email: '', password: '', rememberMe: false },
-            // });
+            const res = await dispatch(logUserIn(values)).unwrap();
+
             navigate(fromUrl, { replace: true });
             actions.setSubmitting(false);
-            dispatch(resetNotification());
+            dispatch(
+              setAsyncNotification({
+                type: 'success',
+                text: `Welcome back ${res.loggedUser.username} !`,
+                time: 6,
+              })
+            );
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (err: any) {
             dispatch(
@@ -79,7 +83,7 @@ const LogInForm = () => {
           <StyledForm onSubmit={formik.handleSubmit}>
             <Notification notification={notification} />
             <StyledImgCtn>
-              <img src={images['logo.blue.XS.png']} alt="" />
+              <img src={images['logo.png']} alt="" />
             </StyledImgCtn>
             <StyledInnerDiv>
               <label htmlFor="email">email:</label>
@@ -105,12 +109,13 @@ const LogInForm = () => {
             </StyledInnerDiv>
 
             <StyledInnerDiv>
-              <button
+              <StyledSharedColoredBtn
+                bgColor="MINT"
                 type="submit"
                 disabled={!(formik.isValid && formik.dirty)}
               >
                 Login now
-              </button>
+              </StyledSharedColoredBtn>
             </StyledInnerDiv>
             <StyledInnerDiv>
               Don&apos;t have an account ?<br />
