@@ -1,11 +1,10 @@
 import {
+  StyledSharedDeleteBtn,
   StyledSharedPriceTd,
   StyledSharedTd,
   StyledSharedTr,
 } from '../pages/styles/shared.styles';
 import { IProduct } from '../types/product.types';
-
-import { StyledDeleteSymbolBtn } from './styles/productsTables.styles';
 
 interface IProps {
   product: IProduct;
@@ -20,16 +19,12 @@ const ProductTr = ({ product, onEdit, onDelete }: IProps) => {
       <StyledSharedPriceTd onClick={() => onEdit()}>
         {product.price}
       </StyledSharedPriceTd>
-      <StyledSharedTd onClick={() => onEdit()}>
-        <span className="italic">
-          {product.image.filename || 'missing name'}
-        </span>
-      </StyledSharedTd>
+
       <StyledSharedTd onClick={() => onEdit()}>
         {product.productCourseType}
       </StyledSharedTd>
       <StyledSharedTd onClick={() => onDelete()}>
-        <StyledDeleteSymbolBtn>&#10008;</StyledDeleteSymbolBtn>
+        <StyledSharedDeleteBtn />
       </StyledSharedTd>
     </StyledSharedTr>
   );

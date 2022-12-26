@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
+import {
+  resetNotification,
+  setNotification,
+} from '../store/notification.slice';
 import { useAppDispatch } from '../store/store';
 
 export const useInitializeData = (
@@ -13,10 +17,11 @@ export const useInitializeData = (
     let isMounted = true;
     const initData = async () => {
       try {
+        dispatch(setNotification({ text: 'Hold on...', type: 'loading' }));
         await dispatch(action(optionsObj)).unwrap();
-      } catch (err) {
-        //TODO: setNotification
-        console.log(err);
+        dispatch(resetNotification());
+      } catch (err: any) {
+        dispatch(setNotification({ text: err.message, type: 'error' }));
       }
     };
     if (isMounted && status !== 'loading') {

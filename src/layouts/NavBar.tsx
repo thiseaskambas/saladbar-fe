@@ -17,6 +17,7 @@ import LogoutPrompt from '../components/LogoutPrompt';
 import { useAppDispatch } from '../store/store';
 import { logUserOut } from '../store/auth.slice';
 import { StyledModalCtnDiv } from '../components/styles/modal.styles';
+import useMeasure from 'react-use-measure';
 
 const NavBar = ({
   user,
@@ -27,6 +28,7 @@ const NavBar = ({
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [navRef, { height }] = useMeasure();
 
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
@@ -50,10 +52,10 @@ const NavBar = ({
   };
 
   return (
-    <StyledNav>
+    <StyledNav ref={navRef}>
       <StyledLogoContainer>
         <Link to="/">
-          <img src={images['logo.blue.XS.png']} alt="" />
+          <img src={images['logo.png']} alt="" />
         </Link>
       </StyledLogoContainer>
       <StyledMainUl>
@@ -68,18 +70,20 @@ const NavBar = ({
               closeParent={() => {
                 null;
               }}
+              navHeight={height}
             />
           );
         })}
         {user && (
           <StyledLogoutBtn onClick={() => setIsLogoutModalOpen(true)}>
-            LOGOUT
+            Logout
           </StyledLogoutBtn>
         )}
       </StyledMainUl>
       <Modal
         open={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
+        modalTitle="Logout"
       >
         {authStatus === 'loading' ? (
           <StyledModalCtnDiv>Hang on...</StyledModalCtnDiv>

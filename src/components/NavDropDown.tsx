@@ -9,6 +9,7 @@ interface IProps {
   moveLeft: boolean;
   setDropdown: React.Dispatch<React.SetStateAction<boolean>>;
   closeParent: () => void;
+  moveFromTop?: number;
 }
 
 const NavDropDown = ({
@@ -18,14 +19,15 @@ const NavDropDown = ({
   moveLeft,
   setDropdown,
   closeParent,
+  moveFromTop,
 }: IProps) => {
   depthLevel = depthLevel + 1;
-
   return (
     <StyledDropUl
       dropdown={dropdown}
       depthLevel={depthLevel}
       moveLeft={moveLeft}
+      moveFromTop={moveFromTop}
     >
       {submenu.map((item: INavItem) => {
         return (

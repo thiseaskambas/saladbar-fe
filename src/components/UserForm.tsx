@@ -17,6 +17,7 @@ import {
   setNotification,
 } from '../store/notification.slice';
 import Notification from './Notification';
+import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
 
 interface IFormValues {
   email: string;
@@ -141,10 +142,14 @@ const UserForm = () => {
       {(formik) => (
         <StyledForm onSubmit={formik.handleSubmit}>
           <Notification notification={notification} />
-          {!loggedUser && (
+          {!loggedUser ? (
             <StyledImgCtn>
               <img src={images['logo.blue.XS.png']} alt="" />
             </StyledImgCtn>
+          ) : (
+            <StyledInnerDiv>
+              <div className="email-noedit">{loggedUser.email}</div>
+            </StyledInnerDiv>
           )}
 
           <StyledInnerDiv>
@@ -163,11 +168,7 @@ const UserForm = () => {
             </StyledMessageCtn>
           </StyledInnerDiv>
 
-          {loggedUser ? (
-            <StyledInnerDiv>
-              <div>{loggedUser.email}</div>
-            </StyledInnerDiv>
-          ) : (
+          {!loggedUser && (
             <StyledInnerDiv>
               <label htmlFor="email">email</label>
               <Field type="email" name="email" />
@@ -207,9 +208,13 @@ const UserForm = () => {
           </StyledInnerDiv>
 
           <StyledInnerDiv>
-            <button type="submit" disabled={!(formik.isValid && formik.dirty)}>
+            <StyledSharedColoredBtn
+              bgColor="MINT"
+              type="submit"
+              disabled={!(formik.isValid && formik.dirty)}
+            >
               {loggedUser ? 'Update' : 'Sign-up now'}
-            </button>
+            </StyledSharedColoredBtn>
           </StyledInnerDiv>
         </StyledForm>
       )}

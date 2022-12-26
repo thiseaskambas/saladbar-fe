@@ -19,6 +19,7 @@ import {
   setNotification,
 } from '../store/notification.slice';
 import Notification from './Notification';
+import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
 
 interface IFormValues {
   name: string;
@@ -30,7 +31,6 @@ interface IFormValues {
 
 interface IProps {
   existingProduct?: IProduct;
-  onEndSubmit?: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -63,9 +63,8 @@ const validationSchema = Yup.object().shape({
     ),
 });
 
-const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
+const ProductForm = ({ existingProduct }: IProps) => {
   const [url, setUrl] = useState('');
-  // const productsState = useSelector((state: RootState) => state.products);
   const notification = useSelector((state: RootState) => state.notification);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
@@ -89,8 +88,9 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
         values.price && input.append('price', values.price);
         values.productCourseType &&
           input.append('productCourseType', values.productCourseType);
+
+        dispatch(setNotification({ type: 'loading', text: 'Loading' }));
         try {
-          dispatch(setNotification({ type: 'loading', text: 'Loading' }));
           if (existingProduct) {
             await dispatch(
               updateProduct({ input, id: existingProduct.id })
@@ -105,19 +105,22 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
               time: 5,
             })
           );
-          actions.resetForm({ values: { ...initialValues } });
-          inputRef.current?.form && inputRef.current.form.reset();
-          URL.revokeObjectURL(url);
-          setUrl('');
-          actions.setSubmitting(false);
-          console.log({ initialValues });
-          onEndSubmit?.();
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
           dispatch(
-            setAsyncNotification({ type: 'error', text: err?.message, time: 6 })
+            setAsyncNotification({
+              type: 'error',
+              text: err?.message,
+              time: 6,
+            })
           );
         }
+
+        actions.resetForm({ values: { ...initialValues } });
+        inputRef.current?.form && inputRef.current.form.reset();
+        URL.revokeObjectURL(url);
+        setUrl('');
+        actions.setSubmitting(false);
       }}
     >
       {(formik) => (
@@ -133,7 +136,7 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
             </StyledPhotoContainer>
           ) : (
             <StyledImgCtn>
-              <img src={images['logo.blue.XS.png']} alt="" />
+              <img src={images['logo.png']} alt="" />
             </StyledImgCtn>
           )}
           <StyledInnerDiv>
@@ -186,9 +189,9 @@ const ProductForm = ({ existingProduct, onEndSubmit }: IProps) => {
             </StyledMessageCtn>
           </StyledInnerDiv>
           <StyledInnerDiv>
-            <button type="submit">
+            <StyledSharedColoredBtn bgColor="MINT" type="submit">
               {existingProduct ? 'Update Product' : 'Create Product'}
-            </button>
+            </StyledSharedColoredBtn>
           </StyledInnerDiv>
         </StyledForm>
       )}

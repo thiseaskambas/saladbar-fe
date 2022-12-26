@@ -1,4 +1,4 @@
-import React from 'react';
+import { StyledLogoutCtn } from './styles/logoutPrompt.styled';
 import {
   StyledBtnCtnDiv,
   StyledCancelBtn,
@@ -14,9 +14,11 @@ interface IProps {
 const LogoutPrompt = ({ onCancel, onLogout }: IProps) => {
   return (
     <StyledModalCtnDiv>
-      <div>
-        Are you sure you want to <b>Logout ?</b>
-      </div>
+      <StyledLogoutCtn>
+        <div>
+          Are you sure you want to <b>Logout ?</b>
+        </div>
+      </StyledLogoutCtn>
       <StyledBtnCtnDiv>
         <StyledConfirmBtn onClick={onLogout}>Yes</StyledConfirmBtn>
         <StyledCancelBtn onClick={onCancel}>No</StyledCancelBtn>

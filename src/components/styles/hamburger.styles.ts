@@ -3,11 +3,13 @@ import styled from 'styled-components';
 export const StyledHamburger = styled.div<{ sideBarDisplay: boolean }>`
   align-self: flex-start;
   cursor: pointer;
-  border-radius: 50%;
+  border: 3px solid ${({ theme }) => theme.neobrutalColors.DARKGRAY};
+  box-shadow: ${({ theme }) =>
+    theme.createShadow(5, 5, 0, 0, theme.neobrutalColors.DARKGRAY)};
   padding: 8px;
   margin: 5px;
-  background-color: ${({ theme }) => theme.colors.lightBrown};
-  transform: scale(0.9);
+  background-color: ${({ theme }) => theme.neobrutalColors.PURPLE};
+  transform: scale(0.7);
 
   & .line {
     width: 35px;

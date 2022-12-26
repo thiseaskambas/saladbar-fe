@@ -49,12 +49,16 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error: ICustomAxiosError) => {
     const prevRequest = error.config;
+
     if (error.response && error.response.status === 401 && !prevRequest.sent) {
       prevRequest.sent = true;
       const res = await store.dispatch(refreshToken()).unwrap();
       return axiosPrivate({
         ...prevRequest,
-        headers: { authorization: `Bearer ${res.accessToken}` },
+        headers: {
+          authorization: `Bearer ${res.accessToken}`,
+          'Content-Type': prevRequest.headers.getContentType(),
+        },
       });
     }
     //NOTE: https://github.com/axios/axios/issues/960

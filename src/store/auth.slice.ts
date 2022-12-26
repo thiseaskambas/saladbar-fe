@@ -17,7 +17,7 @@ export const logUserIn = createAsyncThunk(
   'auth/login',
   async (credentials: ILoginCredentials): Promise<ILoginResponse> => {
     const response = await authServices.logIn(credentials);
-    console.log(response);
+
     return { ...response, persist: credentials.rememberMe };
   }
 );
@@ -26,7 +26,7 @@ export const signupUser = createAsyncThunk(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (inputObj: any) => {
     const response = await authServices.signup(inputObj);
-    console.log(response);
+
     return response.data;
   }
 );
@@ -68,6 +68,7 @@ const authSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(signupUser.fulfilled, (_state, action) => {
+        //TODO: complete
         console.log(action.payload);
       })
       .addCase(logUserIn.rejected, (state) => {

@@ -62,7 +62,7 @@ export const UserTableCellRole = ({ user }: { user: IUser }) => {
         <StyledSharedSelect
           isDisplayed={true}
           defaultValue={user.role}
-          bgColor="white"
+          bgColor
           onChange={(event: React.FormEvent<HTMLSelectElement>) =>
             changeRoleHandler(event, user.role)
           }

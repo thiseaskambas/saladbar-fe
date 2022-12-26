@@ -9,9 +9,9 @@ import helpers from '../utils/functionHelpers';
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
-import { initializeCarts, resetCarts } from '../store/carts.slice';
+import { initializeCarts } from '../store/carts.slice';
 import { RootState } from '../store/store';
-import { Pagination } from './Pagination';
+import { Pagination } from '../components/Pagination';
 import { StyledSharedMain, StyledSharedSelect } from './styles/shared.styles';
 import {
   StyledDatePickerCtnDiv,
@@ -19,6 +19,8 @@ import {
   StyledCartDashDateBtn,
   StyledCartDateBtnCtnDiv,
 } from './styles/cartsDash.styles';
+import Modal from '../components/Modal';
+import Notification from '../components/Notification';
 
 interface IDateRangeState {
   startDate: Date;
@@ -30,6 +32,7 @@ const PAGE_LIMITS = [10, 20, 30];
 
 const CartsDash = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
+  const notification = useSelector((state: RootState) => state.notification);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSizeLimit, setLimit] = useState(10);
   const [afterDate, setAfterDate] = useState<string | null>(null);
@@ -52,7 +55,7 @@ const CartsDash = () => {
     };
   }, [currentPage, pageSizeLimit, afterDate, beforeDate]);
 
-  useInitializeData(initializeCarts, options, cartsState.status, resetCarts);
+  useInitializeData(initializeCarts, options, cartsState.status);
 
   const pages = usePagination({
     currentPage,
@@ -73,12 +76,14 @@ const CartsDash = () => {
 
   return (
     <StyledSharedMain>
+      <Notification notification={notification} />
       <div>
         <StyledSharedSelect
           isDisplayed={!display}
           onChange={(e) => {
             setLimit(Number(e.target.value)), setCurrentPage(1);
           }}
+          bgColor
         >
           {PAGE_LIMITS.map((el) => (
             <option key={el} value={el}>
@@ -92,7 +97,11 @@ const CartsDash = () => {
         >
           Select dates
         </StyledCartDashBtn>
-        {display && (
+        <Modal
+          open={display}
+          onClose={() => setDisplay(false)}
+          modalTitle="Select date range"
+        >
           <StyledDatePickerCtnDiv>
             <DateRangePicker
               // @ts-expect-error can't find docs
@@ -106,7 +115,6 @@ const CartsDash = () => {
               weekStartsOn={1}
               maxDate={new Date()}
             />
-
             <StyledCartDateBtnCtnDiv>
               <StyledCartDashDateBtn
                 onClick={() => setDisplay(false)}
@@ -123,11 +131,9 @@ const CartsDash = () => {
               </StyledCartDashDateBtn>
             </StyledCartDateBtnCtnDiv>
           </StyledDatePickerCtnDiv>
-        )}
+        </Modal>
       </div>
-      {cartsState.status === 'loading' ? (
-        <div>Loading....</div>
-      ) : cartsState.status === 'succeeded' && cartsState.carts.length > 0 ? (
+      {cartsState.status !== 'idle' && cartsState.carts.length > 0 ? (
         <CartsTable carts={cartsState.carts} />
       ) : (
         <div>no carts to show for the selected dates</div>
