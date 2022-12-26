@@ -17,6 +17,7 @@ import {
   setNotification,
 } from '../store/notification.slice';
 import Notification from './Notification';
+import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
 
 interface IFormValues {
   email: string;
@@ -207,9 +208,13 @@ const UserForm = () => {
           </StyledInnerDiv>
 
           <StyledInnerDiv>
-            <button type="submit" disabled={!(formik.isValid && formik.dirty)}>
+            <StyledSharedColoredBtn
+              bgColor="MINT"
+              type="submit"
+              disabled={!(formik.isValid && formik.dirty)}
+            >
               {loggedUser ? 'Update' : 'Sign-up now'}
-            </button>
+            </StyledSharedColoredBtn>
           </StyledInnerDiv>
         </StyledForm>
       )}

@@ -8,7 +8,7 @@ interface IProps {
 const Notification = ({ notification }: IProps) => {
   if (notification.type === 'none') return null;
   return (
-    <StyledNotifContainerDiv type={notification.type}>
+    <StyledNotifContainerDiv className="notification" type={notification.type}>
       {notification.type === 'error' && 'Error : '} {notification.text}
     </StyledNotifContainerDiv>
   );

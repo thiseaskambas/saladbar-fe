@@ -136,7 +136,7 @@ const ProductForm = ({ existingProduct }: IProps) => {
             </StyledPhotoContainer>
           ) : (
             <StyledImgCtn>
-              <img src={images['logo.blue.XS.png']} alt="" />
+              <img src={images['logo.png']} alt="" />
             </StyledImgCtn>
           )}
           <StyledInnerDiv>
@@ -189,7 +189,7 @@ const ProductForm = ({ existingProduct }: IProps) => {
             </StyledMessageCtn>
           </StyledInnerDiv>
           <StyledInnerDiv>
-            <StyledSharedColoredBtn bgColor="GREEN" type="submit">
+            <StyledSharedColoredBtn bgColor="MINT" type="submit">
               {existingProduct ? 'Update Product' : 'Create Product'}
             </StyledSharedColoredBtn>
           </StyledInnerDiv>

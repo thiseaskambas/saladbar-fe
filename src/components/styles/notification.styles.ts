@@ -7,13 +7,18 @@ export const StyledNotifContainerDiv = styled.div<{
   background-color: ${({ type, theme }) => {
     switch (type) {
       case 'loading':
-        return theme.colors.lightBlue;
+        return theme.neobrutalColors.MINT;
       case 'success':
-        return theme.colors.lightGreen;
+        return theme.neobrutalColors.PURPLE;
       case 'error':
-        return theme.colors.lightOrange;
+        return theme.neobrutalColors.ORANGE;
       default:
         return 'transparent';
     }
   }};
+
+  padding: 1rem;
+  border: ${({ theme }) => theme.borders.standard};
+  margin: 0.5rem 1rem;
+  text-align: center;
 `;

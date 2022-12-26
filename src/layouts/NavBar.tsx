@@ -55,7 +55,7 @@ const NavBar = ({
     <StyledNav ref={navRef}>
       <StyledLogoContainer>
         <Link to="/">
-          <img src={images['logo.blue.XS.png']} alt="" />
+          <img src={images['logo.png']} alt="" />
         </Link>
       </StyledLogoContainer>
       <StyledMainUl>

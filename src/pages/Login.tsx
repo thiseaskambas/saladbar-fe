@@ -20,6 +20,7 @@ import {
   setNotification,
 } from '../store/notification.slice';
 import Notification from '../components/Notification';
+import { StyledSharedColoredBtn } from './styles/shared.styles';
 
 interface IFormValues {
   email: string;
@@ -82,7 +83,7 @@ const LogInForm = () => {
           <StyledForm onSubmit={formik.handleSubmit}>
             <Notification notification={notification} />
             <StyledImgCtn>
-              <img src={images['logo.blue.XS.png']} alt="" />
+              <img src={images['logo.png']} alt="" />
             </StyledImgCtn>
             <StyledInnerDiv>
               <label htmlFor="email">email:</label>
@@ -108,12 +109,13 @@ const LogInForm = () => {
             </StyledInnerDiv>
 
             <StyledInnerDiv>
-              <button
+              <StyledSharedColoredBtn
+                bgColor="MINT"
                 type="submit"
                 disabled={!(formik.isValid && formik.dirty)}
               >
                 Login now
-              </button>
+              </StyledSharedColoredBtn>
             </StyledInnerDiv>
             <StyledInnerDiv>
               Don&apos;t have an account ?<br />

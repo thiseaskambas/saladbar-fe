@@ -74,7 +74,7 @@ const productsSlice = createSlice({
         const temp = state.products.map((pr) =>
           pr.id === action.payload.id ? { ...action.payload } : pr
         );
-        console.log('setting new products state');
+
         state.products = temp;
         state.status = 'succeeded';
       })

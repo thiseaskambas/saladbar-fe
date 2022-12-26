@@ -1,20 +1,16 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import helpers from '../utils/functionHelpers';
-import {
-  getCartsForStats,
-  initializeCarts,
-  resetCarts,
-} from '../store/carts.slice';
+import { getCartsForStats, initializeCarts } from '../store/carts.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import TodayCharts from '../components/TodayCharts';
 import { StyledTodayMain } from './styles/today.styles';
+import Notification from '../components/Notification';
 
 const Today = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
+  const notification = useSelector((state: RootState) => state.notification);
   const dispatch = useAppDispatch();
-
-  console.log({ cartsState });
 
   useEffect(() => {
     let isMounted = true;
@@ -53,6 +49,7 @@ const Today = () => {
 
   return (
     <StyledTodayMain>
+      <Notification notification={notification} />
       {ready && <TodayCharts cartsState={cartsState} />}
     </StyledTodayMain>
   );
