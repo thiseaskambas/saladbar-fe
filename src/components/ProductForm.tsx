@@ -31,7 +31,6 @@ interface IFormValues {
 
 interface IProps {
   existingProduct?: IProduct;
-  onEndSubmit?: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -122,7 +121,6 @@ const ProductForm = ({ existingProduct }: IProps) => {
         URL.revokeObjectURL(url);
         setUrl('');
         actions.setSubmitting(false);
-        // onEndSubmit?.();
       }}
     >
       {(formik) => (

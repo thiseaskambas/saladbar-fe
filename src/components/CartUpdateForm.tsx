@@ -71,16 +71,19 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(setNotification({ text: 'Hold on...', type: 'loading' }));
     const cartDataToSend: ILocalCartItemFormated[] = [
       ...toCartEntries(existingItems),
       ...newItems,
     ];
-    console.log({ cartDataToSend });
+
     if (cartDataToSend.length > 0) {
       await dispatch(
         updateCart({ cart: { items: cartDataToSend }, id: cart.id })
       );
-      setIsFormOpen(false);
+      dispatch(
+        setAsyncNotification({ type: 'success', text: 'Cart saved!', time: 5 })
+      );
     } else {
       setIsDeleteClicked(true);
     }
@@ -106,6 +109,7 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
 
   return (
     <StyledUpdateCartForm onSubmit={(e) => submitHandler(e)}>
+      <div>{notification.text}</div>
       <div className="main-ctn">
         <div>
           <label htmlFor="creator">Created by </label>

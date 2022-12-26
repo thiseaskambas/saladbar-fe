@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom';
 
 import images from '../assets';
 import {
-  resetNotification,
   setAsyncNotification,
   setNotification,
 } from '../store/notification.slice';
@@ -56,13 +55,17 @@ const LogInForm = () => {
         onSubmit={async (values, actions) => {
           dispatch(setNotification({ type: 'loading', text: 'Hold on...' }));
           try {
-            await dispatch(logUserIn(values)).unwrap();
-            // actions.resetForm({
-            //   values: { email: '', password: '', rememberMe: false },
-            // });
+            const res = await dispatch(logUserIn(values)).unwrap();
+            console.log({ res });
             navigate(fromUrl, { replace: true });
             actions.setSubmitting(false);
-            dispatch(resetNotification());
+            dispatch(
+              setAsyncNotification({
+                type: 'success',
+                text: `Welcome back ${res.loggedUser.username} !`,
+                time: 6,
+              })
+            );
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (err: any) {
             dispatch(

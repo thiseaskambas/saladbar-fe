@@ -106,10 +106,7 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
       >
         {isSelectedProduct && (
           <StyledModalCtnDiv>
-            <ProductForm
-              existingProduct={isSelectedProduct}
-              // onEndSubmit={closeModalHandler}
-            />
+            <ProductForm existingProduct={isSelectedProduct} />
           </StyledModalCtnDiv>
         )}
       </Modal>
