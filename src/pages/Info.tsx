@@ -6,9 +6,11 @@ import Notification from '../components/Notification';
 import { getLatestMessage } from '../store/message.slice';
 import { RootState, useAppDispatch } from '../store/store';
 import {
-  StyledSharedColoredBtn,
-  StyledSharedMain,
-} from './styles/shared.styles';
+  StyledArticle,
+  StyledInfoCtnDiv,
+  StyledInfoMain,
+} from './styles/info.styles';
+import { StyledSharedColoredBtn } from './styles/shared.styles';
 
 const Info = () => {
   const dispatch = useAppDispatch();
@@ -30,24 +32,28 @@ const Info = () => {
   const lastMessage = messages.messages[0];
   console.log(lastMessage);
   return (
-    <StyledSharedMain>
+    <StyledInfoMain>
       <Notification notification={notificationState} />
       <h1>Info page</h1>
-      {lastMessage && (
-        <article>
-          <h2>{lastMessage.title}</h2>
-          <section>{lastMessage.text}</section>
-          <footer>{lastMessage.createdBy}</footer>
-        </article>
-      )}
-      {authState.user?.role !== 'user' && (
-        <StyledSharedColoredBtn
-          bgColor="PURPLE"
-          onClick={() => setIsModalOpen(true)}
-        >
-          New Message
-        </StyledSharedColoredBtn>
-      )}
+      <StyledInfoCtnDiv>
+        {lastMessage && (
+          <StyledArticle>
+            <h2>{lastMessage.title}</h2>
+            <section>{lastMessage.text}</section>
+            <footer>{lastMessage.createdBy.username}</footer>
+          </StyledArticle>
+        )}
+        {authState.user?.role !== 'user' && (
+          <StyledSharedColoredBtn
+            className="new-msg"
+            bgColor="PURPLE"
+            borderSquare
+            onClick={() => setIsModalOpen(true)}
+          >
+            New Message
+          </StyledSharedColoredBtn>
+        )}
+      </StyledInfoCtnDiv>
       <Modal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -55,7 +61,7 @@ const Info = () => {
       >
         <MessageForm />
       </Modal>
-    </StyledSharedMain>
+    </StyledInfoMain>
   );
 };
 

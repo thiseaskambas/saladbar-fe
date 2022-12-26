@@ -7,7 +7,7 @@ export interface IMessageEntry {
   importance?: number;
 }
 export interface IMessage extends IMessageEntry {
-  createdBy: IUser['id'];
+  createdBy: IUser;
 }
 export interface IMessageResponse {
   data: IMessage;

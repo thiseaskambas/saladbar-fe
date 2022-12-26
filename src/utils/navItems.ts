@@ -1,7 +1,7 @@
 import { INavItem } from '../types/components.types';
 
 export const navItems: Array<INavItem> = [
-  { title: 'Info', url: '/', mustBeLoggedIn: false, alwaysShow: true },
+  { title: 'Info', url: '/', mustBeLoggedIn: true, alwaysShow: true },
   { title: 'Login', url: '/login', mustBeLoggedIn: false, alwaysShow: false },
   {
     title: 'Dash Board',

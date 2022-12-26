@@ -18,9 +18,9 @@ const AppRouter = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
     <Route element={<PersistLogin />}>
-      <Route path="/" element={<Info />} />
-      <Route path="/dashboard" element={<MainDashBoard />} />
       <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
+        <Route path="/dashboard" element={<MainDashBoard />} />
+        <Route path="/" element={<Info />} />
         <Route path="/day-view" element={<Today />} />
         <Route path="/carts">
           <Route index element={<CartsDash />} />
