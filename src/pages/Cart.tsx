@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store/store';
 import {
   StyledCartMain,
+  StyledCartNoItems,
   StyledConfirmBtn,
   StytledGridCtn,
   StytledGridFooterItem,
@@ -20,10 +21,10 @@ const Cart = () => {
   return (
     <StyledCartMain>
       {cart.totalItems === 0 && (
-        <div style={{ textAlign: 'center' }}>
-          <p>The cart is empty!</p>
+        <StyledCartNoItems>
+          <h1>The cart is empty!</h1>
           <p>Add items to the cart from the main dashboard</p>
-        </div>
+        </StyledCartNoItems>
       )}
       {cart.totalItems > 0 && (
         <StytledGridCtn>

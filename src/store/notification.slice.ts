@@ -16,8 +16,8 @@ interface WaitSomeResponse {
 }
 
 const initialState: INotification = {
-  text: 'Testing notification',
-  type: 'success',
+  text: '',
+  type: 'none',
 };
 
 const waitSome = (text: string, type: INotification['type'], time: number) => {

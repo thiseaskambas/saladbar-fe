@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Cart from './pages/Cart';
 import CartsDash from './pages/CartsDash';
 import Today from './pages/Today';
-import Home from './pages/Home';
+import Info from './pages/Info';
 import Login from './pages/Login';
 import MainDashBoard from './pages/MainDashBoard';
 import UserProfile from './pages/UserProfile';
@@ -18,9 +18,9 @@ const AppRouter = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
     <Route element={<PersistLogin />}>
-      <Route path="/" element={<Home />} />
-      <Route path="/dashboard" element={<MainDashBoard />} />
       <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
+        <Route path="/dashboard" element={<MainDashBoard />} />
+        <Route path="/" element={<Info />} />
         <Route path="/day-view" element={<Today />} />
         <Route path="/carts">
           <Route index element={<CartsDash />} />

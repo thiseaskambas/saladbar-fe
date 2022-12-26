@@ -9,6 +9,12 @@ export const StyledSharedMain = styled.main`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+  & h1 {
+    border: ${({ theme }) => theme.borders.standard};
+    padding: ${({ theme }) => theme.paddings.standard};
+    background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
+    font-size: 1.5rem;
+  }
 `;
 
 export const StyledSharedTable = styled.table`
