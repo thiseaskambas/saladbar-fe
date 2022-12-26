@@ -56,7 +56,7 @@ const LogInForm = () => {
           dispatch(setNotification({ type: 'loading', text: 'Hold on...' }));
           try {
             const res = await dispatch(logUserIn(values)).unwrap();
-            console.log({ res });
+
             navigate(fromUrl, { replace: true });
             actions.setSubmitting(false);
             dispatch(

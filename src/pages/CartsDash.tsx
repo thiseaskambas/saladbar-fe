@@ -9,7 +9,7 @@ import helpers from '../utils/functionHelpers';
 import CartsTable from '../components/CartsTable';
 import { useInitializeData } from '../hooks/useInititalizeData';
 import { usePagination } from '../hooks/usePagination';
-import { initializeCarts, resetCarts } from '../store/carts.slice';
+import { initializeCarts } from '../store/carts.slice';
 import { RootState } from '../store/store';
 import { Pagination } from './Pagination';
 import { StyledSharedMain, StyledSharedSelect } from './styles/shared.styles';
@@ -53,7 +53,7 @@ const CartsDash = () => {
     };
   }, [currentPage, pageSizeLimit, afterDate, beforeDate]);
 
-  useInitializeData(initializeCarts, options, cartsState.status, resetCarts);
+  useInitializeData(initializeCarts, options, cartsState.status);
 
   const pages = usePagination({
     currentPage,

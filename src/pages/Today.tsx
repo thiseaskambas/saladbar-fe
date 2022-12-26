@@ -14,6 +14,8 @@ const Today = () => {
   const cartsState = useSelector((state: RootState) => state.carts);
   const dispatch = useAppDispatch();
 
+  console.log({ cartsState });
+
   useEffect(() => {
     let isMounted = true;
     const initCarts = async () => {
@@ -30,19 +32,18 @@ const Today = () => {
           ),
         ]);
       } catch (err) {
-        console.log(err);
+        console.log({ err });
       }
     };
     if (
       isMounted &&
-      cartsState.status === 'idle' &&
-      cartsState.tempCartsStatus === 'idle'
+      cartsState.status !== 'loading' &&
+      cartsState.tempCartsStatus !== 'loading'
     ) {
       initCarts();
     }
     return () => {
       isMounted = false;
-      dispatch(resetCarts());
     };
   }, []);
 
