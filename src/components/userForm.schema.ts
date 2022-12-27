@@ -6,8 +6,14 @@ export const validationSchema = Yup.object().shape(
     email: Yup.string()
       .email('Invalid email address')
       .required('Please fill in your email'),
-    username: Yup.string().required('Please fill in your username'),
-    fullName: Yup.string(),
+    username: Yup.string()
+      .required('Please fill in your username')
+      .matches(/^\S*$/, 'Usernames cannot contain spaces')
+      .max(15, 'Maximum 15 characters')
+      .min(5, 'Minimum 5 characters'),
+    fullName: Yup.string()
+      .max(20, 'Maximum 20 characters')
+      .min(4, 'Minimum 4 characters'),
     oldPassword: Yup.lazy(() =>
       Yup.string()
         .notRequired()
@@ -20,7 +26,6 @@ export const validationSchema = Yup.object().shape(
     password: Yup.lazy(() =>
       Yup.string()
         .notRequired()
-
         .when('passwordConfirm', {
           is: (value: string) => value?.length,
           then: Yup.string()
