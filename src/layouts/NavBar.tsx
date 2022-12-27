@@ -14,14 +14,20 @@ import images from '../assets/index';
 import { StyledLogoutBtn } from '../components/styles/navLInk.styles';
 import Modal from '../components/Modal';
 import LogoutPrompt from '../components/LogoutPrompt';
-import { useAppDispatch } from '../store/store';
+import { RootState, useAppDispatch } from '../store/store';
 import { logUserOut } from '../store/auth.slice';
 import { StyledModalCtnDiv } from '../components/styles/modal.styles';
 import useMeasure from 'react-use-measure';
+import {
+  resetNotification,
+  setAsyncNotification,
+  setNotification,
+} from '../store/notification.slice';
+import Notification from '../components/Notification';
+import { useSelector } from 'react-redux';
 
 const NavBar = ({
   user,
-  authStatus,
 }: {
   user: IUser | null;
   authStatus: IAuthInitialState['status'];
@@ -32,7 +38,7 @@ const NavBar = ({
 
   const [navItemsState, setNavItems] = useState<INavItem[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-
+  const notification = useSelector((state: RootState) => state.notification);
   useEffect(() => {
     if (!user) {
       const navItemsToMap = navItems.filter((item) => !item.mustBeLoggedIn);
@@ -45,10 +51,19 @@ const NavBar = ({
     }
   }, [user]);
 
-  const logoutHandler = () => {
-    dispatch(logUserOut())
-      .then(() => setIsLogoutModalOpen(false))
-      .then(() => navigate('/', { replace: true }));
+  const logoutHandler = async () => {
+    try {
+      dispatch(setNotification({ text: 'Hang on...', type: 'loading' }));
+      await dispatch(logUserOut()).unwrap();
+      setIsLogoutModalOpen(false);
+      navigate('/', { replace: true });
+      dispatch(resetNotification());
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      dispatch(
+        setAsyncNotification({ type: 'error', text: err.message, time: 6 })
+      );
+    }
   };
 
   return (
@@ -85,14 +100,14 @@ const NavBar = ({
         onClose={() => setIsLogoutModalOpen(false)}
         modalTitle="Logout"
       >
-        {authStatus === 'loading' ? (
-          <StyledModalCtnDiv>Hang on...</StyledModalCtnDiv>
-        ) : (
-          <LogoutPrompt
-            onCancel={() => setIsLogoutModalOpen(false)}
-            onLogout={logoutHandler}
-          />
-        )}
+        <StyledModalCtnDiv>
+          <Notification notification={notification} />
+        </StyledModalCtnDiv>
+
+        <LogoutPrompt
+          onCancel={() => setIsLogoutModalOpen(false)}
+          onLogout={logoutHandler}
+        />
       </Modal>
     </StyledNav>
   );

@@ -31,6 +31,7 @@ interface IFormValues {
 
 interface IProps {
   existingProduct?: IProduct;
+  toCloseModal?: () => void;
 }
 
 const validationSchema = Yup.object().shape({
@@ -92,9 +93,10 @@ const ProductForm = ({ existingProduct }: IProps) => {
         dispatch(setNotification({ type: 'loading', text: 'Loading' }));
         try {
           if (existingProduct) {
-            await dispatch(
+            const test = await dispatch(
               updateProduct({ input, id: existingProduct.id })
             ).unwrap();
+            console.log(test);
           } else {
             await dispatch(createProduct(input)).unwrap();
           }
@@ -116,10 +118,10 @@ const ProductForm = ({ existingProduct }: IProps) => {
           );
         }
 
-        actions.resetForm({ values: { ...initialValues } });
-        inputRef.current?.form && inputRef.current.form.reset();
-        URL.revokeObjectURL(url);
-        setUrl('');
+        // actions.resetForm({ values: { ...initialValues } });
+        // inputRef.current?.form && inputRef.current.form.reset();
+        // URL.revokeObjectURL(url);
+        // setUrl('');
         actions.setSubmitting(false);
       }}
     >
@@ -141,7 +143,7 @@ const ProductForm = ({ existingProduct }: IProps) => {
           )}
           <StyledInnerDiv>
             <label htmlFor="name">Product name:</label>
-            <Field type="text" name="name" />
+            <Field type="text" name="name" autoComplete="off" />
             <StyledMessageCtn>
               <ErrorMessage name="name" />
             </StyledMessageCtn>

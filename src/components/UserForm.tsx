@@ -162,7 +162,7 @@ const UserForm = () => {
 
           <StyledInnerDiv>
             <label htmlFor="username">Username</label>
-            <Field type="text" name="username" />
+            <Field type="text" name="username" autoComplete="off" />
             <StyledMessageCtn>
               <ErrorMessage name="username" />
             </StyledMessageCtn>

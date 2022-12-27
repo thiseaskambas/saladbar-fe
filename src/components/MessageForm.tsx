@@ -25,7 +25,7 @@ const validationSchema = Yup.object().shape({
   title: Yup.string()
     .required('Please enter a title')
     .min(5, 'Min 5 characters')
-    .max(15, 'Max 15 characters'),
+    .max(20, 'Max 20 characters'),
   text: Yup.string()
     .required('Please fill in your message')
     .min(5, 'Min 5 characters')
@@ -76,14 +76,14 @@ const MessageForm = () => {
           <Notification notification={notification} />
           <StyledInnerDiv>
             <label htmlFor="title">Message title:</label>
-            <Field type="text" name="title" />
+            <Field type="text" name="title" autoComplete="off" />
             <StyledMessageCtn>
               <ErrorMessage name="title" />
             </StyledMessageCtn>
           </StyledInnerDiv>
           <StyledInnerDiv>
             <label htmlFor="text">Message text:</label>
-            <Field type="text" name="text" />
+            <Field type="text" name="text" autoComplete="off" />
             <StyledMessageCtn>
               <ErrorMessage name="text" />
             </StyledMessageCtn>

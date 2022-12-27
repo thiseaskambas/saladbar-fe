@@ -64,7 +64,7 @@ const LogInForm = () => {
               setAsyncNotification({
                 type: 'success',
                 text: `Welcome back ${res.loggedUser.username} !`,
-                time: 6,
+                time: 5,
               })
             );
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -20,6 +20,7 @@ const Info = () => {
     (state: RootState) => state.notification
   );
   const messages = useSelector((state: RootState) => state.messages);
+
   useEffect(() => {
     let mounted = true;
     if (mounted && messages.status === 'idle') {
@@ -30,7 +31,7 @@ const Info = () => {
     };
   }, []);
   const lastMessage = messages.messages[0];
-  console.log(lastMessage);
+
   return (
     <StyledInfoMain>
       <Notification notification={notificationState} />
