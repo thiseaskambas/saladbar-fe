@@ -20,7 +20,7 @@ const Users = () => {
         console.log(err);
       }
     };
-    if (isMounted && usersState.status === 'idle') {
+    if (isMounted && usersState.status !== 'loading') {
       initData();
     }
     return () => {

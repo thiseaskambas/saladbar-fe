@@ -58,7 +58,9 @@ export const StyledBarCtnDiv = styled.div<{
   labelBefore?: string;
   lastWeek?: boolean;
 }>`
-  font-size: 3rem;
+  font-family: ${({ theme }) => theme.fontFamimies.ROBOTO};
+  font-size: 2rem;
+  font-weight: 600;
   line-height: 3rem;
   color: ${({ theme, lastWeek }) =>
     lastWeek ? theme.neobrutalColors.DARKGRAY : theme.neobrutalColors.DARKGRAY};

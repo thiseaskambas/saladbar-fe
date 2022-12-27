@@ -4,6 +4,27 @@ export const StyledCartMain = styled.main`
   height: 100%;
   background-color: ${({ theme }) => theme.neobrutalColors.MINT};
 `;
+
+export const StyledCartNoItems = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 2rem;
+  width: fit-content;
+  background-color: ${({ theme }) => theme.neobrutalColors.WHITE};
+  box-shadow: ${({ theme }) =>
+    theme.createShadow(15, 15, 0, 0, theme.neobrutalColors.DARKGRAY)};
+  & h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+`;
+
 export const StytledGridCtn = styled.div`
   border-radius: 1rem;
   text-align: center;

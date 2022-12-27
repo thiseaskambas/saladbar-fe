@@ -217,7 +217,6 @@ const CartUpdateForm = ({ cart, setIsFormOpen }: IProps) => {
       {isDeleteClicked && (
         <div className="delete-confirm">
           <p>Are you sure you want to delete the cart?</p>
-          <Notification notification={notification} />
           <div>
             <StyledSharedColoredBtn
               type="button"

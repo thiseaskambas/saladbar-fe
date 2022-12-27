@@ -43,6 +43,7 @@ export const StyledNavLink = styled(NavLink)<{
   white-space: nowrap;
   display: flex;
   align-items: center;
+  cursor: pointer;
   &.active {
     background-color: ${({ theme }) => theme.navLinkBgColor.base};
   }
