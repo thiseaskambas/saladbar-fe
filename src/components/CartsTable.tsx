@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import MediaQuery from 'react-responsive';
 
 import { StyledSharedTable } from '../pages/styles/shared.styles';
 import { ICart } from '../types/cart.types';
@@ -26,10 +27,14 @@ const CartsTable = ({ carts }: IProps) => {
         <thead>
           <tr>
             <th>Date</th>
-            <th>User</th>
+            <MediaQuery minWidth={999}>
+              <th>User</th>
+            </MediaQuery>
             <th>Items</th>
             <th>Total</th>
-            <th>Avg Item Price</th>
+            <MediaQuery minWidth={999}>
+              <th>Avg Item Price</th>
+            </MediaQuery>
           </tr>
         </thead>
         <tbody>

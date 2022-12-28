@@ -9,6 +9,7 @@ export const StyledSharedMain = styled.main`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
+
   & h1 {
     border: ${({ theme }) => theme.borders.standard};
     padding: ${({ theme }) => theme.paddings.standard};
@@ -23,6 +24,7 @@ export const StyledSharedTable = styled.table`
   margin-right: auto;
   padding: 2rem;
   border: ${({ theme }) => theme.borders.standard};
+
   box-shadow: ${({ theme }) =>
     theme.createShadow(10, 10, 0, 0, theme.neobrutalColors.DARKGRAY)};
 `;

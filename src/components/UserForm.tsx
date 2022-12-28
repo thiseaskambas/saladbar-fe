@@ -18,6 +18,7 @@ import {
 } from '../store/notification.slice';
 import Notification from './Notification';
 import { StyledSharedColoredBtn } from '../pages/styles/shared.styles';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormValues {
   email: string;
@@ -38,6 +39,7 @@ interface IUpdateValues {
 const UserForm = () => {
   const loggedUser = useSelector((state: RootState) => state.auth.user);
   const notification = useSelector((state: RootState) => state.notification);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const initialValues: IFormValues = {
     email: loggedUser?.email || '',
@@ -125,6 +127,8 @@ const UserForm = () => {
           dispatch(setNotification({ type: 'loading', text: 'Saving...' }));
           try {
             await dispatch(signupUser(values)).unwrap();
+            actions.setSubmitting(false);
+            navigate('/login');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (err: any) {
             dispatch(
