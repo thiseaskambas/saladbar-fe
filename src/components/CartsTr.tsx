@@ -1,3 +1,4 @@
+import MediaQuery from 'react-responsive';
 import {
   StyledSharedPriceTd,
   StyledSharedTd,
@@ -26,14 +27,18 @@ const CartsTr = ({ cart, onClick }: IProps) => {
   return (
     <StyledSharedTr onClick={onClick} clickable={true}>
       <StyledSharedTd>{formatedDate.split(',').join(' - ')}</StyledSharedTd>
-      <StyledSharedTd>
-        <span className="italic">{cart.createdBy.username}</span>
-      </StyledSharedTd>
+      <MediaQuery minWidth={999}>
+        <StyledSharedTd>
+          <span className="italic">{cart.createdBy.username}</span>
+        </StyledSharedTd>
+      </MediaQuery>
       <StyledSharedPriceTd>{itemsQuantity}</StyledSharedPriceTd>
       <StyledSharedPriceTd>€{cart.totalPrice.toFixed(2)}</StyledSharedPriceTd>
-      <StyledSharedPriceTd>
-        €{(cart.totalPrice / itemsQuantity).toFixed(2)}
-      </StyledSharedPriceTd>
+      <MediaQuery minWidth={999}>
+        <StyledSharedPriceTd>
+          €{(cart.totalPrice / itemsQuantity).toFixed(2)}
+        </StyledSharedPriceTd>
+      </MediaQuery>
     </StyledSharedTr>
   );
 };

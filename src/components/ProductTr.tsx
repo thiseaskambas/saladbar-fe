@@ -1,3 +1,4 @@
+import MediaQuery from 'react-responsive';
 import {
   StyledSharedDeleteBtn,
   StyledSharedPriceTd,
@@ -16,13 +17,15 @@ const ProductTr = ({ product, onEdit, onDelete }: IProps) => {
   return (
     <StyledSharedTr clickable={true}>
       <StyledSharedTd onClick={() => onEdit()}>{product.name}</StyledSharedTd>
-      <StyledSharedPriceTd onClick={() => onEdit()}>
-        {product.price}
-      </StyledSharedPriceTd>
+      <MediaQuery minWidth={999}>
+        <StyledSharedPriceTd onClick={() => onEdit()}>
+          {product.price}
+        </StyledSharedPriceTd>
 
-      <StyledSharedTd onClick={() => onEdit()}>
-        {product.productCourseType}
-      </StyledSharedTd>
+        <StyledSharedTd onClick={() => onEdit()}>
+          {product.productCourseType}
+        </StyledSharedTd>
+      </MediaQuery>
       <StyledSharedTd onClick={() => onDelete()}>
         <StyledSharedDeleteBtn />
       </StyledSharedTd>

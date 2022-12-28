@@ -71,3 +71,20 @@ export const StyledMobileNavLink = styled(NavLink)`
     transition: font-weight 0.1s ease-in-out;
   }
 `;
+
+export const StyledMobileLogoutBtn = styled.button`
+  border-radius: ${({ theme }) => theme.navLink.borderRadius};
+  padding: 1rem;
+  font-weight: ${({ theme }) => theme.navLink.fontWeight};
+  white-space: nowrap;
+  background-color: ${({ theme }) => theme.neobrutalColors.DARKGRAY};
+  color: ${({ theme }) => theme.neobrutalColors.WHITE};
+  &:hover {
+    transition: 100ms ease-in;
+    font-weight: 900;
+    background-color: ${({ theme }) => theme.navLinkBgColor.hover};
+  }
+  &:active {
+    filter: brightness(100%);
+  }
+`;

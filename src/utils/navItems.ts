@@ -17,18 +17,35 @@ export const navItems: Array<INavItem> = [
     mustBeLoggedIn: true,
     mustBeAdmin: true,
     submenu: [
-      { title: 'Carts', url: '/carts', mustBeLoggedIn: true },
-      { title: 'All users', url: '/users', mustBeLoggedIn: true },
+      {
+        title: 'Carts',
+        url: '/carts',
+        mustBeLoggedIn: true,
+        mustBeAdmin: true,
+      },
+      {
+        title: 'All users',
+        url: '/users',
+        mustBeLoggedIn: true,
+        mustBeAdmin: true,
+      },
       {
         title: 'Products',
         url: '',
         mustBeLoggedIn: true,
+        mustBeAdmin: true,
         submenu: [
-          { title: 'All Products', url: '/products', mustBeLoggedIn: true },
+          {
+            title: 'All Products',
+            url: '/products',
+            mustBeLoggedIn: true,
+            mustBeAdmin: true,
+          },
           {
             title: 'New Product',
             url: '/products/create',
             mustBeLoggedIn: true,
+            mustBeAdmin: true,
           },
         ],
       },

@@ -1,4 +1,4 @@
-import React from 'react';
+import MediaQuery from 'react-responsive';
 import { IUser } from '../types/user.types';
 import {
   StyledSharedTable,
@@ -27,8 +27,10 @@ export const UsersTable = ({ users }: { users: IUser[] }) => {
       <thead>
         <tr>
           <th>Username</th>
-          <th>Full name</th>
-          <th>email</th>
+          <MediaQuery minWidth={999}>
+            <th>Full name</th>
+            <th>email</th>
+          </MediaQuery>
           <th>Role</th>
         </tr>
       </thead>
@@ -40,8 +42,10 @@ export const UsersTable = ({ users }: { users: IUser[] }) => {
             className={usr.id === loggedUserId ? 'loggedUser' : ''}
           >
             <StyledSharedTd>{usr.username}</StyledSharedTd>
-            <StyledSharedTd>{usr?.fullName}</StyledSharedTd>
-            <StyledSharedTd>{usr.email}</StyledSharedTd>
+            <MediaQuery minWidth={999}>
+              <StyledSharedTd>{usr?.fullName}</StyledSharedTd>
+              <StyledSharedTd>{usr.email}</StyledSharedTd>
+            </MediaQuery>
             {usr.id !== loggedUserId ? (
               <UserTableCellRole user={usr} />
             ) : (
