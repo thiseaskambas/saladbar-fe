@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import LogoutPrompt from '../components/LogoutPrompt';
+import Modal from '../components/Modal';
+import Notification from '../components/Notification';
+import { StyledModalCtnDiv } from '../components/styles/modal.styles';
+import { StyledLogoutBtn } from '../components/styles/navLInk.styles';
 import { logUserOut } from '../store/auth.slice';
 import {
   resetNotification,
@@ -14,11 +19,10 @@ import { IUser } from '../types/user.types';
 import { navItems } from '../utils/navItems';
 import {
   StyledMobileLi,
+  StyledMobileLogoutBtn,
   StyledMobileNav,
   StyledMobileNavLink,
   StyledMobileUl,
-  StyledNestUl,
-  StyledSubTitle,
 } from './styles/mobileNavBar.styles';
 
 const MobileNavBar = ({ user }: { user: IUser | null }) => {
@@ -31,10 +35,8 @@ const MobileNavBar = ({ user }: { user: IUser | null }) => {
   const temp: INavItem[] = [];
   const flattenNavItems = (arr: INavItem[]) => {
     arr.forEach((item) => {
-      const { submenu, ...rest } = item;
-      submenu
-        ? temp.push({ ...rest }) && flattenNavItems(submenu)
-        : temp.push(item);
+      const { submenu } = item;
+      submenu ? flattenNavItems(submenu) : temp.push(item);
     });
     return temp;
   };
@@ -67,17 +69,39 @@ const MobileNavBar = ({ user }: { user: IUser | null }) => {
   };
 
   return (
-    <StyledMobileNav>
-      <StyledMobileUl>
-        {navItemsState.map((item) => (
-          <StyledMobileLi key={item.title}>
-            <StyledMobileNavLink to={item.url}>
-              {item.title}
-            </StyledMobileNavLink>
-          </StyledMobileLi>
-        ))}
-      </StyledMobileUl>
-    </StyledMobileNav>
+    <>
+      <StyledMobileNav>
+        <StyledMobileUl>
+          {navItemsState.map((item) =>
+            item.mustBeAdmin && user?.role === 'user' ? null : (
+              <StyledMobileLi key={item.title}>
+                <StyledMobileNavLink to={item.url}>
+                  {item.title}
+                </StyledMobileNavLink>
+              </StyledMobileLi>
+            )
+          )}
+          {user && (
+            <StyledMobileLogoutBtn onClick={() => setIsLogoutModalOpen(true)}>
+              Logout
+            </StyledMobileLogoutBtn>
+          )}
+        </StyledMobileUl>
+      </StyledMobileNav>
+      <Modal
+        open={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        modalTitle="Logout"
+      >
+        <StyledModalCtnDiv>
+          <Notification notification={notification} />
+        </StyledModalCtnDiv>
+        <LogoutPrompt
+          onCancel={() => setIsLogoutModalOpen(false)}
+          onLogout={logoutHandler}
+        />
+      </Modal>
+    </>
   );
 };
 

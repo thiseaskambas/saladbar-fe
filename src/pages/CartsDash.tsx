@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker, DateRange } from 'react-date-range';
 
 import helpers from '../utils/functionHelpers';
 import CartsTable from '../components/CartsTable';
@@ -21,6 +21,7 @@ import {
 } from './styles/cartsDash.styles';
 import Modal from '../components/Modal';
 import Notification from '../components/Notification';
+import MediaQuery from 'react-responsive';
 
 interface IDateRangeState {
   startDate: Date;
@@ -103,18 +104,34 @@ const CartsDash = () => {
           modalTitle="Select date range"
         >
           <StyledDatePickerCtnDiv>
-            <DateRangePicker
-              // @ts-expect-error can't find docs
-              onChange={(item) => setRangeState(() => [item.selection])}
-              // @ts-expect-error can't find docs
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={false}
-              months={1}
-              ranges={rangeState}
-              direction="horizontal"
-              weekStartsOn={1}
-              maxDate={new Date()}
-            />
+            <MediaQuery minWidth={1000}>
+              <DateRangePicker
+                // @ts-expect-error can't find docs
+                onChange={(item) => setRangeState(() => [item.selection])}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={rangeState}
+                direction="horizontal"
+                weekStartsOn={1}
+                maxDate={new Date()}
+                fixedHeight={true}
+              />
+            </MediaQuery>
+            <MediaQuery maxWidth={999}>
+              <DateRange
+                // @ts-expect-error can't find docs
+                onChange={(item) => setRangeState(() => [item.selection])}
+                // @ts-expect-error can't find docs
+                showSelectionPreview={true}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={rangeState}
+                direction="horizontal"
+                weekStartsOn={1}
+                maxDate={new Date()}
+                scroll={{ enabled: true }}
+              />
+            </MediaQuery>
             <StyledCartDateBtnCtnDiv>
               <StyledCartDashDateBtn
                 onClick={() => setDisplay(false)}

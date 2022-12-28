@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import MediaQuery from 'react-responsive';
+
 import { IProduct } from '../types/product.types';
 import ProductTr from './ProductTr';
 import Modal from './Modal';
@@ -83,9 +85,10 @@ const ProductsTable = ({ products }: { products: IProduct[] }) => {
         <thead>
           <tr>
             <th onClick={() => handleSorting('name')}>Name</th>
-            <th onClick={() => handleSorting('price')}>Price</th>
-            <th>Image</th>
-            <th onClick={() => handleSorting('productCourseType')}>Type</th>
+            <MediaQuery minWidth={999}>
+              <th onClick={() => handleSorting('price')}>Price</th>
+              <th onClick={() => handleSorting('productCourseType')}>Type</th>
+            </MediaQuery>
           </tr>
         </thead>
         <tbody>
