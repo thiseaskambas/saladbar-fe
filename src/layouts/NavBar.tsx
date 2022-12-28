@@ -9,7 +9,7 @@ import {
   StyledMainUl,
   StyledNav,
 } from './styles/navBar.styles';
-import { IAuthInitialState, IUser } from '../types/user.types';
+import { IUser } from '../types/user.types';
 import images from '../assets/index';
 import { StyledLogoutBtn } from '../components/styles/navLInk.styles';
 import Modal from '../components/Modal';
@@ -26,12 +26,7 @@ import {
 import Notification from '../components/Notification';
 import { useSelector } from 'react-redux';
 
-const NavBar = ({
-  user,
-}: {
-  user: IUser | null;
-  authStatus: IAuthInitialState['status'];
-}) => {
+const NavBar = ({ user }: { user: IUser | null }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [navRef, { height }] = useMeasure();
@@ -56,7 +51,7 @@ const NavBar = ({
       dispatch(setNotification({ text: 'Hang on...', type: 'loading' }));
       await dispatch(logUserOut()).unwrap();
       setIsLogoutModalOpen(false);
-      navigate('/', { replace: true });
+      navigate('/login', { replace: true });
       dispatch(resetNotification());
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -76,6 +71,7 @@ const NavBar = ({
       <StyledMainUl>
         {navItemsState.map((item: INavItem) => {
           const depthLevel = 0;
+
           return (
             <NavItem
               key={item.title}
