@@ -3,6 +3,7 @@ export interface INavItem {
   url: string;
   submenu?: INavSubItem;
   mustBeLoggedIn: boolean;
+  mustBeAdmin?: boolean;
   alwaysShow?: boolean;
   isCart?: true;
 }

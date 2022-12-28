@@ -47,8 +47,8 @@ export const StyledDropUl = styled.ul<{
 `;
 
 export const StyledNav = styled.nav`
-  position: sticky;
   top: 0;
+  position: sticky;
   padding: ${({ theme }) => theme.styledNav.padding};
   z-index: 1;
   display: flex;

@@ -72,3 +72,6 @@ export const StyledBtnCtnDiv = styled.div`
   margin-top: 1rem;
   display: flex;
 `;
+export const StyledMessageCtnDiv = styled.div`
+  padding: 1rem;
+`;

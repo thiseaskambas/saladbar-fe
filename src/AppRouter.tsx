@@ -18,7 +18,7 @@ const AppRouter = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<SignUp />} />
     <Route element={<PersistLogin />}>
-      <Route element={<RequireAuth allowedRoles={['user', 'admin', 'dev']} />}>
+      <Route element={<RequireAuth allowedRoles={['admin', 'dev']} />}>
         <Route path="/dashboard" element={<MainDashBoard />} />
         <Route path="/" element={<Info />} />
         <Route path="/day-view" element={<Today />} />
@@ -26,12 +26,16 @@ const AppRouter = () => (
           <Route index element={<CartsDash />} />
           <Route path="current" element={<Cart />} />
         </Route>
-        <Route path="/products">
-          <Route index element={<Products />} />
-          <Route path="create" element={<ProductCreateNew />} />
+        <Route element={<RequireAuth allowedRoles={['admin', 'dev']} />}>
+          <Route path="/products">
+            <Route index element={<Products />} />
+            <Route path="create" element={<ProductCreateNew />} />
+          </Route>
         </Route>
         <Route path="/users">
-          <Route index element={<Users />} />
+          <Route element={<RequireAuth allowedRoles={['admin', 'dev']} />}>
+            <Route index element={<Users />} />
+          </Route>
           <Route path="me" element={<UserProfile />} />
         </Route>
       </Route>

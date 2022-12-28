@@ -7,6 +7,7 @@ import {
   StyledBtnCtnDiv,
   StyledCancelBtn,
   StyledConfirmBtn,
+  StyledMessageCtnDiv,
   StyledModalCtnDiv,
 } from './styles/modal.styles';
 
@@ -20,10 +21,10 @@ const DeleteProduct = ({ productName, onCancel, onDelete }: IProps) => {
   const notification = useSelector((state: RootState) => state.notification);
   return (
     <StyledModalCtnDiv>
-      <div>
+      <StyledMessageCtnDiv>
         Are you sure you want to delete <b>{productName} ?</b>
         <Notification notification={notification} />
-      </div>
+      </StyledMessageCtnDiv>
 
       <StyledBtnCtnDiv>
         <StyledConfirmBtn onClick={onDelete}>Delete</StyledConfirmBtn>

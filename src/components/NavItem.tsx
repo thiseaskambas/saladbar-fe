@@ -21,6 +21,7 @@ interface IProps {
 }
 
 const NavItem = ({ item, depthLevel, closeParent, navHeight }: IProps) => {
+  const user = useSelector((state: RootState) => state.auth.user);
   const [dropdown, setDropdown] = useState(false);
   const [moveLeft, setMoveLeft] = useState(false);
   const [btnMeasureRef, btnBounds] = useMeasure();
@@ -60,7 +61,7 @@ const NavItem = ({ item, depthLevel, closeParent, navHeight }: IProps) => {
 
   return (
     <StyledNavLi ref={liRef}>
-      {item.submenu ? (
+      {item.mustBeAdmin && user?.role === 'user' ? null : item.submenu ? (
         <>
           <StyledNavButton
             ref={btnMeasureRef}
