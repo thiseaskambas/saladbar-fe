@@ -15,6 +15,7 @@ export const navItems: Array<INavItem> = [
     title: 'Admin',
     url: '',
     mustBeLoggedIn: true,
+    mustBeAdmin: true,
     submenu: [
       { title: 'Carts', url: '/carts', mustBeLoggedIn: true },
       { title: 'All users', url: '/users', mustBeLoggedIn: true },

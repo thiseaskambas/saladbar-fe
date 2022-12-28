@@ -1,12 +1,15 @@
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import MediaQuery from 'react-responsive';
+
 import AppRouter from './AppRouter';
 import NavBar from './layouts/NavBar';
 import Footer from './layouts/Footer';
 import GlobalStyles from './styleUtils/global.styles';
-import { useSelector } from 'react-redux';
 import { RootState /* useAppDispatch */, useAppDispatch } from './store/store';
-import { useEffect } from 'react';
 import { initializeProducts } from './store/products.slice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import MobileNavBar from './layouts/MobileNavBar';
 
 function App() {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -39,10 +42,12 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <NavBar
-        user={authStatus === 'succeeded' ? user : null}
-        authStatus={authStatus}
-      />
+      <MediaQuery minWidth={1000}>
+        <NavBar user={authStatus === 'succeeded' ? user : null} />
+      </MediaQuery>
+      <MediaQuery maxWidth={999}>
+        <MobileNavBar user={authStatus === 'succeeded' ? user : null} />
+      </MediaQuery>
       <AppRouter />
       <Footer />
     </>
